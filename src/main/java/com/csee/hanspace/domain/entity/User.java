@@ -20,7 +20,6 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
     private List<Authorization> authorizationList = new ArrayList<>();
 
@@ -30,7 +29,6 @@ public class User extends BaseEntity {
 
     @OneToOne(mappedBy="user")
     private SavedUserInfo savedUserInfo;
-
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
     private List<ReserveRecord> reserveRecordList = new ArrayList<>();
