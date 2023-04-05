@@ -39,3 +39,4 @@ out/
 #Config
 /src/main/resources/*.yaml
 /src/main/resources/*.yml
+/src/main/resources/application.properties
