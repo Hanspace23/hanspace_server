@@ -20,12 +20,16 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
-    private List<Authorization> authorizationList = new ArrayList<>();
+    private String authName;
+
+    private boolean approve;
 
     private String name;
 
     private String email;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+    private List<UserSite> userSiteList = new ArrayList<>();
 
     @OneToOne(mappedBy="user")
     private SavedUserInfo savedUserInfo;

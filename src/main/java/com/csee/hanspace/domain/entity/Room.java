@@ -1,14 +1,13 @@
 package com.csee.hanspace.domain.entity;
 
 
-import com.csee.hanspace.domain.entity.Authorization;
 import com.csee.hanspace.domain.entity.common.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jdk.vm.ci.meta.Local;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -47,9 +46,12 @@ public class Room extends BaseEntity {
 
     private Integer reserveCnt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Authorization authorization;
-
     @OneToMany(mappedBy = "room", cascade = CascadeType.PERSIST)
     private List<ReserveRecord> reserveRecordList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "room", cascade = CascadeType.PERSIST)
+    private List<RoomTags> roomTagsList = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Site site;
 }

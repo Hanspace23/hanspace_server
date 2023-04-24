@@ -34,6 +34,14 @@ public class ReserveRecord extends BaseEntity {
 
     private Integer status;
 
+    private boolean regular;
+
+    private Long regularId;
+
+    private String answer1;
+
+    private String answer2;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Room room;
 
@@ -43,8 +51,7 @@ public class ReserveRecord extends BaseEntity {
     @OneToMany(mappedBy = "reserveRecord", cascade = CascadeType.PERSIST)
     private List<TimeRecord> timeRecordList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "reserveRecord", cascade = CascadeType.PERSIST)
-    private List<EtcAnswer> etcAnswerList = new ArrayList<>();
+
 
 
 

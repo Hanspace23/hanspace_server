@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -38,13 +39,20 @@ public class Site extends BaseEntity {
 
     private boolean restriction;
 
+    private String question1;
+
+    private String question2;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    private LocalDateTime timeUnit;
+
     @OneToMany(mappedBy = "site", cascade = CascadeType.PERSIST)
-    private List<Authorization> authorizationList = new ArrayList<>();
+    private List<UserSite> userSiteList = new ArrayList<>();
 
     @OneToMany(mappedBy = "site", cascade = CascadeType.PERSIST)
     private List<Tag> tagList = new ArrayList<>();
 
     @OneToMany(mappedBy = "site", cascade = CascadeType.PERSIST)
-    private List<SiteEtc> etcList = new ArrayList<>();
+    private List<Room> roomList = new ArrayList<>();
 
 }

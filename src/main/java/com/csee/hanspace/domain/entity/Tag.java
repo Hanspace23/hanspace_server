@@ -10,6 +10,8 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,4 +29,7 @@ public class Tag extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Site site;
+
+    @OneToMany(mappedBy = "tag", cascade = CascadeType.PERSIST)
+    private List<RoomTags> roomTagsList = new ArrayList<>();
 }

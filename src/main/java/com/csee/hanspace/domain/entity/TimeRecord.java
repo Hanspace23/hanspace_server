@@ -30,8 +30,6 @@ public class TimeRecord extends BaseEntity {
 
     private Integer time;
 
-    private boolean regular;
-
     @NotNull
     private Long regularId;
 
