@@ -1,4 +1,4 @@
-package com.csee.hanspace.reserve.application.response;
+package com.csee.hanspace.presentation.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReserveDeleteResponse {
+public class ReserveDeleteRequest {
     private Long reserveId;
 }

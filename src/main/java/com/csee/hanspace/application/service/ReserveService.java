@@ -1,8 +1,8 @@
-package com.csee.hanspace.reserve.service;
+package com.csee.hanspace.application.service;
 
 import com.csee.hanspace.domain.entity.ReserveRecord;
-import com.csee.hanspace.reserve.application.dto.MyReserveDto;
-import com.csee.hanspace.reserve.repository.ReserveRepository;
+import com.csee.hanspace.application.dto.MyReserveDto;
+import com.csee.hanspace.domain.repository.ReserveRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
