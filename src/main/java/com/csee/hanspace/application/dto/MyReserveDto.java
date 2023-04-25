@@ -1,7 +1,7 @@
-package com.csee.hanspace.reserve.application.dto;
+package com.csee.hanspace.application.dto;
 
 import com.csee.hanspace.domain.entity.ReserveRecord;
-import com.csee.hanspace.reserve.application.response.MyReserveResponse;
+import com.csee.hanspace.presentation.response.MyReserveResponse;
 import lombok.*;
 
 import java.time.LocalDateTime;

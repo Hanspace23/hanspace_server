@@ -1,4 +1,4 @@
-package com.csee.hanspace.reserve.application.response;
+package com.csee.hanspace.presentation.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

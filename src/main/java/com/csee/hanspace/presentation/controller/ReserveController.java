@@ -1,10 +1,10 @@
-package com.csee.hanspace.reserve.contoller;
+package com.csee.hanspace.presentation.controller;
 
-import com.csee.hanspace.reserve.application.dto.MyReserveDto;
-import com.csee.hanspace.reserve.application.request.ReserveDeleteRequest;
-import com.csee.hanspace.reserve.application.response.MyReserveResponse;
-import com.csee.hanspace.reserve.application.response.ReserveDeleteResponse;
-import com.csee.hanspace.reserve.service.ReserveService;
+import com.csee.hanspace.application.dto.MyReserveDto;
+import com.csee.hanspace.presentation.request.ReserveDeleteRequest;
+import com.csee.hanspace.presentation.response.MyReserveResponse;
+import com.csee.hanspace.presentation.response.ReserveDeleteResponse;
+import com.csee.hanspace.application.service.ReserveService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
