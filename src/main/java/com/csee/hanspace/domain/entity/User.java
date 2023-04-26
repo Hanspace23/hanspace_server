@@ -30,7 +30,4 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy="user", cascade = CascadeType.PERSIST)
     private List<SavedUserInfo> savedUserInfoList;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
-    private List<ReserveRecord> reserveRecordList = new ArrayList<>();
-
 }
