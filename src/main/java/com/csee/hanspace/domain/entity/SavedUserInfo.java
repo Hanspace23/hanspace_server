@@ -29,10 +29,14 @@ public class SavedUserInfo {
 
     private String contact;
 
+    private int authority;
+
+    private boolean approve;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Site site;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
 }
