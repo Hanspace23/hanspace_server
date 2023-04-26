@@ -45,7 +45,7 @@ public class ReserveRecord extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Room room;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY)
     private SavedUserInfo savedUserInfo;
 
     @OneToMany(mappedBy = "reserveRecord", cascade = CascadeType.PERSIST)
