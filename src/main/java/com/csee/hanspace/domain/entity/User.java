@@ -24,9 +24,9 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String authName;
-
-    private boolean approve;
+//    private String authName;
+//
+//    private boolean approve;
 
     private String name;
 

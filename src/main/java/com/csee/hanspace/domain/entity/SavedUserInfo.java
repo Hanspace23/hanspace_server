@@ -31,7 +31,6 @@ public class SavedUserInfo {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Site site;
-
     @OneToOne
     private User user;
 
