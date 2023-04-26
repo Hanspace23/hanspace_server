@@ -52,6 +52,4 @@ public class Room extends BaseEntity {
     @OneToMany(mappedBy = "room", cascade = CascadeType.PERSIST)
     private List<RoomTags> roomTagsList = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Site site;
 }
