@@ -1,7 +1,7 @@
 package com.csee.hanspace.domain.entity;
 
 import com.csee.hanspace.domain.entity.common.BaseEntity;
-import com.sun.tools.javac.jvm.Gen;
+//import com.sun.tools.javac.jvm.Gen;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

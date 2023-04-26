@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ReserveRepository extends JpaRepository<ReserveRecord, Long> {
     @Query("select r from ReserveRecord r " +
-            "left join fetch r.user " +
-            "where r.user.id = :userId ")
+            "left join fetch r.savedUserInfo " +
+            "where r.savedUserInfo.user.id = :userId ")
     List<ReserveRecord> findByUserId(@Param("userId") Long userId);
 }
