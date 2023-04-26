@@ -41,6 +41,7 @@ public class SavedUserInfo {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+
     @OneToMany(mappedBy = "savedUserInfo", cascade = CascadeType.PERSIST)
     private List<ReserveRecord> reserveRecordList = new ArrayList<>();
 
