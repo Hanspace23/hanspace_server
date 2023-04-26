@@ -1,5 +1,6 @@
 package com.csee.hanspace.domain.entity;
 
+import com.csee.hanspace.domain.entity.common.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @SQLDelete(sql = "UPDATE saved_user_info SET deleted = true WHERE id = ?")
 @Where(clause = "deleted = false")
-public class SavedUserInfo {
+public class SavedUserInfo extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -40,7 +41,6 @@ public class SavedUserInfo {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-
 
     @OneToMany(mappedBy = "savedUserInfo", cascade = CascadeType.PERSIST)
     private List<ReserveRecord> reserveRecordList = new ArrayList<>();
