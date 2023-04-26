@@ -45,8 +45,8 @@ public class ReserveRecord extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Room room;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private SavedUserInfo savedUserInfo;
 
     @OneToMany(mappedBy = "reserveRecord", cascade = CascadeType.PERSIST)
     private List<TimeRecord> timeRecordList = new ArrayList<>();

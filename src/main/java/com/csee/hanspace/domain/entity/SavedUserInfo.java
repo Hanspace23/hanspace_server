@@ -8,6 +8,8 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -38,5 +40,8 @@ public class SavedUserInfo {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+    @OneToMany(mappedBy = "savedUserInfo" , cascade = CascadeType.PERSIST)
+    private List<ReserveRecord> reserveRecordList = new ArrayList<>();
 
 }
