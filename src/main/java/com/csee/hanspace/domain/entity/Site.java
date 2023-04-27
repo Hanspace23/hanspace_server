@@ -49,7 +49,7 @@ public class Site extends BaseEntity {
     private LocalDateTime timeUnit;
 
     @OneToMany(mappedBy = "site", cascade = CascadeType.PERSIST)
-    private List<UserSite> userSiteList = new ArrayList<>();
+    private List<SavedUserInfo> savedUserInfoList = new ArrayList<>();
 
     @OneToMany(mappedBy = "site", cascade = CascadeType.PERSIST)
     private List<Tag> tagList = new ArrayList<>();
