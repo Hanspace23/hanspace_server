@@ -1,6 +1,5 @@
 package com.csee.hanspace.presentation.controller;
 
-import com.csee.hanspace.application.dto.MyReserveDto;
 import com.csee.hanspace.presentation.request.ReserveDeleteRequest;
 import com.csee.hanspace.presentation.response.MyReserveResponse;
 import com.csee.hanspace.presentation.response.ReserveDeleteResponse;
@@ -19,15 +18,15 @@ import java.util.stream.Collectors;
 public class ReserveController {
     private final ReserveService reserveService;
 
-    @GetMapping("/myReserve")
-    public ResponseEntity<List<MyReserveResponse>> getMyReservations(@RequestParam Long userId) {
-        List<MyReserveDto> myReservations = reserveService.getMyReservations(userId);
-        List<MyReserveResponse> response = myReservations.stream()
-                .map(MyReserveDto::myReserveResponse)
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(response);
-    }
+//    @GetMapping("/myReserve")
+//    public ResponseEntity<List<MyReserveResponse>> getMyReservations(@RequestParam Long userId) {
+//        List<MyReserveDto> myReservations = reserveService.getMyReservations(userId);
+//        List<MyReserveResponse> response = myReservations.stream()
+//                .map(MyReserveDto::myReserveResponse)
+//                .collect(Collectors.toList());
+//
+//        return ResponseEntity.ok(response);
+//    }
 
     @PostMapping("/delete")
     public ResponseEntity<ReserveDeleteResponse> deleteReservation(@RequestBody ReserveDeleteRequest request) {

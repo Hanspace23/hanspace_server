@@ -1,7 +1,6 @@
 package com.csee.hanspace.application.service;
 
 import com.csee.hanspace.domain.entity.ReserveRecord;
-import com.csee.hanspace.application.dto.MyReserveDto;
 import com.csee.hanspace.domain.repository.ReserveRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,11 +14,11 @@ import java.util.stream.Collectors;
 public class ReserveService {
     private final ReserveRepository reserveRepository;
 
-    @Transactional
-    public List<MyReserveDto> getMyReservations(Long userId){
-        List<ReserveRecord> reservations = reserveRepository.findByUserId(userId);
-        return reservations.stream().map(MyReserveDto::new).collect(Collectors.toList());
-    }
+//    @Transactional
+//    public List<MyReserveDto> getMyReservations(Long userId){
+//        List<ReserveRecord> reservations = reserveRepository.findByUserId(userId);
+//        return reservations.stream().map(MyReserveDto::new).collect(Collectors.toList());
+//    }
 
     @Transactional
     public Long delete(Long reserveId) {
