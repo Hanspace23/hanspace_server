@@ -54,4 +54,7 @@ public class Site extends BaseEntity {
     @OneToMany(mappedBy = "site", cascade = CascadeType.PERSIST)
     private List<Tag> tagList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "site", cascade = CascadeType.PERSIST)
+    private List<Room> roomList = new ArrayList<>();
+
 }
