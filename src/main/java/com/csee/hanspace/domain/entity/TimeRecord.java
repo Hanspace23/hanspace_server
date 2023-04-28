@@ -28,10 +28,13 @@ public class TimeRecord extends BaseEntity {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime startDate;
 
-    private Integer time;
+    private String time;
 
     @NotNull
     private Long regularId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private  Room room;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private ReserveRecord reserveRecord;
