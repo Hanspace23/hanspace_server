@@ -16,11 +16,11 @@ import java.util.List;
 public class RoomController {
     private final RoomService roomService;
 
-    @GetMapping(value ="/calendarEvents/{sid}")
-    public ResponseEntity<List<Room>> findAllRoomForCalendar(@PathVariable Long sid){
-        List<Room> res = roomService.findAllRoomForCalendar(sid);
-        return ResponseEntity.ok(res);
-    }
+//    @GetMapping(value ="/calendarEvents/{sid}")
+//    public ResponseEntity<List<Room>> findAllRoomForCalendar(@PathVariable Long sid){
+//        List<Room> res = roomService.findAllRoomForCalendar(sid);
+//        return ResponseEntity.ok(res);
+//    }
 
 
 

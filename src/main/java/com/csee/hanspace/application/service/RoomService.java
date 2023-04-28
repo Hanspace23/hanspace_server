@@ -14,7 +14,7 @@ public class RoomService {
     private final RoomRepository roomRepository;
 
 
-    public List<Room> findAllRoomForCalendar(Long sid) {
-        List<Room> ret = roomRepository.findAllRoomForCalendar(sid);
-    }
+//    public List<Room> findAllRoomForCalendar(Long sid) {
+////        List<Room> ret = roomRepository.findAllRoomForCalendar(sid);
+//    }
 }
