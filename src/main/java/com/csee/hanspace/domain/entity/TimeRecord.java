@@ -34,6 +34,9 @@ public class TimeRecord extends BaseEntity {
     private Long regularId;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    private  Room room;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private ReserveRecord reserveRecord;
 
 }
