@@ -18,11 +18,17 @@ public class RoomService {
     @Autowired
     private final RoomRepository roomRepository;
 
+
     @Transactional(readOnly = true)
     public List<RoomFilterDto> findAllRoomBySiteId(Long sid) {
         List<Room> ret = roomRepository.findAllRoomBySiteId(sid);
         return ret.stream().map(RoomFilterDto::from).collect(Collectors.toList());
     }
+
+    public Room findByName(String roomName){
+        return roomRepository.findByName(roomName);
+    }
+
 
 
 //    public List<Room> findAllRoomForCalendar(Long sid) {
