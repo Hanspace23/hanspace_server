@@ -3,17 +3,16 @@ package com.csee.hanspace.domain.entity;
 import com.csee.hanspace.domain.entity.common.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
@@ -26,14 +25,24 @@ public class TimeRecord extends BaseEntity {
     private Long id;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
-    private Integer time;
+    private int startTime;
 
-    @NotNull
-    private Long regularId;
+    private int endTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private ReserveRecord reserveRecord;
+
+
+
+    public static TimeRecord of (LocalDate date, int startTime, int endTime, ReserveRecord record) {
+        return TimeRecord.builder()
+                .startDate(date)
+                .startTime(startTime)
+                .endTime(endTime)
+                .reserveRecord(record)
+                .build();
+    }
 
 }
