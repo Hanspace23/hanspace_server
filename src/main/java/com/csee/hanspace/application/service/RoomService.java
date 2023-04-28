@@ -6,6 +6,8 @@ import com.csee.hanspace.domain.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class RoomService {
@@ -17,4 +19,7 @@ public class RoomService {
 
 
 
+//    public List<Room> findAllRoomForCalendar(Long sid) {
+////        List<Room> ret = roomRepository.findAllRoomForCalendar(sid);
+//    }
 }

@@ -1,5 +1,7 @@
 package com.csee.hanspace.application.service;
 
+
+import com.csee.hanspace.domain.entity.ReserveRecord;
 import com.csee.hanspace.application.dto.RoomReserveDto;
 import com.csee.hanspace.domain.entity.*;
 import com.csee.hanspace.domain.repository.ReserveRepository;
@@ -73,5 +75,13 @@ public class ReserveService {
         return 1L;
     }
 
+
+//    @Transactional
+//    public List<ReserveDto> getMyReservations(Long savedUserInfoId) {
+//        List<ReserveRecord> reserves = reserveRepository.findAllBySavedUserInfoId(savedUserInfoId);
+//        return reserves.stream()
+//                .map(ReserveDto::new)
+//                .collect(Collectors.toList());
+//    }
 
 }
