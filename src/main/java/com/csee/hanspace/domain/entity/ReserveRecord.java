@@ -1,20 +1,20 @@
 package com.csee.hanspace.domain.entity;
 
+import com.csee.hanspace.application.dto.RoomReserveDto;
 import com.csee.hanspace.domain.entity.common.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Setter
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @SQLDelete(sql = "UPDATE reserve_record SET deleted = true WHERE id = ?")
@@ -43,6 +43,9 @@ public class ReserveRecord extends BaseEntity {
     private String answer2;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    private Site site;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private Room room;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -51,6 +54,45 @@ public class ReserveRecord extends BaseEntity {
     @OneToMany(mappedBy = "reserveRecord", cascade = CascadeType.PERSIST)
     private List<TimeRecord> timeRecordList = new ArrayList<>();
 
+    public static ReserveRecord onetimeReserve (SavedUserInfo savedUserInfo, Site site, Room room, RoomReserveDto dto) {
+        if (site.getRestriction() == 1) {
+            return ReserveRecord.builder()
+                    .groupName(dto.getGroupName())
+                    .purpose(dto.getGroupPurpose())
+                    .reservation(dto.getName())
+                    .contact(dto.getNumber())
+                    .status(1)
+                    .regular(false)
+                    .regularId(0L)
+                    .answer1(dto.getAnswer1())
+                    .answer2(dto.getAnswer2())
+                    .site(site)
+                    .room(room)
+                    .savedUserInfo(savedUserInfo)
+                    .build();
+        }
+        return null;
+
+    }
+
+
+    public static ReserveRecord regularReserve (SavedUserInfo savedUserInfo, Site site, Room room, RoomReserveDto dto){
+
+        return ReserveRecord.builder()
+                .groupName(dto.getGroupName())
+                .purpose(dto.getGroupPurpose())
+                .reservation(dto.getName())
+                .contact(dto.getNumber())
+                .status(1)
+                .regular(false)
+                .regularId(0L)
+                .answer1(dto.getAnswer1())
+                .answer2(dto.getAnswer2())
+                .site(site)
+                .room(room)
+                .savedUserInfo(savedUserInfo)
+                .build();
+    }
 
 
 

@@ -13,6 +13,11 @@ import java.util.List;
 public class RoomService {
     private final RoomRepository roomRepository;
 
+    public Room findByName(String roomName){
+        return roomRepository.findByName(roomName);
+    }
+
+
 
 //    public List<Room> findAllRoomForCalendar(Long sid) {
 ////        List<Room> ret = roomRepository.findAllRoomForCalendar(sid);
