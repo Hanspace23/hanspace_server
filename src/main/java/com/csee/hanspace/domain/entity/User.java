@@ -1,10 +1,8 @@
 package com.csee.hanspace.domain.entity;
 
+import com.csee.hanspace.application.dto.RoomReserveDto;
 import com.csee.hanspace.domain.entity.common.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -15,6 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @SQLDelete(sql = "UPDATE user SET deleted = true WHERE id = ?")
@@ -27,7 +26,10 @@ public class User extends BaseEntity {
 
     private String email;
 
-    @OneToMany(mappedBy="user", cascade = CascadeType.PERSIST)
-    private List<SavedUserInfo> savedUserInfoList;
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+    @Builder.Default
+    private List<SavedUserInfo> savedUserInfoList = new ArrayList<>();
+
+
 
 }

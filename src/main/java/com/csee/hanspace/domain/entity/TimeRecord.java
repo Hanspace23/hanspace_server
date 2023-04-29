@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @SQLDelete(sql = "UPDATE time_record SET deleted = true WHERE id = ?")
 @Where(clause = "deleted = false")
+
 public class TimeRecord extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,13 +40,15 @@ public class TimeRecord extends BaseEntity {
 
 
 
-    public static TimeRecord of (LocalDate date, int startTime, int endTime, ReserveRecord record) {
+    public static TimeRecord from (LocalDate date, int startTime, int endTime, ReserveRecord record, Room room) {
         return TimeRecord.builder()
                 .startDate(date)
                 .startTime(startTime)
                 .endTime(endTime)
+                .room(room)
                 .reserveRecord(record)
                 .build();
     }
+
 
 }

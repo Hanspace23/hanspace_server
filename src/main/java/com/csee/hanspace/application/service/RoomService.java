@@ -2,6 +2,7 @@ package com.csee.hanspace.application.service;
 
 import com.csee.hanspace.application.dto.RoomFilterDto;
 import com.csee.hanspace.domain.entity.Room;
+import com.csee.hanspace.domain.entity.TimeRecord;
 import com.csee.hanspace.domain.repository.ReserveRepository;
 import com.csee.hanspace.domain.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,19 @@ public class RoomService {
     @Autowired
     private final RoomRepository roomRepository;
 
+    @Transactional
+    public Room findByName(String roomName){
+        return roomRepository.findByName(roomName);
+    }
+
+    public Room findById(Long id){
+        return roomRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("no such room"));
+    }
+
+    @Transactional
+    public void save(Room room){
+        roomRepository.save(room);
+    }
 
     @Transactional(readOnly = true)
     public List<RoomFilterDto> findAllRoomBySiteId(Long sid) {
@@ -25,9 +39,6 @@ public class RoomService {
         return ret.stream().map(RoomFilterDto::from).collect(Collectors.toList());
     }
 
-    public Room findByName(String roomName){
-        return roomRepository.findByName(roomName);
-    }
 
 
 

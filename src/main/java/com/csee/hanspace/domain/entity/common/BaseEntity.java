@@ -2,6 +2,8 @@ package com.csee.hanspace.domain.entity.common;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -16,6 +18,7 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 public abstract  class BaseEntity {
 
@@ -28,5 +31,6 @@ public abstract  class BaseEntity {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime modifiedDate;
 
-    private boolean deleted = false;
+
+    private boolean deleted = Boolean.FALSE;
 }

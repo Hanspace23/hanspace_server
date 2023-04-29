@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class RoomReserveDto {
+public class OneReserveDto {
     private String groupName;
     private String groupPurpose;
     private String name;
@@ -29,8 +29,8 @@ public class RoomReserveDto {
 
     private int regular;
     private boolean reserveOne;
-    static public RoomReserveDto from (RoomReserveRequest request) {
-        return new RoomReserveDto(request.getGroupName(), request.getGroupPurpose(), request.getName(), request.getNumber()
-        ,request.getAnswer1(), request.getAnswer2(), request.getReserveDate(), request.getReserveTime(), request.getRoomName(), request.getRegular(), request.isReserveOne());
+    static public OneReserveDto from (RoomReserveRequest request) {
+        return new OneReserveDto(request.getGroupName(), request.getGroupPurpose(), request.getName(), request.getNumber()
+                ,request.getAnswer1(), request.getAnswer2(), request.getReserveDate(), request.getReserveTime(), request.getRoomName(), request.getRegular(), request.isReserveOne());
     }
 }

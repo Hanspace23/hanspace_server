@@ -1,13 +1,17 @@
 package com.csee.hanspace.domain.entity;
 
+import com.csee.hanspace.application.dto.OneReserveDto;
+import com.csee.hanspace.application.dto.RegularReserveDto;
 import com.csee.hanspace.application.dto.RoomReserveDto;
 import com.csee.hanspace.domain.entity.common.BaseEntity;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 @SQLDelete(sql = "UPDATE reserve_record SET deleted = true WHERE id = ?")
 @Where(clause = "deleted = false")
+@ToString
 public class ReserveRecord extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,11 +42,14 @@ public class ReserveRecord extends BaseEntity {
     private boolean regular;
 
     private Long regularId;
-
+    @Nullable
     private String answer1;
-
+    @Nullable
     private String answer2;
+    @Nullable
+    private String weekdays;
 
+    private String reserveTime;
     @ManyToOne(fetch = FetchType.LAZY)
     private Site site;
 
@@ -51,10 +59,11 @@ public class ReserveRecord extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private SavedUserInfo savedUserInfo;
 
+    @Builder.Default
     @OneToMany(mappedBy = "reserveRecord", cascade = CascadeType.PERSIST)
     private List<TimeRecord> timeRecordList = new ArrayList<>();
 
-    public static ReserveRecord onetimeReserve (SavedUserInfo savedUserInfo, Site site, Room room, RoomReserveDto dto) {
+    public static ReserveRecord onetimeReserve (SavedUserInfo savedUserInfo, Site site, Room room, OneReserveDto dto) {
         if (site.getRestriction() == 1) {
             return ReserveRecord.builder()
                     .groupName(dto.getGroupName())
@@ -76,7 +85,7 @@ public class ReserveRecord extends BaseEntity {
     }
 
 
-    public static ReserveRecord regularReserve (SavedUserInfo savedUserInfo, Site site, Room room, RoomReserveDto dto){
+    public static ReserveRecord regularReserve (SavedUserInfo savedUserInfo, Site site, Room room, RegularReserveDto dto){
 
         return ReserveRecord.builder()
                 .groupName(dto.getGroupName())
@@ -88,13 +97,20 @@ public class ReserveRecord extends BaseEntity {
                 .regularId(0L)
                 .answer1(dto.getAnswer1())
                 .answer2(dto.getAnswer2())
+                .weekdays(dto.getWeekdays())
                 .site(site)
                 .room(room)
                 .savedUserInfo(savedUserInfo)
                 .build();
     }
 
+    @Override
+    public LocalDateTime getModifiedDate() {
+        return super.getModifiedDate();
+    }
 
-
-
+    @Override
+    public LocalDateTime getRegDate() {
+        return super.getRegDate();
+    }
 }
