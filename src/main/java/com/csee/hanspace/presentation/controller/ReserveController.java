@@ -8,6 +8,7 @@ import com.csee.hanspace.domain.entity.ReserveRecord;
 import com.csee.hanspace.presentation.request.RegularReserveRequest;
 import com.csee.hanspace.presentation.request.RoomReserveRequest;
 import com.csee.hanspace.presentation.response.AllReservedResponse;
+import com.csee.hanspace.presentation.response.ReserveCalResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,5 +44,18 @@ public class ReserveController {
 //        List<ReserveRecord> list = reserveService.readAllReserveList(siteId);
 //        return ResponseEntity.ok(2L);
 //    }
+
+
+
+
+
+
+    @GetMapping("/calendarList/{siteId}")
+    public ResponseEntity<List<ReserveCalResponse>> findAllBySiteId(@PathVariable Long siteId){
+        List<ReserveCalResponse> res = reserveService.findAllBySiteId(siteId);
+        return ResponseEntity.ok(res);
+    }
+
+
 
 }

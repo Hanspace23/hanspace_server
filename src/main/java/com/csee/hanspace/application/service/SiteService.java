@@ -21,4 +21,10 @@ public class SiteService {
     public void save(Site site) {
         siteRepository.save(site);
     }
+
+    @Transactional(readOnly = true)
+    public Site findByLink(String link) {
+        Site ret = siteRepository.findByLink(link);
+        return ret;
+    }
 }
