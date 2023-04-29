@@ -18,11 +18,11 @@ public class SavedUserInfoController {
     @Autowired
     private final SavedUserInfoService savedUserInfoService;
 
-    @GetMapping(value="/findByEmail")
-    public ResponseEntity<SavedUserInfo> findByEmailSiteId(@RequestBody UserEmailRequest request){
-        SavedUserInfo res = savedUserInfoService.findByEmailSiteId(request);
-        return ResponseEntity.ok(res);
-    }
+//    @GetMapping(value="/findByEmail")
+//    public ResponseEntity<SavedUserInfo> findByEmailSiteId(@RequestBody UserEmailRequest request){
+//        SavedUserInfo res = savedUserInfoService.findByEmailSiteId(request);
+//        return ResponseEntity.ok(res);
+//    }
 
 
 }
