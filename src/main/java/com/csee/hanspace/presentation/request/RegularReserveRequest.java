@@ -9,7 +9,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class RoomReserveRequest {
+public class RegularReserveRequest {
     private String groupName;
     private String groupPurpose;
 
@@ -22,10 +22,13 @@ public class RoomReserveRequest {
     private String answer2;
 
     private String reserveDate;
+
     private List<String> reserveTime;
 
     private String roomName;
 
     private int regular;
     private boolean reserveOne;
+
+    private String weekdays;
 }
