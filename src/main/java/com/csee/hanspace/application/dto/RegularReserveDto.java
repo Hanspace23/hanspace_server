@@ -1,5 +1,6 @@
 package com.csee.hanspace.application.dto;
 
+import com.csee.hanspace.presentation.request.RegularReserveRequest;
 import com.csee.hanspace.presentation.request.RoomReserveRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class RoomReserveDto {
+public class RegularReserveDto {
     private String groupName;
     private String groupPurpose;
     private String name;
@@ -29,8 +30,10 @@ public class RoomReserveDto {
 
     private int regular;
     private boolean reserveOne;
-    static public RoomReserveDto from (RoomReserveRequest request) {
-        return new RoomReserveDto(request.getGroupName(), request.getGroupPurpose(), request.getName(), request.getNumber()
-        ,request.getAnswer1(), request.getAnswer2(), request.getReserveDate(), request.getReserveTime(), request.getRoomName(), request.getRegular(), request.isReserveOne());
+
+    private String weekdays;
+    static public RegularReserveDto from (RegularReserveRequest request) {
+        return new RegularReserveDto(request.getGroupName(), request.getGroupPurpose(), request.getName(), request.getNumber()
+                ,request.getAnswer1(), request.getAnswer2(), request.getReserveDate(), request.getReserveTime(), request.getRoomName(), request.getRegular(), request.isReserveOne(), request.getWeekdays());
     }
 }
