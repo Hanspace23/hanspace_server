@@ -33,13 +33,17 @@ public class RoomService {
         roomRepository.save(room);
     }
 
+//    @Transactional(readOnly = true)
+//    public List<RoomFilterDto> findAllRoomBySiteId(Long sid) {
+//        List<Room> ret = roomRepository.findAllRoomBySiteId(sid);
+//        return ret.stream().map(RoomFilterDto::from).collect(Collectors.toList());
+//    }
+
     @Transactional(readOnly = true)
-    public List<RoomFilterDto> findAllRoomBySiteId(Long sid) {
-        List<Room> ret = roomRepository.findAllRoomBySiteId(sid);
+    public List<RoomFilterDto> findAllBySiteId(Long sid) {
+        List<Room> ret = roomRepository.findAllBySiteId(sid);
         return ret.stream().map(RoomFilterDto::from).collect(Collectors.toList());
     }
-
-
 
 
 //    public List<Room> findAllRoomForCalendar(Long sid) {

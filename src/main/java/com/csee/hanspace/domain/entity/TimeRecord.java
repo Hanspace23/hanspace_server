@@ -2,6 +2,8 @@ package com.csee.hanspace.domain.entity;
 
 import com.csee.hanspace.domain.entity.common.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
@@ -25,17 +27,21 @@ public class TimeRecord extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate startDate;
 
     private int startTime;
 
     private int endTime;
 
+
+
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private  Room room;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private ReserveRecord reserveRecord;
 
 

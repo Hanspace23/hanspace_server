@@ -1,6 +1,7 @@
 package com.csee.hanspace.domain.entity;
 
 import com.csee.hanspace.application.dto.RoomReserveDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.csee.hanspace.domain.entity.common.BaseEntity;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
@@ -28,6 +29,7 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     @Builder.Default
+    @JsonIgnore
     private List<SavedUserInfo> savedUserInfoList = new ArrayList<>();
 
 

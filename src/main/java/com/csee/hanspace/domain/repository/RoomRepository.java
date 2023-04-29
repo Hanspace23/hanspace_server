@@ -9,8 +9,10 @@ import java.util.List;
 
 public interface RoomRepository extends JpaRepository<Room, Long> {
 
-    @Query("select r from Room r where r.site.id = :sid ")
-    List<Room> findAllRoomBySiteId(Long sid);
+//    @Query("select r from Room r where r.site.id = :sid ")
+//    List<Room> findAllRoomBySiteId(Long sid);
 
     Room findByName(String roomName);
+
+    List<Room> findAllBySiteId(Long sid);
 }

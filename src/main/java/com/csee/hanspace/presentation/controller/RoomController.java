@@ -26,8 +26,8 @@ public class RoomController {
 //    }
 
     @GetMapping(value="/roomList/{sid}")
-    public ResponseEntity<List<RoomFilterDto>> findAllRoomBySiteId(@PathVariable Long sid){
-        List<RoomFilterDto> res = roomService.findAllRoomBySiteId(sid);
+    public ResponseEntity<List<RoomFilterDto>> findAllBySiteId(@PathVariable Long sid){
+        List<RoomFilterDto> res = roomService.findAllBySiteId(sid);
         return ResponseEntity.ok(res);
     }
 
