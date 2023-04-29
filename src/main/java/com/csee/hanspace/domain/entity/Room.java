@@ -53,7 +53,7 @@ public class Room extends BaseEntity {
 
     @Builder.Default
     @OneToMany(mappedBy = "room", cascade = CascadeType.PERSIST)
-    private List<TimeRecord> reservedList = new ArrayList<>();
+    private List<TimeRecord> timeRecordList = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Site site;
