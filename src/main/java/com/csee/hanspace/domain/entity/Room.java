@@ -54,10 +54,10 @@ public class Room extends BaseEntity {
     @OneToMany(mappedBy = "room", cascade = CascadeType.PERSIST)
     private List<RoomTags> roomTagsList = new ArrayList<>();
 
-    @Builder.Default
-    @OneToMany(mappedBy = "room", cascade = CascadeType.PERSIST)
-    @JsonIgnore
-    private List<TimeRecord> timeRecordList = new ArrayList<>();
+//    @Builder.Default
+//    @OneToMany(mappedBy = "room", cascade = CascadeType.PERSIST)
+//    @JsonIgnore
+//    private List<TimeRecord> timeRecordList = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore

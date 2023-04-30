@@ -8,7 +8,7 @@ import com.csee.hanspace.application.dto.RegularReserveDto;
 import com.csee.hanspace.domain.entity.ReserveRecord;
 import com.csee.hanspace.domain.entity.*;
 import com.csee.hanspace.domain.repository.ReserveRepository;
-import com.csee.hanspace.domain.repository.TimeRecordRepository;
+//import com.csee.hanspace.domain.repository.TimeRecordRepository;
 import com.csee.hanspace.presentation.response.ReserveCalResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ public class ReserveService {
     @Autowired
     private final RoomService roomService;
 
-    private final TimeRecordRepository timeRecordRepository;
+//    private final TimeRecordRepository timeRecordRepository;
 
     // 일회 대여
     @Transactional
@@ -94,11 +94,11 @@ public class ReserveService {
             int endHour = Integer.parseInt(end.split(":")[0]);
             int startHourByMin = startHour * 60;
             int endHourByMin = endHour * 60;
-            while(startHourByMin < endHourByMin) {
-                TimeRecord timeRecord = TimeRecord.from(date, startHourByMin, startHourByMin+30, record, room);
-                startHourByMin = startHourByMin+30;
-                timeRecordRepository.save(timeRecord);
-            }
+//            while(startHourByMin < endHourByMin) {
+//                TimeRecord timeRecord = TimeRecord.from(date, startHourByMin, startHourByMin+30, record, room);
+//                startHourByMin = startHourByMin+30;
+//                timeRecordRepository.save(timeRecord);
+//            }
         }
         return 1L;
     }
@@ -136,39 +136,39 @@ public class ReserveService {
                 int endHour = Integer.parseInt(end.split(":")[0]);
                 int startHourByMin = startHour * 60;
                 int endHourByMin = endHour * 60;
-                while(startHourByMin < endHourByMin) {
-                    TimeRecord timeRecord = TimeRecord.from(dateForRegular, startHourByMin, startHourByMin+30, record, room);
-                    startHourByMin = startHourByMin+30;
-                    timeRecordRepository.save(timeRecord);
-                }
+//                while(startHourByMin < endHourByMin) {
+//                    TimeRecord timeRecord = TimeRecord.from(dateForRegular, startHourByMin, startHourByMin+30, record, room);
+//                    startHourByMin = startHourByMin+30;
+//                    timeRecordRepository.save(timeRecord);
+//                }
             }
         }
         return 1L;
     }
 
-    @Transactional
-    public List<AllReservedDto> readAllReserveList(Long siteId) {
-        List<ReserveRecord> reservedList = reserveRepository.findAllReserveBySiteId(siteId);
-        List<AllReservedDto> reserveList = reservedList.stream()
-                .flatMap(reserve -> reserve.getTimeRecordList().stream()
-                        .map(time -> AllReservedDto.toAllReserveList(reserve, time)))
-                .collect(Collectors.toList());
+//    @Transactional
+//    public List<AllReservedDto> readAllReserveList(Long siteId) {
+//        List<ReserveRecord> reservedList = reserveRepository.findAllReserveBySiteId(siteId);
+//        List<AllReservedDto> reserveList = reservedList.stream()
+//                .flatMap(reserve -> reserve.getTimeRecordList().stream()
+//                        .map(time -> AllReservedDto.toAllReserveList(reserve, time)))
+//                .collect(Collectors.toList());
+//
+//        System.out.println("reservedList = " + reservedList);
+//        return reserveList;
+//    }
 
-        System.out.println("reservedList = " + reservedList);
-        return reserveList;
-    }
-
-    @Transactional
-    public List<AllReservedDto> readEachReserveList(Long siteId, Long regularId) {
-        List<ReserveRecord> reservedList = reserveRepository.findBySiteIdAndRegularId(siteId, regularId);
-        List<AllReservedDto> reserveList = reservedList.stream()
-                .flatMap(reserve -> reserve.getTimeRecordList().stream()
-                        .map(time -> AllReservedDto.toAllReserveList(reserve, time)))
-                .collect(Collectors.toList());
-
-        System.out.println("reservedList = " + reservedList);
-        return reserveList;
-    }
+//    @Transactional
+//    public List<AllReservedDto> readEachReserveList(Long siteId, Long regularId) {
+//        List<ReserveRecord> reservedList = reserveRepository.findBySiteIdAndRegularId(siteId, regularId);
+//        List<AllReservedDto> reserveList = reservedList.stream()
+//                .flatMap(reserve -> reserve.getTimeRecordList().stream()
+//                        .map(time -> AllReservedDto.toAllReserveList(reserve, time)))
+//                .collect(Collectors.toList());
+//
+//        System.out.println("reservedList = " + reservedList);
+//        return reserveList;
+//    }
 
     @Transactional
     public Integer changeStatus(ChangeRequestDto dto){
@@ -185,10 +185,10 @@ public class ReserveService {
         records.stream().forEach(record -> record.setStatus((dto.getStatusId())));
         List<ReserveRecord> list = reserveRepository.saveAll(records);
     }
-    @Transactional
-    public void saveTimeRecord(TimeRecord timeRecord){
-        timeRecordRepository.save(timeRecord);
-    }
+//    @Transactional
+//    public void saveTimeRecord(TimeRecord timeRecord){
+//        timeRecordRepository.save(timeRecord);
+//    }
 
     @Transactional
     public void saveReserveRecord(ReserveRecord reserveRecord){
