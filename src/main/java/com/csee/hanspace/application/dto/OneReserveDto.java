@@ -25,6 +25,7 @@ public class OneReserveDto {
     private String reserveDate;
     private List<String> reserveTime;
 
+
     private String roomName;
 
     private int regular;
