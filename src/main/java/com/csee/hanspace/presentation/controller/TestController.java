@@ -32,7 +32,7 @@ public class TestController {
     RoomRepository roomRepository;
     SavedUserInfoRepository savedUserInfoRepository;
     TagRepository tagRepository;
-    TimeRecordRepository timeRecordRepository;
+//    TimeRecordRepository timeRecordRepository;
 
     RoomTagRepository roomTagRepository;
 
@@ -68,7 +68,7 @@ public class TestController {
         saveReserveRecord();
         saveTag();
         saveRoomTags();
-        saveTimeRecord();
+//        saveTimeRecord();
 
         return ResponseEntity.ok(null);
     }
@@ -114,11 +114,11 @@ public class TestController {
         return ResponseEntity.ok(null);
     }
 
-    @GetMapping("/timeRecord")
-    public ResponseEntity<Void> initTimeRecord() {
-        saveTimeRecord();
-        return ResponseEntity.ok(null);
-    }
+//    @GetMapping("/timeRecord")
+//    public ResponseEntity<Void> initTimeRecord() {
+//        saveTimeRecord();
+//        return ResponseEntity.ok(null);
+//    }
 
 
 
@@ -157,10 +157,10 @@ public class TestController {
     }
 
     private void saveReserveRecord() {
-        reserveService.saveReserveRecord(ReserveRecord.builder().groupName("홍방이팀").purpose("캡스톤").reservation("이인혁").contact("01034321112").status(2).regular(false).regularId(0L).answer1("김광, 장소연").answer2(null).site(siteService.findById(1L)).room(roomService.findByName("NTH 219")).savedUserInfo(savedUserInfoService.findById(1L)).weekdays(null).reserveTime("13:00 ~ 15:00").build());
-        reserveService.saveReserveRecord(ReserveRecord.builder().groupName("CRA").purpose("동아리모임").reservation("안병웅").contact("01034351114").status(1).regular(false).regularId(0L).answer1("조성배").answer2(null).site(siteService.findById(1L)).room(roomService.findByName("NTH 220")).savedUserInfo(savedUserInfoService.findById(2L)).weekdays(null).reserveTime("12:00 ~ 13:00 , 15:00 ~ 16:00").build());
-        reserveService.saveReserveRecord(ReserveRecord.builder().groupName("GHOST").purpose("동아리모임").reservation("홍성헌").contact("01034352414").status(2).regular(true).regularId(1L).answer1("안민규").answer2(null).site(siteService.findById(1L)).room(roomService.findByName("NTH 221")).savedUserInfo(savedUserInfoService.findById(3L)).weekdays("월,목").reserveTime("12:00 ~ 14:00").build());
-        reserveService.saveReserveRecord(ReserveRecord.builder().groupName("슬기짜기").purpose("동아리모임").reservation("송다빈").contact("01034352444").status(3).regular(true).regularId(2L).answer1("홍신").answer2(null).site(siteService.findById(1L)).room(roomService.findByName("NTH 223")).savedUserInfo(savedUserInfoService.findById(4L)).weekdays("화,금").reserveTime("14:00 ~ 15:00").build());
+        reserveService.saveReserveRecord(ReserveRecord.builder().groupName("홍방이팀").purpose("캡스톤").reservation("이인혁").contact("01034321112").status(2).regular(false).regularId(0L).answer1("김광, 장소연").answer2(null).site(siteService.findById(1L)).room(roomService.findByName("NTH 219")).savedUserInfo(savedUserInfoService.findById(1L)).weekdays(null).reserveTime("13:00 ~ 15:00").date(LocalDate.parse("2023-07-30", DateTimeFormatter.ISO_DATE)).build());
+        reserveService.saveReserveRecord(ReserveRecord.builder().groupName("CRA").purpose("동아리모임").reservation("안병웅").contact("01034351114").status(1).regular(false).regularId(0L).answer1("조성배").answer2(null).site(siteService.findById(1L)).room(roomService.findByName("NTH 220")).savedUserInfo(savedUserInfoService.findById(2L)).weekdays(null).reserveTime("12:00 ~ 13:00 , 15:00 ~ 16:00").date(LocalDate.parse("2023-05-29", DateTimeFormatter.ISO_DATE)).build());
+        reserveService.saveReserveRecord(ReserveRecord.builder().groupName("GHOST").purpose("동아리모임").reservation("홍성헌").contact("01034352414").status(2).regular(true).regularId(1L).answer1("안민규").answer2(null).site(siteService.findById(1L)).room(roomService.findByName("NTH 221")).savedUserInfo(savedUserInfoService.findById(3L)).weekdays("월,목").reserveTime("12:00 ~ 14:00").date(LocalDate.parse("2023-06-29",DateTimeFormatter.ISO_DATE)).build());
+        reserveService.saveReserveRecord(ReserveRecord.builder().groupName("슬기짜기").purpose("동아리모임").reservation("송다빈").contact("01034352444").status(3).regular(true).regularId(2L).answer1("홍신").answer2(null).site(siteService.findById(1L)).room(roomService.findByName("NTH 223")).savedUserInfo(savedUserInfoService.findById(4L)).weekdays("화,금").reserveTime("14:00 ~ 15:00").date(LocalDate.parse("2023-07-29",DateTimeFormatter.ISO_DATE)).build());
     }
 
     private void saveTag() {
@@ -179,16 +179,16 @@ public class TestController {
 
     }
 
-    private void saveTimeRecord() {
-        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JUNE, 27)).startTime(660).endTime(720).room(roomService.findById(1L)).reserveRecord(reserveService.findById(1L)).build());
-        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JUNE, 28)).startTime(540).endTime(600).room(roomService.findById(1L)).reserveRecord(reserveService.findById(1L)).build());
-        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JUNE, 28)).startTime(720).endTime(840).room(roomService.findById(2L)).reserveRecord(reserveService.findById(2L)).build());
-        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JUNE, 28)).startTime(720).endTime(780).room(roomService.findById(2L)).reserveRecord(reserveService.findById(3L)).build());
-        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JUNE, 29)).startTime(720).endTime(780).room(roomService.findById(2L)).reserveRecord(reserveService.findById(3L)).build());
-        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JUNE, 30)).startTime(720).endTime(780).room(roomService.findById(2L)).reserveRecord(reserveService.findById(3L)).build());
-        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JULY, 1)).startTime(720).endTime(840).room(roomService.findById(3L)).reserveRecord(reserveService.findById(4L)).build());
-        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JULY, 2)).startTime(660).endTime(720).room(roomService.findById(4L)).reserveRecord(reserveService.findById(2L)).build());
-    }
+//    private void saveTimeRecord() {
+//        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JUNE, 27)).startTime(660).endTime(720).room(roomService.findById(1L)).reserveRecord(reserveService.findById(1L)).build());
+//        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JUNE, 28)).startTime(540).endTime(600).room(roomService.findById(1L)).reserveRecord(reserveService.findById(1L)).build());
+//        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JUNE, 28)).startTime(720).endTime(840).room(roomService.findById(2L)).reserveRecord(reserveService.findById(2L)).build());
+//        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JUNE, 28)).startTime(720).endTime(780).room(roomService.findById(2L)).reserveRecord(reserveService.findById(3L)).build());
+//        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JUNE, 29)).startTime(720).endTime(780).room(roomService.findById(2L)).reserveRecord(reserveService.findById(3L)).build());
+//        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JUNE, 30)).startTime(720).endTime(780).room(roomService.findById(2L)).reserveRecord(reserveService.findById(3L)).build());
+//        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JULY, 1)).startTime(720).endTime(840).room(roomService.findById(3L)).reserveRecord(reserveService.findById(4L)).build());
+//        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JULY, 2)).startTime(660).endTime(720).room(roomService.findById(4L)).reserveRecord(reserveService.findById(2L)).build());
+//    }
 
 
 

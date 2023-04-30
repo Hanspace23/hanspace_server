@@ -2,7 +2,7 @@ package com.csee.hanspace.application.dto;
 
 import com.csee.hanspace.domain.entity.Room;
 import com.csee.hanspace.domain.entity.RoomTags;
-import com.csee.hanspace.domain.entity.TimeRecord;
+//import com.csee.hanspace.domain.entity.TimeRecord;
 import lombok.*;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class RoomFilterDto {
     private int availableEnd;
     private String img;
     private String detail;
-    private List<TimeRecord> reservedList;
+//    private List<TimeRecord> reservedList;
 
     public static RoomFilterDto from(Room room){
         return RoomFilterDto.builder()
@@ -32,7 +32,7 @@ public class RoomFilterDto {
                 .availableEnd(room.getEndTime())
                 .img(room.getImage())
                 .detail(room.getDescription())
-                .reservedList(room.getTimeRecordList())
+//                .reservedList(room.getTimeRecordList())
                 .build();
     }
 

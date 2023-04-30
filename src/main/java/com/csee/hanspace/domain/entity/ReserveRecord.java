@@ -4,6 +4,7 @@ import com.csee.hanspace.application.dto.OneReserveDto;
 import com.csee.hanspace.application.dto.RegularReserveDto;
 import com.csee.hanspace.application.dto.RoomReserveDto;
 import com.csee.hanspace.domain.entity.common.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
@@ -51,6 +52,11 @@ public class ReserveRecord extends BaseEntity {
     private String weekdays;
 
     private String reserveTime;
+
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    private LocalDate date;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Site site;
@@ -63,9 +69,9 @@ public class ReserveRecord extends BaseEntity {
     @JsonIgnore
     private SavedUserInfo savedUserInfo;
 
-    @Builder.Default
-    @OneToMany(mappedBy = "reserveRecord", cascade = CascadeType.PERSIST)
-    private List<TimeRecord> timeRecordList = new ArrayList<>();
+//    @Builder.Default
+//    @OneToMany(mappedBy = "reserveRecord", cascade = CascadeType.PERSIST)
+//    private List<TimeRecord> timeRecordList = new ArrayList<>();
 
     public static ReserveRecord onetimeReserve (SavedUserInfo savedUserInfo, Site site, Room room, OneReserveDto dto, String fullReserveTime) {
         if (site.getRestriction() == 1) {
