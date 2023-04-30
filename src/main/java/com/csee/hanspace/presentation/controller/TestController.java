@@ -68,7 +68,7 @@ public class TestController {
         saveReserveRecord();
         saveTag();
         saveRoomTags();
-        saveTimeRecord();
+//        saveTimeRecord();
 
         return ResponseEntity.ok(null);
     }
@@ -114,11 +114,11 @@ public class TestController {
         return ResponseEntity.ok(null);
     }
 
-    @GetMapping("/timeRecord")
-    public ResponseEntity<Void> initTimeRecord() {
-        saveTimeRecord();
-        return ResponseEntity.ok(null);
-    }
+//    @GetMapping("/timeRecord")
+//    public ResponseEntity<Void> initTimeRecord() {
+//        saveTimeRecord();
+//        return ResponseEntity.ok(null);
+//    }
 
 
 
@@ -179,16 +179,16 @@ public class TestController {
 
     }
 
-    private void saveTimeRecord() {
-        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JUNE, 27)).startTime(660).endTime(720).room(roomService.findById(1L)).reserveRecord(reserveService.findById(1L)).build());
-        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JUNE, 28)).startTime(540).endTime(600).room(roomService.findById(1L)).reserveRecord(reserveService.findById(1L)).build());
-        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JUNE, 28)).startTime(720).endTime(840).room(roomService.findById(2L)).reserveRecord(reserveService.findById(2L)).build());
-        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JUNE, 28)).startTime(720).endTime(780).room(roomService.findById(2L)).reserveRecord(reserveService.findById(3L)).build());
-        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JUNE, 29)).startTime(720).endTime(780).room(roomService.findById(2L)).reserveRecord(reserveService.findById(3L)).build());
-        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JUNE, 30)).startTime(720).endTime(780).room(roomService.findById(2L)).reserveRecord(reserveService.findById(3L)).build());
-        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JULY, 1)).startTime(720).endTime(840).room(roomService.findById(3L)).reserveRecord(reserveService.findById(4L)).build());
-        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JULY, 2)).startTime(660).endTime(720).room(roomService.findById(4L)).reserveRecord(reserveService.findById(2L)).build());
-    }
+//    private void saveTimeRecord() {
+//        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JUNE, 27)).startTime(660).endTime(720).room(roomService.findById(1L)).reserveRecord(reserveService.findById(1L)).build());
+//        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JUNE, 28)).startTime(540).endTime(600).room(roomService.findById(1L)).reserveRecord(reserveService.findById(1L)).build());
+//        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JUNE, 28)).startTime(720).endTime(840).room(roomService.findById(2L)).reserveRecord(reserveService.findById(2L)).build());
+//        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JUNE, 28)).startTime(720).endTime(780).room(roomService.findById(2L)).reserveRecord(reserveService.findById(3L)).build());
+//        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JUNE, 29)).startTime(720).endTime(780).room(roomService.findById(2L)).reserveRecord(reserveService.findById(3L)).build());
+//        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JUNE, 30)).startTime(720).endTime(780).room(roomService.findById(2L)).reserveRecord(reserveService.findById(3L)).build());
+//        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JULY, 1)).startTime(720).endTime(840).room(roomService.findById(3L)).reserveRecord(reserveService.findById(4L)).build());
+//        reserveService.saveTimeRecord(TimeRecord.builder().startDate(LocalDate.of(2023, Month.JULY, 2)).startTime(660).endTime(720).room(roomService.findById(4L)).reserveRecord(reserveService.findById(2L)).build());
+//    }
 
 
 

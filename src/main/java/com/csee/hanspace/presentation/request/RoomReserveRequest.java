@@ -25,7 +25,4 @@ public class RoomReserveRequest {
     private List<String> reserveTime;
 
     private String roomName;
-
-    private int regular;
-    private boolean reserveOne;
 }
