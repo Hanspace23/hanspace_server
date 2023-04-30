@@ -29,9 +29,7 @@ public class TimeRecord extends BaseEntity {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate startDate;
-
     private int startTime;
-
     private int endTime;
 
 

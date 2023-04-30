@@ -4,6 +4,7 @@ import com.csee.hanspace.domain.entity.ReserveRecord;
 import com.csee.hanspace.domain.entity.TimeRecord;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import org.springframework.lang.Nullable;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,6 +21,7 @@ public class ReserveCalResponse {
     private String groupName;
 
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    @Nullable
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate start;
 
@@ -32,11 +34,28 @@ public class ReserveCalResponse {
     private List<TimeRecord> timeRecord;
 
     public static ReserveCalResponse from (ReserveRecord record){
+
+        if(!record.getTimeRecordList().isEmpty()){
+            System.out.println(record.getTimeRecordList().get(0).getStartTime());
+            return ReserveCalResponse.builder()
+                    .id(record.getId())
+                    .roomId(record.getRoom().getId())
+                    .groupName(record.getGroupName())
+                    .start(record.getTimeRecordList().get(0).getStartDate())
+                    .purpose(record.getPurpose())
+                    .reservationName(record.getReservation())
+                    .contact(record.getContact())
+                    .status(record.getStatus())
+                    .content(record.getAnswer1())
+                    .regular(record.isRegular())
+                    .timeRecord(record.getTimeRecordList())
+                    .build();
+        }
         return ReserveCalResponse.builder()
                 .id(record.getId())
                 .roomId(record.getRoom().getId())
                 .groupName(record.getGroupName())
-                .start(record.getTimeRecordList().get(0).getStartDate())
+                .start(null)
                 .purpose(record.getPurpose())
                 .reservationName(record.getReservation())
                 .contact(record.getContact())
