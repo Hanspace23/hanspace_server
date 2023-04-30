@@ -2,7 +2,7 @@ package com.csee.hanspace.presentation.response;
 
 import com.csee.hanspace.application.dto.AllReservedDto;
 import com.csee.hanspace.domain.entity.ReserveRecord;
-import com.csee.hanspace.domain.entity.TimeRecord;
+//import com.csee.hanspace.domain.entity.TimeRecord;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

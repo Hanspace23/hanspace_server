@@ -2,7 +2,7 @@ package com.csee.hanspace.application.service;
 
 import com.csee.hanspace.application.dto.RoomFilterDto;
 import com.csee.hanspace.domain.entity.Room;
-import com.csee.hanspace.domain.entity.TimeRecord;
+//import com.csee.hanspace.domain.entity.TimeRecord;
 import com.csee.hanspace.domain.repository.ReserveRepository;
 import com.csee.hanspace.domain.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;

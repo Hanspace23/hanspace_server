@@ -41,21 +41,21 @@ public class ReserveController {
         return ResponseEntity.ok(savedId);
     }
 
-    @GetMapping("/allReservedList")
-    public ResponseEntity<List<AllReservedResponse>> findAllReserved(@RequestParam Long siteId) {
-        List<AllReservedResponse> responses = reserveService.readAllReserveList(siteId).stream()
-                .map(AllReservedResponse::toResponse)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(responses);
-    }
+//    @GetMapping("/allReservedList")
+//    public ResponseEntity<List<AllReservedResponse>> findAllReserved(@RequestParam Long siteId) {
+//        List<AllReservedResponse> responses = reserveService.readAllReserveList(siteId).stream()
+//                .map(AllReservedResponse::toResponse)
+//                .collect(Collectors.toList());
+//        return ResponseEntity.ok(responses);
+//    }
 
-    @GetMapping("/eachReservedList")
-    public ResponseEntity<List<AllReservedResponse>> findAllReserved(@RequestParam Long siteId, @RequestParam Long regularId) {
-        List<AllReservedResponse> responses = reserveService.readEachReserveList(siteId, regularId).stream()
-                .map(AllReservedResponse::toResponse)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(responses);
-    }
+//    @GetMapping("/eachReservedList")
+//    public ResponseEntity<List<AllReservedResponse>> findAllReserved(@RequestParam Long siteId, @RequestParam Long regularId) {
+//        List<AllReservedResponse> responses = reserveService.readEachReserveList(siteId, regularId).stream()
+//                .map(AllReservedResponse::toResponse)
+//                .collect(Collectors.toList());
+//        return ResponseEntity.ok(responses);
+//    }
 
 
     @PutMapping("/changeStatus")
