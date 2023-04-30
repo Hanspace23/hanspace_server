@@ -67,7 +67,7 @@ public class ReserveRecord extends BaseEntity {
     @OneToMany(mappedBy = "reserveRecord", cascade = CascadeType.PERSIST)
     private List<TimeRecord> timeRecordList = new ArrayList<>();
 
-    public static ReserveRecord onetimeReserve (SavedUserInfo savedUserInfo, Site site, Room room, OneReserveDto dto) {
+    public static ReserveRecord onetimeReserve (SavedUserInfo savedUserInfo, Site site, Room room, OneReserveDto dto, String fullReserveTime) {
         if (site.getRestriction() == 1) {
             return ReserveRecord.builder()
                     .groupName(dto.getGroupName())
@@ -82,6 +82,7 @@ public class ReserveRecord extends BaseEntity {
                     .site(site)
                     .room(room)
                     .savedUserInfo(savedUserInfo)
+                    .reserveTime(fullReserveTime)
                     .build();
         }
         return null;
@@ -89,7 +90,7 @@ public class ReserveRecord extends BaseEntity {
     }
 
 
-    public static ReserveRecord regularReserve (SavedUserInfo savedUserInfo, Site site, Room room, RegularReserveDto dto){
+    public static ReserveRecord regularReserve (SavedUserInfo savedUserInfo, Site site, Room room, RegularReserveDto dto, String fullReserveTime, Long curId, String weekdays){
 
         return ReserveRecord.builder()
                 .groupName(dto.getGroupName())
@@ -97,14 +98,15 @@ public class ReserveRecord extends BaseEntity {
                 .reservation(dto.getName())
                 .contact(dto.getNumber())
                 .status(1)
-                .regular(false)
-                .regularId(0L)
+                .regular(true)
+                .regularId(curId)
                 .answer1(dto.getAnswer1())
                 .answer2(dto.getAnswer2())
-                .weekdays(dto.getWeekdays())
+                .weekdays(weekdays)
                 .site(site)
                 .room(room)
                 .savedUserInfo(savedUserInfo)
+                .reserveTime(fullReserveTime)
                 .build();
     }
 

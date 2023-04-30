@@ -1,6 +1,7 @@
 package com.csee.hanspace.domain.entity;
 
 import com.csee.hanspace.domain.entity.common.BaseEntity;
+import lombok.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.*;
