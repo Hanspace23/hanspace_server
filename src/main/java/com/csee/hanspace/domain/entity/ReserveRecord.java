@@ -4,6 +4,7 @@ import com.csee.hanspace.application.dto.OneReserveDto;
 import com.csee.hanspace.application.dto.RegularReserveDto;
 import com.csee.hanspace.application.dto.RoomReserveDto;
 import com.csee.hanspace.domain.entity.common.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -51,12 +52,15 @@ public class ReserveRecord extends BaseEntity {
 
     private String reserveTime;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Site site;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Room room;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private SavedUserInfo savedUserInfo;
 
     @Builder.Default

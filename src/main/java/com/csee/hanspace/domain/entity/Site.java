@@ -2,6 +2,7 @@ package com.csee.hanspace.domain.entity;
 
 import com.csee.hanspace.domain.entity.common.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.apache.tomcat.util.http.parser.Authorization;
 import org.hibernate.annotations.SQLDelete;
@@ -43,18 +44,20 @@ public class Site extends BaseEntity {
 
     @Builder.Default
     @OneToMany(mappedBy = "site", cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private List<SavedUserInfo> savedUserInfoList = new ArrayList<>();
 
     @Builder.Default
     @OneToMany(mappedBy = "site", cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private List<Tag> tagList = new ArrayList<>();
 
     @Builder.Default
     @OneToMany(mappedBy = "site", cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private List<ReserveRecord> recordList = new ArrayList<>();
 
     @Builder.Default
     @OneToMany(mappedBy = "site", cascade = CascadeType.PERSIST)
     private List<Room> roomList = new ArrayList<>();
-
 }

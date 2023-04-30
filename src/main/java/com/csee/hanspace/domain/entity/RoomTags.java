@@ -2,6 +2,9 @@ package com.csee.hanspace.domain.entity;
 
 import com.csee.hanspace.domain.entity.common.BaseEntity;
 import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -21,8 +24,10 @@ public class RoomTags extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Tag tag;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Room room;
 }

@@ -34,8 +34,8 @@ public class RoomService {
     }
 
     @Transactional(readOnly = true)
-    public List<RoomFilterDto> findAllRoomBySiteId(Long sid) {
-        List<Room> ret = roomRepository.findAllRoomBySiteId(sid);
+    public List<RoomFilterDto> findAllBySiteId(Long sid) {
+        List<Room> ret = roomRepository.findAllBySiteId(sid);
         return ret.stream().map(RoomFilterDto::from).collect(Collectors.toList());
     }
 

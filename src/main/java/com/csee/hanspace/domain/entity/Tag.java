@@ -1,6 +1,8 @@
 package com.csee.hanspace.domain.entity;
 
 import com.csee.hanspace.domain.entity.common.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 //import com.sun.tools.javac.jvm.Gen;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
@@ -26,6 +28,7 @@ public class Tag extends BaseEntity {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Site site;
 
     @Builder.Default

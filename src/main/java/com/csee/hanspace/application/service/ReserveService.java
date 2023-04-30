@@ -2,10 +2,14 @@ package com.csee.hanspace.application.service;
 
 
 import com.csee.hanspace.application.dto.*;
+import com.csee.hanspace.application.dto.AllReservedDto;
+import com.csee.hanspace.application.dto.OneReserveDto;
+import com.csee.hanspace.application.dto.RegularReserveDto;
 import com.csee.hanspace.domain.entity.ReserveRecord;
 import com.csee.hanspace.domain.entity.*;
 import com.csee.hanspace.domain.repository.ReserveRepository;
 import com.csee.hanspace.domain.repository.TimeRecordRepository;
+import com.csee.hanspace.presentation.response.ReserveCalResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -222,6 +226,9 @@ public class ReserveService {
         }
     }
 
+
+
+
 //    @Transactional
 //    public List<ReserveDto> getMyReservations(Long savedUserInfoId) {
 //        List<ReserveRecord> reserves = reserveRepository.findAllBySavedUserInfoId(savedUserInfoId);
@@ -229,5 +236,14 @@ public class ReserveService {
 //                .map(ReserveDto::new)
 //                .collect(Collectors.toList());
 //    }
+
+
+
+    @Transactional(readOnly = true)
+    public List<ReserveCalResponse> findAllBySiteId(Long siteId) {
+        List<ReserveRecord> temp = reserveRepository.findAllReserveBySiteId(siteId);
+        List<ReserveCalResponse> ret = temp.stream().map(ReserveCalResponse::from).collect(Collectors.toList());
+        return ret;
+    }
 
 }
