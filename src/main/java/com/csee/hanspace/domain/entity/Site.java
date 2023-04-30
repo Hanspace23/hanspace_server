@@ -44,18 +44,20 @@ public class Site extends BaseEntity {
 
     @Builder.Default
     @OneToMany(mappedBy = "site", cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private List<SavedUserInfo> savedUserInfoList = new ArrayList<>();
 
     @Builder.Default
     @OneToMany(mappedBy = "site", cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private List<Tag> tagList = new ArrayList<>();
 
     @Builder.Default
     @OneToMany(mappedBy = "site", cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private List<ReserveRecord> recordList = new ArrayList<>();
 
     @Builder.Default
     @OneToMany(mappedBy = "site", cascade = CascadeType.PERSIST)
     private List<Room> roomList = new ArrayList<>();
-
 }

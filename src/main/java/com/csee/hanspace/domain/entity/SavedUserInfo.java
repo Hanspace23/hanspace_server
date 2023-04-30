@@ -43,6 +43,7 @@ public class SavedUserInfo extends BaseEntity {
     private Site site;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private User user;
 
     @Builder.Default

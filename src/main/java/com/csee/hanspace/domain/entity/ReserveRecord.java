@@ -56,6 +56,7 @@ public class ReserveRecord extends BaseEntity {
     private Site site;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Room room;
 
     @ManyToOne(fetch = FetchType.LAZY)

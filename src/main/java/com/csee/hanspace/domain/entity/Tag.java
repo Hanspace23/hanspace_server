@@ -33,6 +33,5 @@ public class Tag extends BaseEntity {
 
     @Builder.Default
     @OneToMany(mappedBy = "tag", cascade = CascadeType.PERSIST)
-    @JsonIgnore
     private List<RoomTags> roomTagsList = new ArrayList<>();
 }

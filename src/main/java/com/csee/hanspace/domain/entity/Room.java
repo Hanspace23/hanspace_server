@@ -3,6 +3,7 @@ package com.csee.hanspace.domain.entity;
 
 import com.csee.hanspace.domain.entity.common.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.apache.tomcat.util.http.parser.Authorization;
 import org.hibernate.annotations.SQLDelete;
@@ -45,6 +46,7 @@ public class Room extends BaseEntity {
 
     @Builder.Default
     @OneToMany(mappedBy = "room", cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private List<ReserveRecord> reserveRecordList = new ArrayList<>();
 
     @Builder.Default
@@ -53,9 +55,11 @@ public class Room extends BaseEntity {
 
     @Builder.Default
     @OneToMany(mappedBy = "room", cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private List<TimeRecord> timeRecordList = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Site site;
 
 }
