@@ -7,6 +7,7 @@ import com.csee.hanspace.application.dto.OneReserveDto;
 import com.csee.hanspace.domain.entity.ReserveRecord;
 import com.csee.hanspace.domain.entity.*;
 import com.csee.hanspace.domain.repository.ReserveRepository;
+import com.csee.hanspace.exception.ReserveRecordNotFoundException;
 //import com.csee.hanspace.domain.repository.TimeRecordRepository;
 import com.csee.hanspace.presentation.request.ChangeMStatusRequest;
 import com.csee.hanspace.presentation.response.ReserveCalResponse;
@@ -195,6 +196,20 @@ public class ReserveService {
 //        return reserves.stream()
 //                .map(ReserveDto::new)
 //                .collect(Collectors.toList());
+//    }
+//
+//    @Transactional
+//    public ReserveDetailDto find(Long reservationId) {
+//
+//        ReserveRecord reserve = reserveRepository.findById(reservationId).orElseThrow(ReserveRecordNotFoundException::new);
+//
+//        return reserve.toDetailDto();
+//    }
+//
+//    @Transactional
+//    public Long delete(Long reservationId) {
+//        reserveRepository.deleteById(reservationId);
+//        return reservationId;
 //    }
 
 

@@ -1,5 +1,6 @@
 package com.csee.hanspace.presentation.controller;
 
+
 import com.csee.hanspace.application.dto.*;
 import com.csee.hanspace.application.dto.OneReserveDto;
 
@@ -8,6 +9,7 @@ import com.csee.hanspace.domain.entity.ReserveRecord;
 import com.csee.hanspace.presentation.request.*;
 import com.csee.hanspace.presentation.response.AllReservedResponse;
 import com.csee.hanspace.presentation.response.ReserveCalResponse;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,28 @@ import java.util.stream.Collectors;
 public class ReserveController {
 
     private final ReserveService reserveService;
+//
+//    @GetMapping("/reservations")
+//    public ResponseEntity<List<ReserveResponse>> getMyReservations(@RequestParam Long savedUserInfoId) {
+//        List<ReserveDto> reserves = reserveService.getMyReservations(savedUserInfoId);
+//        List<ReserveResponse> response = reserves.stream()
+//                .map(ReserveDto::reserveResponse)
+//                .collect(Collectors.toList());
+//        return ResponseEntity.ok(response);
+//    }
+//
+//    @GetMapping
+//    public ResponseEntity<ReserveDetailDto> getOneReservation(@RequestParam Long reservationId) {
+//        ReserveDetailDto reserveDetailDto = reserveService.find(reservationId);
+//        return ResponseEntity.ok(reserveDetailDto);
+//    }
+//
+//    @PostMapping("/delete")
+//    public ResponseEntity<ReservationIdResponse> deleteReservation(@RequestParam Long reservationId) {
+//        Long deletedReservationId = reserveService.delete(reservationId);
+//        ReservationIdResponse response = new ReservationIdResponse(deletedReservationId);
+//        return ResponseEntity.ok(response);
+//    }
 
     @PostMapping("/reserveRoom")
     public ResponseEntity<Long> save(@RequestBody RoomReserveRequest request) {
