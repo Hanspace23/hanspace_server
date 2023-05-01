@@ -2,8 +2,6 @@ package com.csee.hanspace.domain.entity;
 
 // import com.csee.hanspace.application.dto.ReserveDetailDto;
 import com.csee.hanspace.application.dto.OneReserveDto;
-import com.csee.hanspace.application.dto.RegularReserveDto;
-import com.csee.hanspace.application.dto.RoomReserveDto;
 import com.csee.hanspace.domain.entity.common.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -15,6 +13,7 @@ import org.springframework.lang.Nullable;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -90,11 +89,11 @@ public class ReserveRecord extends BaseEntity {
     @JsonIgnore
     private SavedUserInfo savedUserInfo;
 
-//    @Builder.Default
-//    @OneToMany(mappedBy = "reserveRecord", cascade = CascadeType.PERSIST)
-//    private List<TimeRecord> timeRecordList = new ArrayList<>();
+    public static ReserveRecord onetimeReserve (SavedUserInfo savedUserInfo, Site site, Room room, OneReserveDto dto) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        LocalDate date = LocalDate.parse(dto.getReserveDate(), formatter);
+        String fullReserveTime = String.join(" , " , dto.getReserveTime());
 
-    public static ReserveRecord onetimeReserve (SavedUserInfo savedUserInfo, Site site, Room room, OneReserveDto dto, String fullReserveTime) {
         if (site.getRestriction() == 1) {
             return ReserveRecord.builder()
                     .groupName(dto.getGroupName())
@@ -106,6 +105,7 @@ public class ReserveRecord extends BaseEntity {
                     .regularId(0L)
                     .answer1(dto.getAnswer1())
                     .answer2(dto.getAnswer2())
+                    .date(date)
                     .site(site)
                     .room(room)
                     .savedUserInfo(savedUserInfo)
@@ -113,11 +113,12 @@ public class ReserveRecord extends BaseEntity {
                     .build();
         }
         return null;
-
     }
 
 
-    public static ReserveRecord regularReserve (SavedUserInfo savedUserInfo, Site site, Room room, RegularReserveDto dto, String fullReserveTime, Long curId, String weekdays){
+    public static ReserveRecord regularReserve (SavedUserInfo savedUserInfo, Site site, Room room, OneReserveDto dto, Long curId, LocalDate date, String weekdays){
+        String fullReserveTime = String.join(" , " , dto.getReserveTime());
+
 
         return ReserveRecord.builder()
                 .groupName(dto.getGroupName())
@@ -132,6 +133,7 @@ public class ReserveRecord extends BaseEntity {
                 .weekdays(weekdays)
                 .site(site)
                 .room(room)
+                .date(date)
                 .savedUserInfo(savedUserInfo)
                 .reserveTime(fullReserveTime)
                 .build();
