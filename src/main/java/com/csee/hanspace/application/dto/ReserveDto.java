@@ -1,9 +1,13 @@
 //package com.csee.hanspace.application.dto;
 //
 //import com.csee.hanspace.domain.entity.ReserveRecord;
+//import com.csee.hanspace.domain.entity.TimeRecord;
+//import com.csee.hanspace.presentation.response.ReserveResponse;
 //import lombok.*;
 //
 //import java.time.LocalDateTime;
+//import java.util.ArrayList;
+//import java.util.List;
 //
 //@Getter
 //@Setter
@@ -35,13 +39,35 @@
 //
 //    private String roomImg;
 //
+//    private List<TimeRecord> timeRecord;
+//
 //    private LocalDateTime regDate;
 //
-//    private LocalDateTime startDate;
-//
-//    private int time;
-//
 //    public ReserveDto(ReserveRecord reserve){
-//        this.
+//        this.id = reserve.getId();
+//        this.groupName = reserve.getGroupName();
+//        this.purpose = reserve.getPurpose();
+//        this.userName = reserve.getReservation();
+//        this.contact = reserve.getContact();
+//        this.status = reserve.getStatus();
+//        this.regular = reserve.isRegular();
+//        this.regularId = reserve.getRegularId();
+//        this.answer1 = reserve.getAnswer1();
+//        this.answer2 = reserve.getAnswer2();
+//        this.roomName = reserve.getRoom().getName();
+//        this.roomImg = reserve.getRoom().getImage();
+//        this.timeRecord = reserve.getTimeRecordList();
+//        this.regDate = reserve.getRegDate();
+//    }
+//
+//    public ReserveResponse reserveResponse() {
+//        List<TimeRecordDto> newTimeRecord = new ArrayList<>();
+//
+//        for (TimeRecord record: timeRecord) {
+//            TimeRecordDto tempRecord = new TimeRecordDto(record.getId(), record.getStartDate(), record.getStartTime(), record.getEndTime());
+//            newTimeRecord.add(tempRecord);
+//        }
+//
+//        return new ReserveResponse(id, groupName, purpose, userName, contact, status, regular, regularId, answer1, answer2, roomName, roomImg, newTimeRecord, regDate);
 //    }
 //}

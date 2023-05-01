@@ -8,6 +8,7 @@ import com.csee.hanspace.application.dto.RegularReserveDto;
 import com.csee.hanspace.domain.entity.ReserveRecord;
 import com.csee.hanspace.domain.entity.*;
 import com.csee.hanspace.domain.repository.ReserveRepository;
+import com.csee.hanspace.exception.ReserveRecordNotFoundException;
 //import com.csee.hanspace.domain.repository.TimeRecordRepository;
 import com.csee.hanspace.presentation.response.ReserveCalResponse;
 import lombok.RequiredArgsConstructor;
@@ -235,6 +236,20 @@ public class ReserveService {
 //        return reserves.stream()
 //                .map(ReserveDto::new)
 //                .collect(Collectors.toList());
+//    }
+//
+//    @Transactional
+//    public ReserveDetailDto find(Long reservationId) {
+//
+//        ReserveRecord reserve = reserveRepository.findById(reservationId).orElseThrow(ReserveRecordNotFoundException::new);
+//
+//        return reserve.toDetailDto();
+//    }
+//
+//    @Transactional
+//    public Long delete(Long reservationId) {
+//        reserveRepository.deleteById(reservationId);
+//        return reservationId;
 //    }
 
 
