@@ -1,5 +1,6 @@
 package com.csee.hanspace.domain.entity;
 
+import com.csee.hanspace.application.dto.ReserveDetailDto;
 import com.csee.hanspace.domain.entity.common.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +11,9 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Setter
@@ -53,6 +56,24 @@ public class ReserveRecord extends BaseEntity {
 
 
 
+    public ReserveDetailDto toDetailDto() {
+        return ReserveDetailDto.builder()
+                .reserveId(this.id)
+                .groupName(this.groupName)
+                .purpose(this.purpose)
+                .userName(this.reservation)
+                .contact(this.contact)
+                .status(this.status)
+                .regular(this.regular)
+                .regularId(this.regularId)
+                .answer1(this.answer1)
+                .answer2(this.answer2)
+                .roomName(this.getRoom().getName())
+                .roomImg(this.getRoom().getImage())
+                .timeRecord(this.timeRecordList)
+                .regDate(this.getRegDate())
+                .build();
+    }
 
 
 }
