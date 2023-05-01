@@ -25,12 +25,27 @@ public class SiteService {
                 .collect(Collectors.toList());
     }
 
+    // @Transactional
+    // public List<SiteDto> getMySites(Long savedUserInfoId, int creator, int admin) {
+    //     List<Site> sites = siteRepository.findAllBySavedUserInfoIdAndCreatorAndAdmin(savedUserInfoId, creator, admin);
+    //     return sites.stream()
+    //             .map(SiteDto::new)
+    //             .collect(Collectors.toList());
+    // }
+
     @Transactional
-    public List<SiteDto> getMySites(Long savedUserInfoId, int creator, int admin) {
-        List<Site> sites = siteRepository.findAllBySavedUserInfoIdAndCreatorAndAdmin(savedUserInfoId, creator, admin);
-        return sites.stream()
-                .map(SiteDto::new)
-                .collect(Collectors.toList());
+    public Site findById(Long siteId) {
+        return siteRepository.findById(siteId).orElseThrow(() -> new IllegalArgumentException("no such site"));
     }
 
+    @Transactional
+    public void save(Site site) {
+        siteRepository.save(site);
+    }
+
+    @Transactional(readOnly = true)
+    public Site findByLink(String link) {
+        Site ret = siteRepository.findByLink(link);
+        return ret;
+    }
 }
