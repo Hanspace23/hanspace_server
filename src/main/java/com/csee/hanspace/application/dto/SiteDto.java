@@ -1,13 +1,8 @@
 package com.csee.hanspace.application.dto;
 
 import com.csee.hanspace.domain.entity.Site;
-import com.csee.hanspace.domain.entity.TimeRecord;
-import com.csee.hanspace.presentation.response.ReserveResponse;
 import com.csee.hanspace.presentation.response.SiteResponse;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
