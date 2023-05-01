@@ -29,6 +29,4 @@ public class RegularReserveRequest {
 
     private int regular;
     private boolean reserveOne;
-
-    private String weekdays;
 }

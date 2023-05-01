@@ -1,6 +1,6 @@
 package com.csee.hanspace.presentation.controller;
 
-import com.csee.hanspace.application.dto.RoomReserveDto;
+
 import com.csee.hanspace.application.service.ReserveService;
 import com.csee.hanspace.application.service.UserService;
 import com.csee.hanspace.domain.entity.User;

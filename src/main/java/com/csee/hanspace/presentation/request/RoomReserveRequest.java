@@ -10,6 +10,10 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 public class RoomReserveRequest {
+
+    private String email;
+
+    private Long siteId;
     private String groupName;
     private String groupPurpose;
 
@@ -21,7 +25,7 @@ public class RoomReserveRequest {
 
     private String answer2;
 
-    private String reserveDate;
+    private String reserveStartDate;
     private List<String> reserveTime;
 
     private String roomName;
