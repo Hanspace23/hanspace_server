@@ -1,9 +1,9 @@
 package com.csee.hanspace.presentation.controller;
 
-import com.csee.hanspace.application.dto.RoomFilterDto;
 import com.csee.hanspace.application.service.ReserveService;
 import com.csee.hanspace.application.service.RoomService;
 import com.csee.hanspace.domain.entity.Room;
+import com.csee.hanspace.presentation.response.RoomFilterResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +26,8 @@ public class RoomController {
 //    }
 
     @GetMapping(value="/roomList/{sid}")
-    public ResponseEntity<List<RoomFilterDto>> findAllBySiteId(@PathVariable Long sid){
-        List<RoomFilterDto> res = roomService.findAllBySiteId(sid);
+    public ResponseEntity<List<RoomFilterResponse>> findAllBySiteId(@PathVariable Long sid){
+        List<RoomFilterResponse> res = roomService.findAllBySiteId(sid);
         return ResponseEntity.ok(res);
     }
 

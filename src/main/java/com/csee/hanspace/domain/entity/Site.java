@@ -28,6 +28,8 @@ public class Site extends BaseEntity {
     private String name;
     private String description;
     private String logo;
+
+    @Column(unique = true)
     private String link;
     private String company;
 
