@@ -1,7 +1,6 @@
 package com.csee.hanspace.domain.entity;
 
-// import com.csee.hanspace.application.dto.ReserveDetailDto;
-import com.csee.hanspace.application.dto.OneReserveDto;
+import com.csee.hanspace.application.dto.*;
 import com.csee.hanspace.domain.entity.common.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -148,4 +147,21 @@ public class ReserveRecord extends BaseEntity {
     public LocalDateTime getRegDate() {
         return super.getRegDate();
     }
+
+    public List<TimeDto> retListOfTimeRecord(){
+        List<TimeDto> ret = new ArrayList<>();
+        String[] temp = this.reserveTime.split(" , ");
+        for(int j=0; j<temp.length; j++){
+            String[] partTime = temp[j].split(" ~ ");
+            String start = partTime[0];
+            String end = partTime[1];
+            int startT = Integer.parseInt(start.split(":")[0]) * 60;
+            int endT = Integer.parseInt(end.split(":")[0]) * 60;
+            ret.add(new TimeDto(startT, endT));
+        }
+
+//        System.out.println(ret);
+        return ret;
+    }
+
 }

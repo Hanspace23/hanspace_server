@@ -24,7 +24,6 @@ public class RoomTags extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
     private Tag tag;
 
     @ManyToOne(fetch = FetchType.LAZY)

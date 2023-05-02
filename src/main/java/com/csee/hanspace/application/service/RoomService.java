@@ -1,10 +1,10 @@
 package com.csee.hanspace.application.service;
 
-import com.csee.hanspace.application.dto.RoomFilterDto;
 import com.csee.hanspace.domain.entity.Room;
 //import com.csee.hanspace.domain.entity.TimeRecord;
 import com.csee.hanspace.domain.repository.ReserveRepository;
 import com.csee.hanspace.domain.repository.RoomRepository;
+import com.csee.hanspace.presentation.response.RoomFilterResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,9 +34,10 @@ public class RoomService {
     }
 
     @Transactional(readOnly = true)
-    public List<RoomFilterDto> findAllBySiteId(Long sid) {
-        List<Room> ret = roomRepository.findAllBySiteId(sid);
-        return ret.stream().map(RoomFilterDto::from).collect(Collectors.toList());
+    public List<RoomFilterResponse> findAllBySiteId(Long sid) {
+
+        List<RoomFilterResponse> ret = roomRepository.findAllBySiteId(sid).stream().map(RoomFilterResponse::from).collect(Collectors.toList());
+        return ret;
     }
 
 

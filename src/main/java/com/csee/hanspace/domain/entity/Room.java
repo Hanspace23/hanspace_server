@@ -1,6 +1,7 @@
 package com.csee.hanspace.domain.entity;
 
 
+import com.csee.hanspace.application.dto.TimeRecordDto;
 import com.csee.hanspace.domain.entity.common.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
@@ -11,6 +12,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,5 +64,24 @@ public class Room extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Site site;
+
+    public List<TimeRecordDto> retListOfTimeRecord(){
+        List<TimeRecordDto> ret = new ArrayList<>();
+        for(int i=0; i<this.reserveRecordList.size();i++){
+            LocalDate d = this.reserveRecordList.get(i).getDate();
+            String[] temp = this.reserveRecordList.get(i).getReserveTime().split(" , ");
+            for(int j=0; j<temp.length;j++){
+                String[] partTime = temp[j].split(" ~ ");
+                String start = partTime[0];
+                String end = partTime[1];
+                int startT = Integer.parseInt(start.split(":")[0]) * 60;
+                int endT = Integer.parseInt(end.split(":")[0]) * 60;
+                ret.add(new TimeRecordDto(d, startT, endT));
+            }
+        }
+//        System.out.println(ret);
+        return ret;
+    }
+
 
 }
