@@ -19,7 +19,6 @@ public class ChangeMRequestDto {
     private List<Long> recordList;
 
     static public ChangeMRequestDto from (ChangeMStatusRequest request) {
-        System.out.println("request.getRecordList() = " + request.getRecordList());
         return new ChangeMRequestDto(request.getSiteId(), request.getStatusId(), request.getRecordList());
     }
 }
