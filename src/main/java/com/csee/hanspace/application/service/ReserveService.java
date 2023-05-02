@@ -216,8 +216,7 @@ public class ReserveService {
 
     @Transactional(readOnly = true)
     public List<ReserveCalResponse> findAllBySiteId(Long siteId) {
-        List<ReserveRecord> temp = reserveRepository.findAllReserveBySiteId(siteId);
-        List<ReserveCalResponse> ret = temp.stream().map(ReserveCalResponse::from).collect(Collectors.toList());
+        List<ReserveCalResponse> ret = reserveRepository.findAllReserveBySiteId(siteId).stream().map(ReserveCalResponse::from).collect(Collectors.toList());
         return ret;
     }
 
