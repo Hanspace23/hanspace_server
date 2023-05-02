@@ -134,6 +134,8 @@ public class ReserveController {
         return ResponseEntity.ok(null);
     }
 
+
+
 //    @DeleteMapping("deleteMReserve")
 //    public ResponseEntity<Void> deleteMRegularReserve (@RequestBody DeleteMRegularRequest request) {
 //        reserveService.deleteMultiRegular(DeleteMultiRegularDto.from(request));
@@ -141,11 +143,14 @@ public class ReserveController {
 //    }
 
 
+
     @GetMapping("/calendarList/{siteId}")
     public ResponseEntity<List<ReserveCalResponse>> findAllBySiteId(@PathVariable Long siteId){
         List<ReserveCalResponse> res = reserveService.findAllBySiteId(siteId);
         return ResponseEntity.ok(res);
     }
+
+
 
 
 }

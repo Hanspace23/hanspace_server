@@ -1,5 +1,6 @@
 package com.csee.hanspace.domain.entity;
 
+import com.csee.hanspace.application.dto.UserListDto;
 import com.csee.hanspace.domain.entity.common.BaseEntity;
 import lombok.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -37,7 +38,7 @@ public class SavedUserInfo extends BaseEntity {
 
     private int authority;
 
-    private boolean approve;
+    private int status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
@@ -50,5 +51,6 @@ public class SavedUserInfo extends BaseEntity {
     @Builder.Default
     @OneToMany(mappedBy = "savedUserInfo", cascade = CascadeType.PERSIST)
     private List<ReserveRecord> reserveRecordList = new ArrayList<>();
+
 
 }
