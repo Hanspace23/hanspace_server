@@ -14,6 +14,8 @@ import com.csee.hanspace.presentation.request.RoomReserveRequest;
 import com.csee.hanspace.presentation.response.AllReservedResponse;
 import com.csee.hanspace.presentation.response.ReserveCalResponse;
 
+import com.csee.hanspace.presentation.response.ReserveIdResponse;
+import com.csee.hanspace.presentation.response.ReserveResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,28 +30,59 @@ import java.util.stream.Collectors;
 public class ReserveController {
 
     private final ReserveService reserveService;
-//
-//    @GetMapping("/reservations")
-//    public ResponseEntity<List<ReserveResponse>> getMyReservations(@RequestParam Long savedUserInfoId) {
-//        List<ReserveDto> reserves = reserveService.getMyReservations(savedUserInfoId);
-//        List<ReserveResponse> response = reserves.stream()
-//                .map(ReserveDto::reserveResponse)
-//                .collect(Collectors.toList());
-//        return ResponseEntity.ok(response);
-//    }
-//
-//    @GetMapping
-//    public ResponseEntity<ReserveDetailDto> getOneReservation(@RequestParam Long reservationId) {
-//        ReserveDetailDto reserveDetailDto = reserveService.find(reservationId);
-//        return ResponseEntity.ok(reserveDetailDto);
-//    }
-//
-//    @PostMapping("/delete")
-//    public ResponseEntity<ReservationIdResponse> deleteReservation(@RequestParam Long reservationId) {
-//        Long deletedReservationId = reserveService.delete(reservationId);
-//        ReservationIdResponse response = new ReservationIdResponse(deletedReservationId);
-//        return ResponseEntity.ok(response);
-//    }
+
+//    일회대여 리스트
+    @GetMapping("/one-reservations")
+    public ResponseEntity<List<ReserveResponse>> getMyReservations(@RequestParam Long savedUserInfoId) {
+        List<ReserveDto> reserves = reserveService.getMyReservations(savedUserInfoId);
+        List<ReserveResponse> response = reserves.stream()
+                .map(ReserveDto::reserveResponse)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(response);
+    }
+
+//    일회 대여 더보기
+    @GetMapping("/one-detail")
+    public ResponseEntity<ReserveDetailDto> getOneReservationDetail(@RequestParam Long reservationId) {
+        ReserveDetailDto reserveDetailDto = reserveService.findOneReservationDetail(reservationId);
+        return ResponseEntity.ok(reserveDetailDto);
+    }
+
+    //    일회 대여 삭제
+    @PostMapping("/delete")
+    public ResponseEntity<ReserveIdResponse> deleteReservation(@RequestParam Long reservationId) {
+        Long deletedReservationId = reserveService.delete(reservationId);
+        ReserveIdResponse response = new ReserveIdResponse(deletedReservationId);
+        return ResponseEntity.ok(response);
+    }
+
+//    정기 대여 리스트
+
+//    정기 대여 더보기
+    @GetMapping("/regular-detail")
+    public ResponseEntity<ReserveDetailDto> getRegularReservationDetail(@RequestParam Long regularId) {
+        ReserveDetailDto detailDto = reserveService.findRegularReservationDetail(regularId);
+        return ResponseEntity.ok(detailDto);
+    }
+
+//    정기 대여 삭제
+    @PostMapping("/delete/regular")
+    public ResponseEntity<String> deleteAllByRegular(@RequestParam Long regularId) {
+        reserveService.deleteAllByRegular(regularId);
+        return ResponseEntity.ok("Success");
+    }
+
+//    개별 예약 보기
+    @GetMapping("/each-reservations")
+    public ResponseEntity<List<ReserveResponse>> getEachReservations(@RequestParam Long regularId) {
+        List<ReserveDto> reserves = reserveService.getEachReservations(regularId);
+        List<ReserveResponse> response = reserves.stream()
+            .map(ReserveDto::reserveResponse)
+            .collect(Collectors.toList());
+        return ResponseEntity.ok(response);
+    }
+
+
 
     @PostMapping("/reserveRoom")
     public ResponseEntity<Long> save(@RequestParam String email, @RequestParam Long siteId, @RequestBody RoomReserveRequest request) {

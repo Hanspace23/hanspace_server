@@ -229,28 +229,52 @@ public class ReserveService {
 
 
 
+//일회대여
+    @Transactional
+    public List<ReserveDto> getMyReservations(Long savedUserInfoId) {
+        List<ReserveRecord> reserves = reserveRepository.findAllBySavedUserInfoId(savedUserInfoId);
+        return reserves.stream()
+                .map(ReserveDto::new)
+                .collect(Collectors.toList());
+    }
 
-//    @Transactional
-//    public List<ReserveDto> getMyReservations(Long savedUserInfoId) {
-//        List<ReserveRecord> reserves = reserveRepository.findAllBySavedUserInfoId(savedUserInfoId);
-//        return reserves.stream()
-//                .map(ReserveDto::new)
-//                .collect(Collectors.toList());
-//    }
-//
-//    @Transactional
-//    public ReserveDetailDto find(Long reservationId) {
-//
-//        ReserveRecord reserve = reserveRepository.findById(reservationId).orElseThrow(ReserveRecordNotFoundException::new);
-//
-//        return reserve.toDetailDto();
-//    }
-//
-//    @Transactional
-//    public Long delete(Long reservationId) {
-//        reserveRepository.deleteById(reservationId);
-//        return reservationId;
-//    }
+//    개별 예약
+    @Transactional
+    public List<ReserveDto> getEachReservations(Long regularId) {
+        List<ReserveRecord> reserves = reserveRepository.findAllByRegularId(regularId);
+        return reserves.stream()
+            .map(ReserveDto::new)
+            .collect(Collectors.toList());
+    }
+
+//일회대여 더보기
+    @Transactional
+    public ReserveDetailDto findOneReservationDetail(Long reservationId) {
+
+        ReserveRecord reserve = reserveRepository.findById(reservationId).orElseThrow(ReserveRecordNotFoundException::new);
+
+        return reserve.toDetailDto();
+    }
+
+//정기대여 더보기
+    @Transactional
+    public ReserveDetailDto findRegularReservationDetail(Long regularId) {
+        ReserveRecord reserve = reserveRepository.findTop1ByRegularId(regularId);
+        return reserve.toDetailDto();
+    }
+
+// 예약 삭제
+    @Transactional
+    public Long delete(Long reservationId) {
+        reserveRepository.deleteById(reservationId);
+        return reservationId;
+    }
+
+//    정기대여 예약 삭제
+    @Transactional
+    public void deleteAllByRegular(Long regularId) {
+        reserveRepository.deleteAllByRegularId(regularId);
+    }
 
 
 
