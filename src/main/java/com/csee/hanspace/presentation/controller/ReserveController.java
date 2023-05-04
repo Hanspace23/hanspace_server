@@ -52,6 +52,7 @@ public class ReserveController {
         System.out.println("request = " + request);
         Long savedId = reserveService.save(OneReserveDto.from(request));
         return ResponseEntity.ok(savedId);
+//        return ResponseEntity.ok(request);
     }
 
     @PostMapping("/reserveRegularRoom")

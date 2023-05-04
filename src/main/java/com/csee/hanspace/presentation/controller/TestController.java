@@ -135,11 +135,11 @@ public class TestController {
     private void saveSite() {
         siteService.save(Site.builder().name("한동 공간 대여 시스템").description("강의실 대여 시스템입니다.").logo("null").link("hbl").company("(주)홍방이").maxDate(30).maxTime(180).restriction(1).question1("관련 교수").question2(null).timeUnit(60).build());
         siteService.save(Site.builder().name("MT 공간 대여 시스템").description("MT 공간 대여 시스템입니다.").logo("null").link("mt").company("(주)홍방이").maxDate(20).maxTime(120).restriction(2).question1(null).question2(null).timeUnit(30).build());
-        siteService.save(Site.builder().name("한동 팀모임 공간 대여 시스템").description("한동대학교 학생을 위한 팀모임 공간 대여 시스템입니다.").logo("null").link("mt").company("(주)홍방이").maxDate(20).maxTime(120).restriction(3).question1("팀교수님").question2("팀장이름").timeUnit(30).build());
+        siteService.save(Site.builder().name("한동 팀모임 공간 대여 시스템").description("한동대학교 학생을 위한 팀모임 공간 대여 시스템입니다.").logo("null").link("mt2").company("(주)홍방이").maxDate(20).maxTime(120).restriction(3).question1("팀교수님").question2("팀장이름").timeUnit(30).build());
     }
 
     private void saveRoom() {
-        roomService.save(Room.builder().image(null).name("NTH 219").capacity(40).description("빔프로젝트 있음. 전자 칠판 있음. 깨끗하게 사용해주셔야 이후에 예약 가능합니다.").available(true).startTime(9).endTime(21).reserveCnt(10).site(siteService.findById(1L)).build());
+        roomService.save(Room.builder().image(null).name("NTH 219").capacity(40).description("빔프로젝트 있음. 전자 칠판 있음. 깨끗하게 사용해주셔야 이후에 예약 가능합니다.").available(true).startTime(540).endTime(1260).reserveCnt(10).site(siteService.findById(1L)).build());
         roomService.save(Room.builder().image(null).name("NTH 220").capacity(40).description("빔프로젝트 있음.").available(true).startTime(540).endTime(1260).reserveCnt(20).site(siteService.findById(1L)).build());
         roomService.save(Room.builder().image(null).name("NTH 221").capacity(30).description("빔프로젝트 있음.").available(true).startTime(540).endTime(1260).reserveCnt(20).site(siteService.findById(1L)).build());
         roomService.save(Room.builder().image(null).name("NTH 222").capacity(20).description("").available(true).startTime(540).endTime(1260).reserveCnt(20).site(siteService.findById(1L)).build());

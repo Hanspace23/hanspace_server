@@ -48,6 +48,7 @@ public class ReserveService {
     // 일회 대여
     @Transactional
     public Long save(OneReserveDto dto) {
+        System.out.println("들어옴");
         User user = userService.findByEmail(dto.getEmail());
         SavedUserInfo savedUserInfo = userInfoService.findById(user.getId());
         Site site = siteService.findById(dto.getSiteId());
@@ -60,6 +61,7 @@ public class ReserveService {
     // 정기 대여
     @Transactional
     public void saveRegular(OneReserveDto dto) {
+        System.out.println("dto = " + dto);
         User user = userService.findByEmail(dto.getEmail());
         SavedUserInfo savedUserInfo = userInfoService.findById(user.getId());
         Site site = siteService.findById(dto.getSiteId());

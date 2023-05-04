@@ -89,7 +89,7 @@ public class ReserveRecord extends BaseEntity {
     private SavedUserInfo savedUserInfo;
 
     public static ReserveRecord onetimeReserve (SavedUserInfo savedUserInfo, Site site, Room room, OneReserveDto dto) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/M/d");
         LocalDate date = LocalDate.parse(dto.getReserveDate(), formatter);
         String fullReserveTime = String.join(" , " , dto.getReserveTime());
 
