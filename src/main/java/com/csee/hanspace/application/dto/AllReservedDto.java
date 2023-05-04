@@ -28,7 +28,9 @@ public class AllReservedDto {
         String fullApplyDate = record.getDate().getYear() + "-" + record.getDate().getMonthValue() + "-" + record.getDate().getDayOfMonth();
 
         return new AllReservedDto(record.getId(), record.getRoom().getName(), fullUseDate, fullApplyDate,
-                record.getReserveTime(), record.getReservation(), record.getPurpose(), record.getStatus() == 1 ? "대기" : record.getStatus() == 2 ? "승인" : "거절", record.getWeekdays(), record.isRegular());
+                 record.getWeekdays(), record.getReserveTime(), record.getReservation(), record.getPurpose(), record.getStatus() == 1 ? "대기" : record.getStatus() == 2 ? "승인" : "거절", record.isRegular());
     }
+
+
 
 }

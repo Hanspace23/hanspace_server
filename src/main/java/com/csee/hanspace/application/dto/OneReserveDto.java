@@ -1,18 +1,17 @@
 package com.csee.hanspace.application.dto;
 
 import com.csee.hanspace.presentation.request.RoomReserveRequest;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.lang.Nullable;
 
 import java.util.List;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Builder
 public class OneReserveDto {
 
     private String email;
@@ -21,6 +20,7 @@ public class OneReserveDto {
     private String groupPurpose;
     private String name;
     private String number;
+
     @Nullable
     private String answer1;
     @Nullable
@@ -30,7 +30,8 @@ public class OneReserveDto {
     private String roomName;
 
     static public OneReserveDto from (RoomReserveRequest request) {
+        System.out.println("request = " + request);
         return new OneReserveDto(request.getEmail(), request.getSiteId(), request.getGroupName(), request.getGroupPurpose(), request.getName(), request.getNumber()
-                ,request.getAnswer1(), request.getAnswer2(), request.getReserveStartDate(), request.getReserveTime(), request.getRoomName());
+                ,request.getAnswer1()==null ?"" :  request.getAnswer1(), request.getAnswer1()==null ?"" :  request.getAnswer2(), request.getReserveStartDate(), request.getReserveTime(), request.getRoomName());
     }
 }
