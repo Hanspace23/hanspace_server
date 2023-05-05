@@ -1,5 +1,6 @@
 package com.csee.hanspace.presentation.response;
 
+import com.csee.hanspace.application.dto.TimeDto;
 import com.csee.hanspace.domain.entity.ReserveRecord;
 //import com.csee.hanspace.domain.entity.TimeRecord;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -20,22 +21,18 @@ public class ReserveCalResponse {
     private Long roomId;
     private String groupName;
 
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     @Nullable
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate start;
-
     private String purpose;
     private String reservationName;
     private String contact;
     private int status;
     private String content;
     private Boolean regular;
-//    private List<TimeRecord> timeRecord;
+    private List<TimeDto> timeRecord;
 
     public static ReserveCalResponse from (ReserveRecord record) {
-
-
         return ReserveCalResponse.builder()
                 .id(record.getId())
                 .roomId(record.getRoom().getId())
@@ -47,6 +44,7 @@ public class ReserveCalResponse {
                 .status(record.getStatus())
                 .content(record.getAnswer1())
                 .regular(record.isRegular())
+                .timeRecord(record.retListOfTimeRecord())
                 .build();
     }
 }

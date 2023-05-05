@@ -1,5 +1,6 @@
 package com.csee.hanspace.domain.entity;
 
+import com.csee.hanspace.application.dto.SiteInfoDto;
 import com.csee.hanspace.domain.entity.common.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -33,5 +34,13 @@ public class Tag extends BaseEntity {
 
     @Builder.Default
     @OneToMany(mappedBy = "tag", cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private List<RoomTags> roomTagsList = new ArrayList<>();
+
+    public static Tag from(String name, Site site) {
+        return Tag.builder()
+                .name(name)
+                .site(site)
+                .build();
+    }
 }

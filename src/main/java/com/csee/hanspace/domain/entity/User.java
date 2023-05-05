@@ -1,6 +1,6 @@
 package com.csee.hanspace.domain.entity;
 
-import com.csee.hanspace.application.dto.RoomReserveDto;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.csee.hanspace.domain.entity.common.BaseEntity;
 import lombok.*;

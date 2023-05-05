@@ -15,19 +15,22 @@ public class AllReservedDto {
     private String place;
     private String useDate;
     private String applyDate;
+    private String weekdays;
     private String time;
     private String applicant;
     private String purpose;
     private String status;
-    private String weekdays;
     private boolean regular;
-//    static public AllReservedDto toAllReserveList (ReserveRecord record, TimeRecord time) {
-////        String fullTime = (time.getStartTime()/30)/2 + ':' + (time.getStartTime()/30)%2 + " ~ " + (time.getEndTime()/30)/2 + ":" + (time.getEndTime()/30)%2;
-//        String fullUseDate = time.getStartDate().getYear() + "-" + time.getStartDate().getMonth() + "-" + time.getStartDate().getDayOfMonth();
-//        String fullApplyDate = record.getRegDate().getYear() + "-" + time.getRegDate().getMonth() + "-" + time.getRegDate().getDayOfMonth();
-//
-//        return new AllReservedDto(record.getId(), record.getRoom().getName(), fullUseDate,
-//                fullApplyDate, record.getReserveTime(), record.getReservation(), record.getPurpose(), record.getStatus() == 1 ? "대기" : record.getStatus() == 2 ? "승인" : "거절", record.getWeekdays(), record.isRegular());
-//    }
+
+
+    static public AllReservedDto of (ReserveRecord record) {
+        String fullUseDate = record.getDate().getYear() + "-" + record.getDate().getMonthValue() + "-" + record.getDate().getDayOfMonth();
+        String fullApplyDate = record.getDate().getYear() + "-" + record.getDate().getMonthValue() + "-" + record.getDate().getDayOfMonth();
+
+        return new AllReservedDto(record.getId(), record.getRoom().getName(), fullUseDate, fullApplyDate,
+                 record.getWeekdays(), record.getReserveTime(), record.getReservation(), record.getPurpose(), record.getStatus() == 1 ? "대기" : record.getStatus() == 2 ? "승인" : "거절", record.isRegular());
+    }
+
+
 
 }
