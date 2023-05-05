@@ -30,13 +30,21 @@ public class SiteService {
                 .collect(Collectors.toList());
     }
 
-    // @Transactional
-    // public List<SiteDto> getMySites(Long savedUserInfoId, int creator, int admin) {
-    //     List<Site> sites = siteRepository.findAllBySavedUserInfoIdAndCreatorAndAdmin(savedUserInfoId, creator, admin);
-    //     return sites.stream()
-    //             .map(SiteDto::new)
-    //             .collect(Collectors.toList());
-    // }
+     @Transactional
+     public List<SiteDto> getMySites(Long savedUserInfoId) {
+         List<Site> sites = siteRepository.findAllBySavedUserInfoIdAndCreator(savedUserInfoId);
+         return sites.stream()
+                 .map(SiteDto::new)
+                 .collect(Collectors.toList());
+     }
+
+    @Transactional
+    public List<SiteDto> getSubscribedSites(Long savedUserInfoId) {
+        List<Site> sites = siteRepository.findAllBySavedUserInfoIdAndAdmin(savedUserInfoId);
+        return sites.stream()
+                .map(SiteDto::new)
+                .collect(Collectors.toList());
+    }
 
     @Transactional
     public Site findById(Long siteId) {

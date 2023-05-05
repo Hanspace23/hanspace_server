@@ -1,20 +1,17 @@
-package com.csee.hanspace.presentation.response;
+package com.csee.hanspace.application.dto;
 
+import com.csee.hanspace.presentation.response.RegularReservationHistoryResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReserveResponse {
-    private Long id;
+public class RegularReservationHistoryDto {
 
     private String groupName;
 
@@ -26,8 +23,6 @@ public class ReserveResponse {
 
     private Integer status;
 
-    private boolean regular;
-
     private Long regularId;
 
     private String answer1;
@@ -38,7 +33,15 @@ public class ReserveResponse {
 
     private String roomImg;
 
-    private LocalDate reservationDate;
+    private LocalDate startDate;
+
+    private LocalDate endDate;
 
     private LocalDateTime regDate;
+
+    public RegularReservationHistoryResponse reserveResponse() {
+
+        return new RegularReservationHistoryResponse(groupName, purpose, userName, contact, status, regularId, answer1, answer2, roomName, roomImg, startDate, endDate, regDate);
+    }
+
 }
