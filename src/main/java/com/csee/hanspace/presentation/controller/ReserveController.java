@@ -11,11 +11,8 @@ import com.csee.hanspace.presentation.request.ChangeMStatusRequest;
 import com.csee.hanspace.presentation.request.ChangeStatusRequest;
 import com.csee.hanspace.presentation.request.RegularReserveRequest;
 import com.csee.hanspace.presentation.request.RoomReserveRequest;
-import com.csee.hanspace.presentation.response.AllReservedResponse;
-import com.csee.hanspace.presentation.response.ReserveCalResponse;
+import com.csee.hanspace.presentation.response.*;
 
-import com.csee.hanspace.presentation.response.ReserveIdResponse;
-import com.csee.hanspace.presentation.response.ReserveResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -57,6 +54,14 @@ public class ReserveController {
     }
 
 //    정기 대여 리스트
+    @GetMapping("/regular-reservations")
+    public ResponseEntity<List<RegularReservationHistoryResponse>> getMyRegularReservations(@RequestParam Long savedUserInfoId) {
+        List<RegularReservationHistoryDto> reserves = reserveService.getMyRegularReservations(savedUserInfoId);
+        List<RegularReservationHistoryResponse> response = reserves.stream()
+                .map(RegularReservationHistoryDto::reserveResponse)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(response);
+    }
 
 //    정기 대여 더보기
     @GetMapping("/regular-detail")

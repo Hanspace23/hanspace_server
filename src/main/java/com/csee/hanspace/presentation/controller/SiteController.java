@@ -32,22 +32,31 @@ public class SiteController {
 
 
 
-    // @GetMapping("/all-sites")
-    // public ResponseEntity<List<SiteResponse>> getAllSites() {
-    //     List<SiteDto> sites = siteService.getAllSites();
-    //     List<SiteResponse> response = sites.stream()
-    //             .map(SiteDto::siteResponse)
-    //             .collect(Collectors.toList());
-    //     return ResponseEntity.ok(response);
-    // }
+     @GetMapping("/all-sites")
+     public ResponseEntity<List<SiteResponse>> getAllSites() {
+         List<SiteDto> sites = siteService.getAllSites();
+         List<SiteResponse> response = sites.stream()
+                 .map(SiteDto::siteResponse)
+                 .collect(Collectors.toList());
+         return ResponseEntity.ok(response);
+     }
 
-    // @GetMapping("/my-sites")
-    // public ResponseEntity<List<SiteResponse>> getMySites(@RequestParam Long savedUserInfoId) {
-    //     List<SiteDto> sites = siteService.getMySites(savedUserInfoId, 1, 2);
-    //     List<SiteResponse> response = sites.stream()
-    //             .map(SiteDto::siteResponse)
-    //             .collect(Collectors.toList());
-    //     return ResponseEntity.ok(response);
-    
+     @GetMapping("/my-sites")
+     public ResponseEntity<List<SiteResponse>> getMySites(@RequestParam Long savedUserInfoId) {
+         List<SiteDto> sites = siteService.getMySites(savedUserInfoId);
+         List<SiteResponse> response = sites.stream()
+                 .map(SiteDto::siteResponse)
+                 .collect(Collectors.toList());
+         return ResponseEntity.ok(response);
+     }
+
+    @GetMapping("/subscribed-sites")
+    public ResponseEntity<List<SiteResponse>> getSubscribedSites(@RequestParam Long savedUserInfoId) {
+        List<SiteDto> sites = siteService.getSubscribedSites(savedUserInfoId);
+        List<SiteResponse> response = sites.stream()
+                .map(SiteDto::siteResponse)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(response);
+    }
 
 }

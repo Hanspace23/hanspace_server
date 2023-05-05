@@ -15,10 +15,13 @@ public interface ReserveRepository extends JpaRepository<ReserveRecord, Long> {
             "and r.regular = false ")
     List<ReserveRecord> findAllBySavedUserInfoId(@Param("savedUserInfoId") Long savedUserInfoId);
 
-    @Query("select r from ReserveRecord r " +
-            "left join fetch r.savedUserInfo " +
-            "where r.savedUserInfo.id = :savedUserInfoId " +
-            "and r.regular = true ")
+//    @Query("select r from ReserveRecord r " +
+//            "left join fetch r.savedUserInfo " +
+//            "where r.savedUserInfo.id = :savedUserInfoId " +
+//            "and r.regular = true ")
+//    List<ReserveRecord> findAllRegularBySavedUserInfoId(@Param("savedUserInfoId") Long savedUserInfoId);
+
+    @Query("SELECT r FROM ReserveRecord r LEFT JOIN FETCH r.savedUserInfo s WHERE s.id = :savedUserInfoId AND r.regular = true ORDER BY r.regularId, r.date ASC")
     List<ReserveRecord> findAllRegularBySavedUserInfoId(@Param("savedUserInfoId") Long savedUserInfoId);
 
 //    @Query("select r from ReserveRecord r " +
@@ -44,7 +47,7 @@ public interface ReserveRepository extends JpaRepository<ReserveRecord, Long> {
     ReserveRecord findBySiteIdAndId(Long siteId, Long reserveId);
 
     @Modifying
-    @Query("Update from ReserveRecord r where r.regularId = :regularId")
+    @Query("Update ReserveRecord r set r.deleted = true where r.regularId = :regularId and r.deleted = false")
     void deleteAllByRegularId(Long regularId);
 
 }
