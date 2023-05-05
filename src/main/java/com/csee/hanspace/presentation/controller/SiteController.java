@@ -66,6 +66,15 @@ public class SiteController {
          return ResponseEntity.ok(response);
      }
 
+    @GetMapping("/manage-sites")
+    public ResponseEntity<List<SiteResponse>> getManagingSites(@RequestParam Long savedUserInfoId) {
+        List<SiteDto> sites = siteService.getManagingSites(savedUserInfoId);
+        List<SiteResponse> response = sites.stream()
+                .map(SiteDto::siteResponse)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/subscribed-sites")
     public ResponseEntity<List<SiteResponse>> getSubscribedSites(@RequestParam Long savedUserInfoId) {
         List<SiteDto> sites = siteService.getSubscribedSites(savedUserInfoId);

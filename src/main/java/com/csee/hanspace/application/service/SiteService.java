@@ -39,8 +39,16 @@ public class SiteService {
      }
 
     @Transactional
-    public List<SiteDto> getSubscribedSites(Long savedUserInfoId) {
+    public List<SiteDto> getManagingSites(Long savedUserInfoId) {
         List<Site> sites = siteRepository.findAllBySavedUserInfoIdAndAdmin(savedUserInfoId);
+        return sites.stream()
+                .map(SiteDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<SiteDto> getSubscribedSites(Long savedUserInfoId) {
+        List<Site> sites = siteRepository.findAllBySavedUserInfoIdAndUser(savedUserInfoId);
         return sites.stream()
                 .map(SiteDto::new)
                 .collect(Collectors.toList());
