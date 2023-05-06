@@ -21,7 +21,7 @@ public class RegularReservationHistoryDto {
 
     private String contact;
 
-    private Integer status;
+    private String status;
 
     private Long regularId;
 
