@@ -59,6 +59,9 @@ public class ReserveController {
     @GetMapping("/regular-reservations")
     public ResponseEntity<List<RegularReservationHistoryResponse>> getMyRegularReservations(@RequestParam Long savedUserInfoId) {
         List<RegularReservationHistoryDto> reserves = reserveService.getMyRegularReservations(savedUserInfoId);
+        for(RegularReservationHistoryDto dto : reserves) {
+            System.out.println("reservationId: " + dto.getRegularId() + " startDate: " + dto.getStartDate() +  " endDate: " + dto.getEndDate());
+        }
         List<RegularReservationHistoryResponse> response = reserves.stream()
                 .map(RegularReservationHistoryDto::reserveResponse)
                 .collect(Collectors.toList());
