@@ -33,6 +33,9 @@ public class SiteService {
      @Transactional
      public List<SiteDto> getMySites(Long savedUserInfoId) {
          List<Site> sites = siteRepository.findAllBySavedUserInfoIdAndCreator(savedUserInfoId);
+         for(Site site : sites) {
+             System.out.println("name: " + site.getName());
+         }
          return sites.stream()
                  .map(SiteDto::new)
                  .collect(Collectors.toList());
@@ -41,6 +44,9 @@ public class SiteService {
     @Transactional
     public List<SiteDto> getManagingSites(Long savedUserInfoId) {
         List<Site> sites = siteRepository.findAllBySavedUserInfoIdAndAdmin(savedUserInfoId);
+        for(Site site : sites) {
+            System.out.println("name: " + site.getName());
+        }
         return sites.stream()
                 .map(SiteDto::new)
                 .collect(Collectors.toList());
@@ -49,6 +55,9 @@ public class SiteService {
     @Transactional
     public List<SiteDto> getSubscribedSites(Long savedUserInfoId) {
         List<Site> sites = siteRepository.findAllBySavedUserInfoIdAndUser(savedUserInfoId);
+        for(Site site : sites) {
+            System.out.println("name: " + site.getName());
+        }
         return sites.stream()
                 .map(SiteDto::new)
                 .collect(Collectors.toList());
