@@ -17,6 +17,8 @@ public interface ReserveRepository extends JpaRepository<ReserveRecord, Long> {
 //    List<ReserveRecord> findAllReserveBySiteId(Long siteId);
     List<ReserveRecord> findAllReserveBySiteId(Long siteId);
 
+    @Query("select r from ReserveRecord  r where r.site.id = :siteId and r.regular = true")
+    List<ReserveRecord> findAllRegularReserve(Long siteId);
 //    @Query("select MAX(regularId) from ReserveRecord where id = :siteId")
     @Query("select max(r.regularId) from ReserveRecord r where r.site.id = :siteId")
     Long findCurrentRegularId(Long siteId);
@@ -30,5 +32,6 @@ public interface ReserveRepository extends JpaRepository<ReserveRecord, Long> {
     Long deleteReserveRecordBySiteIdAndRegularId(Long siteId, Long reserveId);
 
     Long deleteReserveRecordBySiteIdAndRegularIdAndId(Long siteId, Long regularId, Long reserveId);
+
 
 }

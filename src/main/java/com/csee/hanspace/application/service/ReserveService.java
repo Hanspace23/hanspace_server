@@ -7,6 +7,7 @@ import com.csee.hanspace.application.dto.OneReserveDto;
 import com.csee.hanspace.domain.entity.ReserveRecord;
 import com.csee.hanspace.domain.entity.*;
 import com.csee.hanspace.domain.repository.ReserveRepository;
+import com.csee.hanspace.domain.repository.SiteRepository;
 import com.csee.hanspace.exception.ReserveRecordNotFoundException;
 //import com.csee.hanspace.domain.repository.TimeRecordRepository;
 import com.csee.hanspace.presentation.request.ChangeMStatusRequest;
@@ -30,6 +31,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ReserveService {
     private final ReserveRepository reserveRepository;
+    private final SiteRepository siteRepository;
 
     @Autowired
     private final UserService userService;
@@ -96,21 +98,64 @@ public class ReserveService {
     @Transactional
     public List<AllReservedDto> readAllReserveList(Long siteId) {
         List<ReserveRecord> reservedList = reserveRepository.findAllReserveBySiteId(siteId);
+        String question1 = siteRepository.findQuestion1BySiteId(siteId);
+        String question2 = siteRepository.findQuestion2BySiteId(siteId);
         System.out.println("reservedList = " + reservedList);
-        List<AllReservedDto> reserveList = reservedList.stream().map(AllReservedDto::of).collect(Collectors.toList());
+        List<AllReservedDto> reserveList = reservedList.stream().map(record -> AllReservedDto.of(record, question1, question2)).collect(Collectors.toList());
+
+        return reserveList;
+    }
+
+    @Transactional
+    public List<AllReservedDto> readOneReserveList(Long siteId) {
+        List<ReserveRecord> reservedList = reserveRepository.findAllReserveBySiteId(siteId);
+        System.out.println("reservedList = " + reservedList);
+        String question1 = siteRepository.findQuestion1BySiteId(siteId);
+        String question2 = siteRepository.findQuestion2BySiteId(siteId);
+        List<AllReservedDto> reserveList = reservedList.stream().filter(data -> !data.isRegular()).map(record -> AllReservedDto.of(record, question1, question2)).collect(Collectors.toList());
         return reserveList;
     }
     @Transactional
     public List<AllReservedDto> readAllRegularList(Long siteId) {
-        List<ReserveRecord> reservedList = reserveRepository.findAllReserveBySiteId(siteId);
-        List<AllReservedDto> reserveList = reservedList.stream().filter(ReserveRecord::isRegular).map(AllReservedDto::of).collect(Collectors.toList());
+        List<ReserveRecord> reservedList = reserveRepository.findAllRegularReserve(siteId);
+        String question1 = siteRepository.findQuestion1BySiteId(siteId);
+        String question2 = siteRepository.findQuestion2BySiteId(siteId);
+//        Map<Long, List<ReserveRecord>> dataMap = new HashMap<>();
+//        reservedList.stream() // 스트림 생성
+//                .map(record -> {
+//                Long regularId = record.getRegularId();
+//
+//                if (!dataMap.containsKey(regularId)) {
+//                    dataMap.put(regularId, new ArrayList<>());
+//                }
+//
+//                List<ReserveRecord> dataListForId = dataMap.get(regularId);
+//                dataListForId.add(record);
+//            }
+////                System.out.println("record = " + record);
+////                return record;
+//                )
+//            .collect(Collectors.toList());
+////        List<ReserveRecord> flattenedList = dataMap.values().stream() // 스트림 생성
+////                .flatMap(Collection::stream).map(record -> {
+////                    System.out.println("record = " + record);
+////                    return record;
+////                }).collect(Collectors.toList()); // 결과를 List로 수집
+////        List<ReserveRecord> flattenedList = records.stream()
+////                .flatMap(List::stream)
+////                .collect(Collectors.toList());
+
+        List<AllReservedDto> reserveList = reservedList.stream().filter(ReserveRecord::isRegular).map(record -> AllReservedDto.of(record, question1, question2)).collect(Collectors.toList());
+
         return reserveList;
     }
 
     @Transactional
     public List<AllReservedDto> readEachReserveList(Long siteId, Long regularId) {
         List<ReserveRecord> reservedList = reserveRepository.findBySiteIdAndRegularId(siteId, regularId);
-        List<AllReservedDto> reserveList = reservedList.stream().map(AllReservedDto::of).collect(Collectors.toList());
+        String question1 = siteRepository.findQuestion1BySiteId(siteId);
+        String question2 = siteRepository.findQuestion2BySiteId(siteId);
+        List<AllReservedDto> reserveList = reservedList.stream().map(record -> AllReservedDto.of(record, question1, question2)).collect(Collectors.toList());
         return reserveList;
     }
 
@@ -142,18 +187,30 @@ public class ReserveService {
         return reserveRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("no such reserveRecord"));
     }
 
+//    @Transactional
+//    public void changeMultiStatus(ChangeMRequestDto dto) {
+//        List<Long> list = dto.getRecordList();
+//        System.out.println("list = " + list);
+//        for(Long i : list) {
+//            List<ReserveRecord> recordList = reserveRepository.findBySiteIdAndRegularId(dto.getSiteId(), i);
+//            System.out.println("recordList = " + recordList);
+//            for(ReserveRecord record: recordList) {
+//                System.out.println("record = " + record);
+//                record.setStatus(dto.getStatusId());
+//                reserveRepository.save(record);
+//            }
+//        }
+//    }
+
     @Transactional
     public void changeMultiStatus(ChangeMRequestDto dto) {
         List<Long> list = dto.getRecordList();
         System.out.println("list = " + list);
         for(Long i : list) {
-            List<ReserveRecord> recordList = reserveRepository.findBySiteIdAndRegularId(dto.getSiteId(), i);
-            System.out.println("recordList = " + recordList);
-            for(ReserveRecord record: recordList) {
-                System.out.println("record = " + record);
-                record.setStatus(dto.getStatusId());
-                reserveRepository.save(record);
-            }
+            ReserveRecord record = reserveRepository.findBySiteIdAndId(dto.getSiteId(), i);
+            System.out.println("record = " + record);
+            record.setStatus(dto.getStatusId());
+            reserveRepository.save(record);
         }
     }
 
@@ -191,6 +248,8 @@ public class ReserveService {
             reserveRepository.deleteReserveRecordBySiteIdAndRegularIdAndId(dto.getSiteId(), dto.getRegularId(), id);
         }
     }
+
+
 
 //    @Transactional
 //    public List<ReserveDto> getMyReservations(Long savedUserInfoId) {
