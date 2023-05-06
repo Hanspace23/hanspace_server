@@ -21,7 +21,7 @@ public interface ReserveRepository extends JpaRepository<ReserveRecord, Long> {
 //            "and r.regular = true ")
 //    List<ReserveRecord> findAllRegularBySavedUserInfoId(@Param("savedUserInfoId") Long savedUserInfoId);
 
-    @Query("SELECT r FROM ReserveRecord r LEFT JOIN FETCH r.savedUserInfo s WHERE s.id = :savedUserInfoId AND r.regular = true ORDER BY r.regularId, r.date ASC")
+    @Query("SELECT r FROM ReserveRecord r LEFT JOIN FETCH r.savedUserInfo s WHERE s.id = :savedUserInfoId AND r.regular = true ORDER BY r.regularId ASC, r.date ASC")
     List<ReserveRecord> findAllRegularBySavedUserInfoId(@Param("savedUserInfoId") Long savedUserInfoId);
 
 //    @Query("select r from ReserveRecord r " +

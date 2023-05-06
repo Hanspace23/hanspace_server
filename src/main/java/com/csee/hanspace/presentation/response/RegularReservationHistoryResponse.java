@@ -22,7 +22,7 @@ public class RegularReservationHistoryResponse {
 
     private String contact;
 
-    private Integer status;
+    private String status;
 
     private Long regularId;
 
