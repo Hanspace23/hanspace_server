@@ -1,0 +1,63 @@
+
+-- 유저 데이터 삽입
+-- INSERT INTO capstone.user (deleted, email, name) VALUES (false, 'b', 'park');
+-- INSERT INTO capstone.user (deleted, email, name) VALUES (false, 'c', 'lee');
+-- INSERT INTO capstone.user (deleted, email, name) VALUES (false, 'd', 'yun');
+-- INSERT INTO capstone.user (deleted, email, name) VALUES (false, 'e', 'kwon');
+-- INSERT INTO capstone.user (deleted, email, name) VALUES (false, 'f', 'jeong');
+
+-- 사이트 데이터 삽입
+-- INSERT INTO capstone.site (deleted, company, description, link, logo, max_date, max_time, name, question1, question2, restriction, time_unit)
+-- VALUES (false, '홍방이', '한동대학교 강의실 대여 서비스입니다', 'hbl', 'a', 90, 30, '한동대학교 강의실 대여 서비스', '홍신', '', 2, '30');
+--
+-- INSERT INTO capstone.site (deleted, company, description, link, logo, max_date, max_time, name, question1, question2, restriction, time_unit)
+-- VALUES (false, '한동대학교', '한동대학교 시설 대여 서비스입니다', 'hgu', 'a', 90, 30, '한동대학교 시설 대여 서비스', '김광', '', 2, '30');
+--
+-- INSERT INTO capstone.site (deleted, company, description, link, logo, max_date, max_time, name, question1, question2, restriction, time_unit)
+-- VALUES (false, '선린대학교', '선린대학교 강의실 대여 서비스입니다', 'sl', 'a', 90, 30, '선린대학교 강의실 대여 서비스', '선린', '', 2, '30');
+--
+-- INSERT INTO capstone.site (deleted, company, description, link, logo, max_date, max_time, name, question1, question2, restriction, time_unit)
+-- VALUES (false, '포항대학교', '포항대학교 강의실 대여 서비스입니다', 'ph', 'a', 90, 30, '포항대학교 강의실 대여 서비스', '포항', '', 2, '30');
+--
+-- INSERT INTO capstone.site (deleted, company, description, link, logo, max_date, max_time, name, question1, question2, restriction, time_unit)
+-- VALUES (false, '포항공과대학교', '포항공과대학교 강의실 대여 서비스입니다', 'postech', 'a', 90, 30, '포항공과대학교 강의실 대여 서비스', '포스텍', '', 2, '30');
+--
+-- -- saved 유저 데이터 삽입
+-- INSERT INTO capstone.saved_user_info (deleted, authority, contact, group_name, purpose, reservation, status, site_id, user_id)
+-- VALUES (false, 1, '010', '스터디', '학습', 'a', 2, 1L, 1L)
+--
+-- INSERT INTO capstone.saved_user_info (deleted, authority, contact, group_name, purpose, reservation, status, site_id, user_id)
+-- VALUES (false, 2, '010', '스터디', '학습', 'a', 2, 1L, 2L)
+--
+-- INSERT INTO capstone.saved_user_info (deleted, authority, contact, group_name, purpose, reservation, status, site_id, user_id)
+-- VALUES (false, 3, '010', '스터디', '학습', 'a', 2, 1L, 4L)
+--
+-- INSERT INTO capstone.saved_user_info (deleted, authority, contact, group_name, purpose, reservation, status, site_id, user_id)
+-- VALUES (false, 1, '010', '영화모임', '영화보기', 'b', 2, 2L, 2L)
+--
+-- INSERT INTO capstone.saved_user_info (deleted, authority, contact, group_name, purpose, reservation, status, site_id, user_id)
+-- VALUES (false, 2, '010', '영화모임', '영화보기', 'b', 2, 2L, 1L)
+--
+-- INSERT INTO capstone.saved_user_info (deleted, authority, contact, group_name, purpose, reservation, status, site_id, user_id)
+-- VALUES (false, 3, '010', '영화모임', '영화보기', 'b', 2, 2L, 4L)
+--
+-- INSERT INTO capstone.saved_user_info (deleted, authority, contact, group_name, purpose, reservation, status, site_id, user_id)
+-- VALUES (false, 1, '010', '독서모임', '독서하기', 'c', 2, 4L, 4L)
+--
+-- INSERT INTO capstone.saved_user_info (deleted, authority, contact, group_name, purpose, reservation, status, site_id, user_id)
+-- VALUES (false, 2, '010', '독서모임', '독서하기', 'c', 2, 4, 1)
+--
+-- INSERT INTO capstone.saved_user_info (deleted, authority, contact, group_name, purpose, reservation, status, site_id, user_id)
+-- VALUES (false, 3, '010', '독서모임', '독서하기', 'c', 2, 4, 2)
+
+-- -- 태그 데이터 삽입
+-- insert into capstone.tag (deleted, name, site_id) values ();
+--
+-- room 데이터 삽입
+-- insert into capstone.room (deleted, available, capacity, description, end_time, image, name, reserve_cnt, start_time, site_id) values()
+
+-- -- roomg_tag 데이터 삽입
+-- insert into capstone.room_tags (deleted, room_id, tag_id) values ()
+--
+-- -- 예약 내역 데이터 삽입
+-- insert into capstone.reserve_record (deleted, answer1, answer2, contact, date, group_name, purpose, regular, regular_id, reservation, reserve_time, status, weekdays, room_id, saved_user_info_id, site_id) values ()

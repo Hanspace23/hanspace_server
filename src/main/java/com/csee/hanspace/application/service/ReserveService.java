@@ -259,7 +259,7 @@ public class ReserveService {
 @Transactional
 public List<RegularReservationHistoryDto> getMyRegularReservations(Long savedUserInfoId) {
     List<ReserveRecord> reserves = reserveRepository.findAllRegularBySavedUserInfoId(savedUserInfoId);
-    Long tmpRegularId = -1L;
+    int tmpRegularId = -1;
     int loopTimes = 0;
     List<ReserveRecord> temp = new ArrayList<>();
     List<List<ReserveRecord>> reservesGroupBy = new ArrayList<>();
@@ -267,6 +267,7 @@ public List<RegularReservationHistoryDto> getMyRegularReservations(Long savedUse
 
 //    reserveid가 같은 것끼리 list를 만들고 그걸 다시 list에 담는다.
     for(ReserveRecord reserveRecord : reserves) {
+//        System.out.println("regularId: " + reserveRecord.getRegularId() + " -name: " + reserveRecord.getReservation() + " -date: " + reserveRecord.getDate());
         loopTimes++;
 //        마지막 element이면, reservesGroupBy에 담고 종료
         if(loopTimes == reserves.size()) {
@@ -275,12 +276,12 @@ public List<RegularReservationHistoryDto> getMyRegularReservations(Long savedUse
             break;
         }
 //      regularId의 값이 바뀌면
-        if(tmpRegularId != reserveRecord.getRegularId()) {
+        if(tmpRegularId != reserveRecord.getRegularId().intValue()) {
 //            처음이 아닌 경우에는 reservesGroupBy에 추가
-            if(reservesGroupBy.size() != 0) {
+            if(loopTimes != 1) {
                 reservesGroupBy.add(temp);
             }
-            tmpRegularId = reserveRecord.getRegularId();
+            tmpRegularId = reserveRecord.getRegularId().intValue();
             temp = new ArrayList<>();
             temp.add(reserveRecord);
         } else {
