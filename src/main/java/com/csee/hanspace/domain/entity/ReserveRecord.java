@@ -62,24 +62,22 @@ public class ReserveRecord extends BaseEntity {
     @JsonIgnore
     private Site site;
 
-    // public ReserveDetailDto toDetailDto() {
-    //     return ReserveDetailDto.builder()
-    //             .reserveId(this.id)
-    //             .groupName(this.groupName)
-    //             .purpose(this.purpose)
-    //             .userName(this.reservation)
-    //             .contact(this.contact)
-    //             .status(this.status)
-    //             .regular(this.regular)
-    //             .regularId(this.regularId)
-    //             .answer1(this.answer1)
-    //             .answer2(this.answer2)
-    //             .roomName(this.getRoom().getName())
-    //             .roomImg(this.getRoom().getImage())
-    //             .timeRecord(this.timeRecordList)
-    //             .regDate(this.getRegDate())
-    //             .build();
-    // }
+     public ReserveDetailDto toDetailDto() {
+         return ReserveDetailDto.builder()
+                 .reserveId(this.id)
+                 .groupName(this.groupName)
+                 .purpose(this.purpose)
+                 .userName(this.reservation)
+                 .contact(this.contact)
+                 .status(this.status)
+                 .answer1(this.answer1)
+                 .answer2(this.answer2)
+                 .roomName(this.getRoom().getName())
+                 .reserveTime(this.reserveTime)
+                 .regDate(this.getRegDate())
+                 .reservationDate(this.date)
+                 .build();
+     }
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Room room;

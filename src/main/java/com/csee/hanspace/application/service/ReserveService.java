@@ -50,7 +50,6 @@ public class ReserveService {
     // 일회 대여
     @Transactional
     public Long save(OneReserveDto dto) {
-        System.out.println("들어옴");
         User user = userService.findByEmail(dto.getEmail());
         SavedUserInfo savedUserInfo = userInfoService.findById(user.getId());
         Site site = siteService.findById(dto.getSiteId());
@@ -63,7 +62,6 @@ public class ReserveService {
     // 정기 대여
     @Transactional
     public void saveRegular(OneReserveDto dto) {
-        System.out.println("dto = " + dto);
         User user = userService.findByEmail(dto.getEmail());
         SavedUserInfo savedUserInfo = userInfoService.findById(user.getId());
         Site site = siteService.findById(dto.getSiteId());
@@ -105,7 +103,6 @@ public class ReserveService {
 
         return reserveList;
     }
-
     @Transactional
     public List<AllReservedDto> readOneReserveList(Long siteId) {
         List<ReserveRecord> reservedList = reserveRepository.findAllReserveBySiteId(siteId);
@@ -233,6 +230,15 @@ public class ReserveService {
         reserveRepository.deleteReserveRecordBySiteIdAndRegularId(dto.getSiteId(), dto.getRecordId());
     }
 
+//일회대여
+    @Transactional
+    public List<ReserveDto> getMyReservations(Long savedUserInfoId) {
+        List<ReserveRecord> reserves = reserveRepository.findAllBySavedUserInfoId(savedUserInfoId);
+        return reserves.stream()
+                .map(ReserveDto::new)
+                .collect(Collectors.toList());
+    }
+
     @Transactional
     public void deleteMReserve(DeleteMultiReserveDto dto) {
         List<Long> list = dto.getRecordList();
@@ -249,29 +255,112 @@ public class ReserveService {
         }
     }
 
+//    정기대여
+@Transactional
+public List<RegularReservationHistoryDto> getMyRegularReservations(Long savedUserInfoId) {
+    List<ReserveRecord> reserves = reserveRepository.findAllRegularBySavedUserInfoId(savedUserInfoId);
+    List<RegularReservationHistoryDto> regularReserves = new ArrayList<>();
+        int n = 0;
+        int regId = 0;
+        int size = 0;
+        LocalDate startDate = LocalDate.now();
+        String groupName = "1";
+        String purpose = "1";
+        String userName = "1";
+        String contact = "1";
+        LocalDate endDate = LocalDate.now();
+        Integer status = 1;
+        String answer1 = "1";
+        String answer2 = "1";
+        String roomName = "1";
+        String roomImg = "1";
+        LocalDateTime regDate = LocalDateTime.now();
+
+        for(ReserveRecord reserve : reserves ){
+            if(n == 0) {
+                n++;
+                regId = reserve.getRegularId().intValue();
+                startDate = reserve.getDate();
+            } else if(reserves.size()-1 == size) {
+                groupName = reserve.getGroupName();
+                purpose = reserve.getPurpose();
+                userName = reserve.getReservation();
+                contact = reserve.getContact();
+                status = reserve.getStatus();
+                endDate = reserve.getDate();
+                answer1 = reserve.getAnswer1();
+                answer2 = reserve.getAnswer2();
+                roomName = reserve.getRoom().getName();
+                roomImg = reserve.getRoom().getImage();
+                regDate = reserve.getRegDate();
+                RegularReservationHistoryDto regularReservationHistoryDto = new RegularReservationHistoryDto(groupName, purpose, userName, contact, status, Long.valueOf(regId), answer1, answer2, roomName, roomImg, startDate, endDate, regDate);
+                regularReserves.add(regularReservationHistoryDto);
+            } else if(regId == reserve.getRegularId()) {
+                n++;
+                groupName = reserve.getGroupName();
+                purpose = reserve.getPurpose();
+                userName = reserve.getReservation();
+                contact = reserve.getContact();
+                status = reserve.getStatus();
+                endDate = reserve.getDate();
+                answer1 = reserve.getAnswer1();
+                answer2 = reserve.getAnswer2();
+                roomName = reserve.getRoom().getName();
+                roomImg = reserve.getRoom().getImage();
+                regDate = reserve.getRegDate();
+            } else {
+                n = 0;
+                RegularReservationHistoryDto regularReservationHistoryDto = new RegularReservationHistoryDto(groupName, purpose, userName, contact, status, Long.valueOf(regId), answer1, answer2, roomName, roomImg, startDate, endDate, regDate);
+                regularReserves.add(regularReservationHistoryDto);
+                if(reserves.size() != size) {
+                    n++;
+                    regId = reserve.getRegularId().intValue();
+                    startDate = reserve.getDate();
+                }
+            }
+            size++;
+        }
+    return regularReserves;
+}
 
 
-//    @Transactional
-//    public List<ReserveDto> getMyReservations(Long savedUserInfoId) {
-//        List<ReserveRecord> reserves = reserveRepository.findAllBySavedUserInfoId(savedUserInfoId);
-//        return reserves.stream()
-//                .map(ReserveDto::new)
-//                .collect(Collectors.toList());
-//    }
-//
-//    @Transactional
-//    public ReserveDetailDto find(Long reservationId) {
-//
-//        ReserveRecord reserve = reserveRepository.findById(reservationId).orElseThrow(ReserveRecordNotFoundException::new);
-//
-//        return reserve.toDetailDto();
-//    }
-//
-//    @Transactional
-//    public Long delete(Long reservationId) {
-//        reserveRepository.deleteById(reservationId);
-//        return reservationId;
-//    }
+    //    개별 예약
+    @Transactional
+    public List<ReserveDto> getEachReservations(Long regularId) {
+        List<ReserveRecord> reserves = reserveRepository.findAllByRegularId(regularId);
+        return reserves.stream()
+            .map(ReserveDto::new)
+            .collect(Collectors.toList());
+    }
+
+//일회대여 더보기
+    @Transactional
+    public ReserveDetailDto findOneReservationDetail(Long reservationId) {
+
+        ReserveRecord reserve = reserveRepository.findById(reservationId).orElseThrow(ReserveRecordNotFoundException::new);
+
+        return reserve.toDetailDto();
+    }
+
+//정기대여 더보기
+    @Transactional
+    public ReserveDetailDto findRegularReservationDetail(Long regularId) {
+        ReserveRecord reserve = reserveRepository.findTop1ByRegularId(regularId);
+        return reserve.toDetailDto();
+    }
+
+// 예약 삭제
+    @Transactional
+    public Long delete(Long reservationId) {
+        reserveRepository.deleteById(reservationId);
+        return reservationId;
+    }
+
+//    정기대여 예약 삭제
+    @Transactional
+    public void deleteAllByRegular(Long regularId) {
+        reserveRepository.deleteAllByRegularId(regularId);
+    }
 
 
 
