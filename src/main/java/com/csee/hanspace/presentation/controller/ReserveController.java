@@ -114,6 +114,15 @@ public class ReserveController {
         return ResponseEntity.ok(responses);
     }
 
+    @GetMapping("/oneReservedList/{siteId}")
+    public ResponseEntity<List<AllReservedResponse>> findOneReserved(@PathVariable Long siteId) {
+//        System.out.println("siteId = " + siteId);
+        List<AllReservedResponse> responses = reserveService.readOneReserveList(siteId).stream()
+                .map(AllReservedResponse::toResponse)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(responses);
+    }
+
     @GetMapping("/allRegularReservedList/{siteId}")
     public ResponseEntity<List<AllReservedResponse>> findAllRegularReserved(@PathVariable Long siteId) {
         List<AllReservedResponse> responses = reserveService.readAllRegularList(siteId).stream()
@@ -145,6 +154,7 @@ public class ReserveController {
 
     @PutMapping("/changeMultiStatus")
     public ResponseEntity<Void> changeMultiStatus (@RequestBody ChangeMStatusRequest request) {
+        System.out.println("request = " + request);
         reserveService.changeMultiStatus(ChangeMRequestDto.from(request));
         return ResponseEntity.ok(null);
     }
@@ -175,9 +185,12 @@ public class ReserveController {
 
     @DeleteMapping("deleteMultiReserve")
     public ResponseEntity<Void> deleteMReserve (@RequestBody DeleteMReserveRequest request) {
+        System.out.println("request = " + request);
         reserveService.deleteMReserve(DeleteMultiReserveDto.from(request));
         return ResponseEntity.ok(null);
     }
+
+
 
 
 

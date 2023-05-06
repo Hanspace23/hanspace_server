@@ -40,4 +40,9 @@ public interface SiteRepository extends JpaRepository<Site, Long> {
     @Query("select s from Site s where s.link=:link")
     Site findByLink(String link);
 
+    @Query("select s.question1 from Site s where s.id = :siteId")
+    String findQuestion1BySiteId(Long siteId);
+
+    @Query("select s.question2 from Site s where s.id = :siteId")
+    String findQuestion2BySiteId(Long siteId);
 }
