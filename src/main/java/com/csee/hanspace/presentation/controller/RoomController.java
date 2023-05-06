@@ -79,7 +79,7 @@ public class RoomController {
     }
 
 //    공간 관리 room 사용금지 여부 수정
-    @PostMapping("/update-room")
+    @PostMapping("/update-avail")
     public ResponseEntity<UpdateRoomAvailResponse> updateRoomAvailable(@RequestBody UpdateRoomAvailRequest request) {
         RoomDto roomDto = roomService.updateRoomAvailable(request.roomAvailableDto(), request.getRoomId());
         UpdateRoomAvailResponse res = roomDto.updateRoomAvailResponse();
