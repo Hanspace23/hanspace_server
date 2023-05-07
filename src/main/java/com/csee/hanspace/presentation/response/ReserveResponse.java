@@ -24,7 +24,7 @@ public class ReserveResponse {
 
     private String contact;
 
-    private Integer status;
+    private String status;
 
     private boolean regular;
 
@@ -41,4 +41,8 @@ public class ReserveResponse {
     private LocalDate reservationDate;
 
     private LocalDateTime regDate;
+
+    private String reserveTime;
+
+    private String deadline;
 }

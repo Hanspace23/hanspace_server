@@ -24,7 +24,7 @@ public class RegularReservationHistoryResponse {
 
     private String status;
 
-    private Long regularId;
+    private Long id;
 
     private String answer1;
 
@@ -39,4 +39,10 @@ public class RegularReservationHistoryResponse {
     private LocalDate endDate;
 
     private LocalDateTime regDate;
+
+    private String reserveTime;
+
+    private String deadline;
+
+    private String weekdays;
 }
