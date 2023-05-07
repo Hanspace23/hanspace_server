@@ -81,14 +81,14 @@ public class ReserveController {
     }
 
 //    개별 예약 보기
-//    @GetMapping("/each-reservations")
-//    public ResponseEntity<List<ReserveResponse>> getEachReservations(@RequestParam Long regularId) {
-//        List<ReserveDto> reserves = reserveService.getEachReservations(regularId);
-//        List<ReserveResponse> response = reserves.stream()
-//            .map(ReserveDto::reserveResponse)
-//            .collect(Collectors.toList());
-//        return ResponseEntity.ok(response);
-//    }
+    @GetMapping("/each-reservations")
+    public ResponseEntity<List<ReserveResponse>> getEachReservations(@RequestParam Long regularId) {
+        List<ReserveDto> reserves = reserveService.getEachReservations(regularId);
+        List<ReserveResponse> response = reserves.stream()
+            .map(ReserveDto::reserveResponse)
+            .collect(Collectors.toList());
+        return ResponseEntity.ok(response);
+    }
 
 
 

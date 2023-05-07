@@ -73,7 +73,7 @@ public class RoomService {
 
     @Transactional
     public RoomDto create(RoomCUDto roomCUDto, Long siteId) {
-        Site site = siteRepository.findById(siteId).orElseThrow(() -> new IllegalArgumentException("no such site"));
+        Site site = siteRepository.findById(siteId).orElseThrow(() -> new IllegalArgumentException("no such room"));
         Room newRoom = new Room(roomCUDto, site);
         Room savedRoom = roomRepository.save(newRoom);
         return savedRoom.toCreateDto();
