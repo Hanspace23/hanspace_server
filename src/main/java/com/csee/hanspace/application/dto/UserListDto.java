@@ -12,7 +12,7 @@ public class UserListDto {
     private Long siteId;
     private Long userId;
     private String userName;
-    private String authority;
+    private int authority;
     private String email;
     private int status;
 
@@ -20,7 +20,7 @@ public class UserListDto {
         return UserListDto.builder()
                 .userId(userInfo.getId())
                 .userName(userInfo.getUser().getName())
-                .authority(String.valueOf(userInfo.getAuthority()))
+                .authority(userInfo.getAuthority())
                 .email(userInfo.getUser().getEmail())
                 .status(userInfo.getStatus())
                 .build();

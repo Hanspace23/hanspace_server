@@ -39,6 +39,7 @@ public class SavedUserInfoController {
 
     @PutMapping("/changeUserStatus")
     public ResponseEntity<Integer> changeUserStatus(@RequestBody ChangeUserStatusRequest request) {
+        System.out.println("request = " + request);
         int id = savedUserInfoService.changeUserStatus(ChangeStatusDto.from(request));
         return ResponseEntity.ok(id);
     }
