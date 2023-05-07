@@ -4,13 +4,16 @@ import com.csee.hanspace.application.dto.*;
 import com.csee.hanspace.application.service.ReserveService;
 import com.csee.hanspace.application.service.SavedUserInfoService;
 import com.csee.hanspace.domain.entity.SavedUserInfo;
+import com.csee.hanspace.domain.entity.User;
 import com.csee.hanspace.presentation.request.*;
+import com.csee.hanspace.presentation.response.SiteUserResponse;
 import com.csee.hanspace.presentation.response.UserListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.ws.Response;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +32,21 @@ public class SavedUserInfoController {
 //        return ResponseEntity.ok(res);
 //    }
 
+
+    @GetMapping(value="/findCreator/{sid}")
+    public ResponseEntity<User> findCreator(@PathVariable Long sid){
+        User res = savedUserInfoService.findCreator(sid);
+        return ResponseEntity.ok(res);
+    }
+
+
+    @PostMapping(value="/findSiteUserInfo")
+    public ResponseEntity<SiteUserResponse>  findSiteUserInfo(@RequestBody SavedUserInfoRequest request){
+        SiteUserResponse res = savedUserInfoService.findSiteUserInfo(request);
+        return ResponseEntity.ok(res);
+    }
+
+
     @GetMapping("/readUserList/{siteId}")
     public ResponseEntity<List<UserListResponse>> readUserList(@PathVariable Long siteId) {
         List<UserListDto> userList = savedUserInfoService.readUserList(UserListDto.from(siteId));
@@ -46,6 +64,12 @@ public class SavedUserInfoController {
     public ResponseEntity<Void> changeMultiUserStatus(@RequestBody ChangeMUserStatusRequest request) {
         savedUserInfoService.changeMUserStatus(ChangeMStatusDto.from(request));
         return ResponseEntity.ok(null);
+    }
+
+    @PatchMapping("/editSavedUserInfo/{id}")
+    public ResponseEntity<SiteUserResponse> editSavedUserInfo(@PathVariable Long id, @RequestBody SavedUserInfoEditRequest request) throws Throwable {
+        SiteUserResponse res = savedUserInfoService.editSavedUserInfo(id, request);
+        return ResponseEntity.ok(res);
     }
 
     @DeleteMapping("/deleteUser")

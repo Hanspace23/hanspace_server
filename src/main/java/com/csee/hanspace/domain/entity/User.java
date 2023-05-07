@@ -1,6 +1,7 @@
 package com.csee.hanspace.domain.entity;
 
 
+import com.csee.hanspace.presentation.request.UserEmailRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.csee.hanspace.domain.entity.common.BaseEntity;
 import lombok.*;
@@ -25,6 +26,7 @@ public class User extends BaseEntity {
     private Long id;
     private String name;
 
+    @Column(unique = true)
     private String email;
 
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
@@ -32,6 +34,12 @@ public class User extends BaseEntity {
     @JsonIgnore
     private List<SavedUserInfo> savedUserInfoList = new ArrayList<>();
 
+    public static User from(UserEmailRequest request){
+        return User.builder()
+                .email(request.getEmail())
+                .name(request.getName())
+                .build();
+    }
 
 
 }

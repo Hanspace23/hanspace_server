@@ -3,12 +3,12 @@ package com.csee.hanspace.application.service;
 import com.csee.hanspace.application.dto.SiteDto;
 import com.csee.hanspace.application.dto.SiteEditDto;
 import com.csee.hanspace.application.dto.SiteInfoDto;
-import com.csee.hanspace.domain.entity.ReserveRecord;
-import com.csee.hanspace.domain.entity.Site;
-import com.csee.hanspace.domain.entity.Tag;
+import com.csee.hanspace.domain.entity.*;
 import com.csee.hanspace.domain.repository.ReserveRepository;
+import com.csee.hanspace.domain.repository.SavedUserInfoRepository;
 import com.csee.hanspace.domain.repository.SiteRepository;
 import com.csee.hanspace.domain.repository.TagRepository;
+import com.csee.hanspace.presentation.response.SiteByLinkResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SiteService {
     private final SiteRepository siteRepository;
+    private final SavedUserInfoRepository savedUserInfoRepository;
     private final TagRepository tagRepository;
 
     @Transactional
@@ -80,8 +81,11 @@ public class SiteService {
     }
 
     @Transactional(readOnly = true)
-    public Site findByLink(String link) {
-        Site ret = siteRepository.findByLink(link);
+    public SiteByLinkResponse findByLink(String link) {
+        Site site = siteRepository.findByLink(link);
+        SavedUserInfo temp = savedUserInfoRepository.findCreator(site.getId());
+        String domain = temp.getUser().getEmail().split("@")[1];
+        SiteByLinkResponse ret = SiteByLinkResponse.from(site, domain);
         return ret;
     }
 }

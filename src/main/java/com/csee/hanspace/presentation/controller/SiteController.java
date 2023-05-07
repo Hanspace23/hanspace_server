@@ -4,10 +4,13 @@ import com.csee.hanspace.application.dto.SiteDto;
 import com.csee.hanspace.application.dto.SiteEditDto;
 import com.csee.hanspace.application.dto.SiteInfoDto;
 import com.csee.hanspace.application.service.ReserveService;
+import com.csee.hanspace.application.service.SavedUserInfoService;
 import com.csee.hanspace.application.service.SiteService;
 import com.csee.hanspace.application.service.TagService;
+import com.csee.hanspace.domain.entity.User;
 import com.csee.hanspace.presentation.request.SiteEditRequest;
 import com.csee.hanspace.presentation.request.SiteInfoRequest;
+import com.csee.hanspace.presentation.response.SiteByLinkResponse;
 import com.csee.hanspace.presentation.response.SiteResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,9 +32,11 @@ public class SiteController {
     @Autowired
     private SiteService siteService;
 
+    private static SavedUserInfoService savedUserInfoService;
+
     @GetMapping("/getSiteByLink/{link}")
-    public ResponseEntity<Site> findByLink(@PathVariable String link){
-        Site res = siteService.findByLink(link);
+    public ResponseEntity<SiteByLinkResponse> findByLink(@PathVariable String link){
+        SiteByLinkResponse res = siteService.findByLink(link);
         return ResponseEntity.ok(res);
     }
 
