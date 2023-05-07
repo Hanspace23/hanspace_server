@@ -59,5 +59,7 @@ public interface ReserveRepository extends JpaRepository<ReserveRecord, Long> {
 
     Long deleteReserveRecordBySiteIdAndRegularIdAndId(Long siteId, Long regularId, Long reserveId);
 
-
+//    Long deleteReserveRecordBySiteIdAnAndSavedUserInfoId(Long siteId, Long userId);
+    @Query("delete from ReserveRecord r where r.site.id = :siteId and r.savedUserInfo.id = :userId")
+    Long deleteUser(Long siteId, Long userId);
 }

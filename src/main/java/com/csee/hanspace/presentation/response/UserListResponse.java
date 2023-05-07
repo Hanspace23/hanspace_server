@@ -10,19 +10,20 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class UserListResponse {
-    private Long userId;
+    private Long id;
     private String userName;
-    private String authority;
+    private String authorization;
     private String email;
-    private int status;
+    private String status;
 
     static public UserListResponse toResponse (UserListDto dto) {
+        System.out.println("dto.getAuthority() = " + dto.getAuthority());
         return UserListResponse.builder()
-                .userId(dto.getUserId())
+                .id(dto.getUserId())
                 .userName(dto.getUserName())
-                .authority(dto.getAuthority())
+                .authorization(dto.getAuthority() == 1 ? "creator" : dto.getAuthority() == 2 ? "admin" : dto.getAuthority() == 3 ? "user" : "blacklist")
                 .email(dto.getEmail())
-                .status(dto.getStatus())
+                .status(dto.getStatus() == 1 ? "대기" : dto.getStatus() == 2 ? "승인" : "거절")
                 .build();
     }
 }
