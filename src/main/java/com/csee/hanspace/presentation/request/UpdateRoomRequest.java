@@ -20,10 +20,9 @@ public class UpdateRoomRequest {
     private Integer endTime;
     private boolean available;
     private String image;
-    private Integer reserveCnt;
     private List<RoomTags> roomTags;
 
     public RoomCUDto roomCUDto() {
-        return new RoomCUDto(roomName, capacity, description, startTime, endTime, available, image, reserveCnt, roomTags);
+        return new RoomCUDto(roomName, capacity, description, startTime, endTime, available, image, roomTags);
     }
 }

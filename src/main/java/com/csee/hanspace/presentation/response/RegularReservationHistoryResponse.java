@@ -14,6 +14,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RegularReservationHistoryResponse {
+
+    private Long id;
+
     private String groupName;
 
     private String purpose;
@@ -23,8 +26,6 @@ public class RegularReservationHistoryResponse {
     private String contact;
 
     private String status;
-
-    private Long id;
 
     private String answer1;
 

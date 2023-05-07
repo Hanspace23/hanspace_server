@@ -20,6 +20,5 @@ public class UpdateRoomResponse {
     private Integer endTime;
     private boolean available;
     private String image;
-    private Integer reserveCnt;
     private List<RoomTags> roomTags;
 }
