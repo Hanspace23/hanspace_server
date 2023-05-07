@@ -234,9 +234,23 @@ public class ReserveService {
     @Transactional
     public List<ReserveDto> getMyReservations(Long savedUserInfoId) {
         List<ReserveRecord> reserves = reserveRepository.findAllBySavedUserInfoId(savedUserInfoId);
-        return reserves.stream()
-                .map(ReserveDto::new)
-                .collect(Collectors.toList());
+        List<ReserveDto> reserveList = new ArrayList<>();
+        LocalDate now = LocalDate.now();
+        for(ReserveRecord reserve : reserves) {
+            String deadline = "마감됨";
+            String status = "대기";
+            if(reserve.getDate().isAfter(now)) {
+                deadline = "마감되지 않음";
+            }
+            if(reserve.getStatus() == 2) {
+                status = "승인";
+            } else if(reserve.getStatus() == 3) {
+                status = "거절";
+            }
+            ReserveDto reserveDto = new ReserveDto(reserve.getId(), reserve.getGroupName(), reserve.getPurpose(), reserve.getReservation(), reserve.getContact(), status, reserve.isRegular(), reserve.getRegularId(), reserve.getAnswer1(), reserve.getAnswer2(), reserve.getRoom().getName(), reserve.getRoom().getImage(), reserve.getDate(), reserve.getRegDate(), reserve.getReserveTime(), deadline);
+            reserveList.add(reserveDto);
+        }
+        return reserveList;
     }
 
     @Transactional
@@ -259,7 +273,7 @@ public class ReserveService {
 @Transactional
 public List<RegularReservationHistoryDto> getMyRegularReservations(Long savedUserInfoId) {
     List<ReserveRecord> reserves = reserveRepository.findAllRegularBySavedUserInfoId(savedUserInfoId);
-    Long tmpRegularId = -1L;
+    int tmpRegularId = -1;
     int loopTimes = 0;
     List<ReserveRecord> temp = new ArrayList<>();
     List<List<ReserveRecord>> reservesGroupBy = new ArrayList<>();
@@ -267,6 +281,7 @@ public List<RegularReservationHistoryDto> getMyRegularReservations(Long savedUse
 
 //    reserveid가 같은 것끼리 list를 만들고 그걸 다시 list에 담는다.
     for(ReserveRecord reserveRecord : reserves) {
+//        System.out.println("regularId: " + reserveRecord.getRegularId() + " -name: " + reserveRecord.getReservation() + " -date: " + reserveRecord.getDate());
         loopTimes++;
 //        마지막 element이면, reservesGroupBy에 담고 종료
         if(loopTimes == reserves.size()) {
@@ -275,12 +290,12 @@ public List<RegularReservationHistoryDto> getMyRegularReservations(Long savedUse
             break;
         }
 //      regularId의 값이 바뀌면
-        if(tmpRegularId != reserveRecord.getRegularId()) {
+        if(tmpRegularId != reserveRecord.getRegularId().intValue()) {
 //            처음이 아닌 경우에는 reservesGroupBy에 추가
-            if(reservesGroupBy.size() != 0) {
+            if(loopTimes != 1) {
                 reservesGroupBy.add(temp);
             }
-            tmpRegularId = reserveRecord.getRegularId();
+            tmpRegularId = reserveRecord.getRegularId().intValue();
             temp = new ArrayList<>();
             temp.add(reserveRecord);
         } else {
@@ -293,26 +308,31 @@ public List<RegularReservationHistoryDto> getMyRegularReservations(Long savedUse
         LocalDate endDate = reserveList.get(reserveList.size() - 1).getDate();
         ReserveRecord tmp = reserveList.get(0);
         String status = "";
-        if(tmp.getStatus() == 1) status = "대기중";
+        if(tmp.getStatus() == 1) status = "대기";
         else if(tmp.getStatus() == 2) status = "승인";
         else status = "거절";
 
-        RegularReservationHistoryDto regularReservationHistoryDto = new RegularReservationHistoryDto(tmp.getGroupName(), tmp.getPurpose(), tmp.getReservation(), tmp.getContact(), status, tmp.getRegularId(), tmp.getAnswer1(), tmp.getAnswer2(), tmp.getRoom().getName(), tmp.getRoom().getImage(), startDate, endDate, tmp.getRegDate());
+        LocalDate now = LocalDate.now();
+//        String deadline = "마감됨";
+//        if(tmp.getDate().isAfter(now)) {
+//            deadline = "마감되지 않음";
+//        }
+
+        RegularReservationHistoryDto regularReservationHistoryDto = new RegularReservationHistoryDto(tmp, status,  now, startDate, endDate);
         regularReserves.add(regularReservationHistoryDto);
     }
 
     return regularReserves;
 }
 
-
     //    개별 예약
-    @Transactional
-    public List<ReserveDto> getEachReservations(Long regularId) {
-        List<ReserveRecord> reserves = reserveRepository.findAllByRegularId(regularId);
-        return reserves.stream()
-            .map(ReserveDto::new)
-            .collect(Collectors.toList());
-    }
+//    @Transactional
+//    public List<ReserveDto> getEachReservations(Long regularId) {
+//        List<ReserveRecord> reserves = reserveRepository.findAllByRegularId(regularId);
+//        return reserves.stream()
+//            .map(ReserveDto::new)
+//            .collect(Collectors.toList());
+//    }
 
 //일회대여 더보기
     @Transactional

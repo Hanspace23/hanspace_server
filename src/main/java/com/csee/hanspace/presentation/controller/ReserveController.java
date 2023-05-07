@@ -48,12 +48,13 @@ public class ReserveController {
     }
 
     //    일회 대여 삭제
-    @PostMapping("/delete")
-    public ResponseEntity<ReserveIdResponse> deleteReservation(@RequestParam Long reservationId) {
-        Long deletedReservationId = reserveService.delete(reservationId);
+    @PostMapping("/delete/{index}")
+    public ResponseEntity<ReserveIdResponse> deleteReservation(@PathVariable Long index) {
+        Long deletedReservationId = reserveService.delete(index);
         ReserveIdResponse response = new ReserveIdResponse(deletedReservationId);
         return ResponseEntity.ok(response);
     }
+
 
 //    정기 대여 리스트
     @GetMapping("/regular-reservations")
@@ -80,14 +81,14 @@ public class ReserveController {
     }
 
 //    개별 예약 보기
-    @GetMapping("/each-reservations")
-    public ResponseEntity<List<ReserveResponse>> getEachReservations(@RequestParam Long regularId) {
-        List<ReserveDto> reserves = reserveService.getEachReservations(regularId);
-        List<ReserveResponse> response = reserves.stream()
-            .map(ReserveDto::reserveResponse)
-            .collect(Collectors.toList());
-        return ResponseEntity.ok(response);
-    }
+//    @GetMapping("/each-reservations")
+//    public ResponseEntity<List<ReserveResponse>> getEachReservations(@RequestParam Long regularId) {
+//        List<ReserveDto> reserves = reserveService.getEachReservations(regularId);
+//        List<ReserveResponse> response = reserves.stream()
+//            .map(ReserveDto::reserveResponse)
+//            .collect(Collectors.toList());
+//        return ResponseEntity.ok(response);
+//    }
 
 
 

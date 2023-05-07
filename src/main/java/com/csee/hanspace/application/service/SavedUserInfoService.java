@@ -76,4 +76,25 @@ public class SavedUserInfoService {
 
     }
 
+//    이용중인 사이트 리스트
+    @Transactional
+    public List<SiteDto> getSubscribedSites(Long userId) {
+        List<SavedUserInfo> savedUserInfoList = savedUserInfoRepository.findAllByUserIdAndUser(userId);
+        return savedUserInfoList.stream().map(SiteDto::new).collect(Collectors.toList());
+    }
+
+    //    관리중인 사이트 리스트
+    @Transactional
+    public List<SiteDto> getManagingSites(Long userId) {
+        List<SavedUserInfo> savedUserInfoList = savedUserInfoRepository.findAllByUserIdAndAdmin(userId);
+        return savedUserInfoList.stream().map(SiteDto::new).collect(Collectors.toList());
+    }
+
+    //    운영중인 사이트 리스트
+    @Transactional
+    public List<SiteDto> getCreateSites(Long userId) {
+        List<SavedUserInfo> savedUserInfoList = savedUserInfoRepository.findAllByUserIdAndCreator(userId);
+        return savedUserInfoList.stream().map(SiteDto::new).collect(Collectors.toList());
+    }
+
 }
