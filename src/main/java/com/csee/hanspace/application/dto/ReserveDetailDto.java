@@ -22,8 +22,6 @@ public class ReserveDetailDto {
 
     private String contact;
 
-    private Integer status;
-
     private String answer1;
 
     private String answer2;
