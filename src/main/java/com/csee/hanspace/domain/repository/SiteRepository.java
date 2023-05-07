@@ -30,8 +30,19 @@ public interface SiteRepository extends JpaRepository<Site, Long> {
             "and u.authority = 2 ")
     List<Site> findAllBySavedUserInfoIdAndAdmin(@Param("savedUserInfoId") Long savedUserInfoId);
 
+    @Query("select distinct s from Site s " +
+            "left join fetch s.savedUserInfoList as u " +
+            "where u.id = :savedUserInfoId " +
+            "and u.authority = 3 ")
+    List<Site> findAllBySavedUserInfoIdAndUser(@Param("savedUserInfoId") Long savedUserInfoId);
+
 
     @Query("select s from Site s where s.link=:link")
     Site findByLink(String link);
 
+    @Query("select s.question1 from Site s where s.id = :siteId")
+    String findQuestion1BySiteId(Long siteId);
+
+    @Query("select s.question2 from Site s where s.id = :siteId")
+    String findQuestion2BySiteId(Long siteId);
 }

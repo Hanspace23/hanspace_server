@@ -13,6 +13,7 @@ import com.csee.hanspace.presentation.request.SavedUserInfoEditRequest;
 import com.csee.hanspace.presentation.request.SavedUserInfoRequest;
 import com.csee.hanspace.presentation.response.SiteUserResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +29,7 @@ public class SavedUserInfoService {
     private final SavedUserInfoRepository savedUserInfoRepository;
     private final UserRepository userRepository;
     private final SiteRepository siteRepository;
+    private final ReserveRepository reserveRepository;
 
     @Transactional
     public SavedUserInfo findById(Long userId) {
@@ -48,7 +50,7 @@ public class SavedUserInfoService {
 
     @Transactional
     public int changeUserStatus(ChangeStatusDto dto){
-        SavedUserInfo userInfo = savedUserInfoRepository.findSavedUserInfoBySiteIdAndUserId(dto.getSiteId(), dto.getUserId());
+        SavedUserInfo userInfo = savedUserInfoRepository.findSavedUserInfoBySiteIdAndId(dto.getSiteId(), dto.getUserId());
         userInfo.setStatus(dto.getStatusId());
         SavedUserInfo editUserInfo = savedUserInfoRepository.save(userInfo);
         return editUserInfo.getStatus();
@@ -57,15 +59,18 @@ public class SavedUserInfoService {
     @Transactional
     public void changeMUserStatus(ChangeMStatusDto dto){
         for(Long i : dto.getUserList()) {
-            SavedUserInfo userInfo = savedUserInfoRepository.findSavedUserInfoBySiteIdAndUserId(dto.getSiteId(), i);
+            SavedUserInfo userInfo = savedUserInfoRepository.findSavedUserInfoBySiteIdAndId(dto.getSiteId(), i);
             System.out.println("userInfo = " + userInfo);
             userInfo.setStatus(dto.getStatusId());
             savedUserInfoRepository.save(userInfo);
         }
     }
 
+    @Modifying
     @Transactional
     public Long deleteUser(DeleteUserDto dto){
+        Long u_id = savedUserInfoRepository.findUserId(dto.getUserId(), dto.getSiteId());
+        reserveRepository.deleteUser(dto.getSiteId(), u_id);
         Long id = savedUserInfoRepository.deleteSavedUserInfoBySiteIdAndUserId(dto.getSiteId(), dto.getUserId());
         return id;
     }
@@ -73,6 +78,10 @@ public class SavedUserInfoService {
     @Transactional
     public void deleteMUser(DeleteMUserDto dto){
         for(Long id : dto.getUserList()) {
+            System.out.println("id = " + id);
+            Long u_id = savedUserInfoRepository.findUserId(id, dto.getSiteId());
+            System.out.println("u_id = " + u_id);
+            reserveRepository.deleteUser(dto.getSiteId(), u_id);
             savedUserInfoRepository.deleteSavedUserInfoBySiteIdAndUserId(dto.getSiteId(), id);
         }
 
@@ -115,4 +124,25 @@ public class SavedUserInfoService {
         SavedUserInfo savedUserInfo =  savedUserInfoRepository.findCreator(sid);
         return savedUserInfo.getUser();
     }
+//    이용중인 사이트 리스트
+    @Transactional
+    public List<SiteDto> getSubscribedSites(Long userId) {
+        List<SavedUserInfo> savedUserInfoList = savedUserInfoRepository.findAllByUserIdAndUser(userId);
+        return savedUserInfoList.stream().map(SiteDto::new).collect(Collectors.toList());
+    }
+
+    //    관리중인 사이트 리스트
+    @Transactional
+    public List<SiteDto> getManagingSites(Long userId) {
+        List<SavedUserInfo> savedUserInfoList = savedUserInfoRepository.findAllByUserIdAndAdmin(userId);
+        return savedUserInfoList.stream().map(SiteDto::new).collect(Collectors.toList());
+    }
+
+    //    운영중인 사이트 리스트
+    @Transactional
+    public List<SiteDto> getCreateSites(Long userId) {
+        List<SavedUserInfo> savedUserInfoList = savedUserInfoRepository.findAllByUserIdAndCreator(userId);
+        return savedUserInfoList.stream().map(SiteDto::new).collect(Collectors.toList());
+    }
+
 }

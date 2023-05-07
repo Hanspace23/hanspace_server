@@ -7,6 +7,7 @@ import com.csee.hanspace.domain.entity.SavedUserInfo;
 import com.csee.hanspace.domain.entity.User;
 import com.csee.hanspace.presentation.request.*;
 import com.csee.hanspace.presentation.response.SiteUserResponse;
+import com.csee.hanspace.presentation.response.SiteResponse;
 import com.csee.hanspace.presentation.response.UserListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,7 @@ public class SavedUserInfoController {
 
     @PutMapping("/changeUserStatus")
     public ResponseEntity<Integer> changeUserStatus(@RequestBody ChangeUserStatusRequest request) {
+        System.out.println("request = " + request);
         int id = savedUserInfoService.changeUserStatus(ChangeStatusDto.from(request));
         return ResponseEntity.ok(id);
     }
@@ -83,6 +85,36 @@ public class SavedUserInfoController {
     public ResponseEntity<Void> deleteMUser(@RequestBody DeleteMUserRequest request) {
         savedUserInfoService.deleteMUser(DeleteMUserDto.from(request));
         return ResponseEntity.ok(null);
+    }
+
+//    이용중인 사이트 리스트
+    @GetMapping("/subscribed-sites")
+    public ResponseEntity<List<SiteResponse>> getSubscribedSites(@RequestParam Long userId) {
+        List<SiteDto> sites = savedUserInfoService.getSubscribedSites(userId);
+        List<SiteResponse> response = sites.stream()
+                .map(SiteDto::siteResponse)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(response);
+    }
+
+    //    관리중인 사이트 리스트
+    @GetMapping("/manage-sites")
+    public ResponseEntity<List<SiteResponse>> getManagingSites(@RequestParam Long userId) {
+        List<SiteDto> sites = savedUserInfoService.getManagingSites(userId);
+        List<SiteResponse> response = sites.stream()
+                .map(SiteDto::siteResponse)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(response);
+    }
+
+    //    생성한 사이트 리스트
+    @GetMapping("/my-sites")
+    public ResponseEntity<List<SiteResponse>> getCreateSites(@RequestParam Long userId) {
+        List<SiteDto> sites = savedUserInfoService.getCreateSites(userId);
+        List<SiteResponse> response = sites.stream()
+                .map(SiteDto::siteResponse)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(response);
     }
 
 

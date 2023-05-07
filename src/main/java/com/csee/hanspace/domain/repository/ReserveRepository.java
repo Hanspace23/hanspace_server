@@ -21,7 +21,7 @@ public interface ReserveRepository extends JpaRepository<ReserveRecord, Long> {
 //            "and r.regular = true ")
 //    List<ReserveRecord> findAllRegularBySavedUserInfoId(@Param("savedUserInfoId") Long savedUserInfoId);
 
-    @Query("SELECT r FROM ReserveRecord r LEFT JOIN FETCH r.savedUserInfo s WHERE s.id = :savedUserInfoId AND r.regular = true ORDER BY r.regularId, r.date ASC")
+    @Query("SELECT r FROM ReserveRecord r LEFT JOIN FETCH r.savedUserInfo s WHERE s.id = :savedUserInfoId AND r.regular = true ORDER BY r.regularId ASC, r.date ASC")
     List<ReserveRecord> findAllRegularBySavedUserInfoId(@Param("savedUserInfoId") Long savedUserInfoId);
 
 //    @Query("select r from ReserveRecord r " +
@@ -39,6 +39,8 @@ public interface ReserveRepository extends JpaRepository<ReserveRecord, Long> {
 //    List<ReserveRecord> findAllReserveBySiteId(Long siteId);
     List<ReserveRecord> findAllReserveBySiteId(Long siteId);
 
+    @Query("select r from ReserveRecord  r where r.site.id = :siteId and r.regular = true")
+    List<ReserveRecord> findAllRegularReserve(Long siteId);
 //    @Query("select MAX(regularId) from ReserveRecord where id = :siteId")
     @Query("select max(r.regularId) from ReserveRecord r where r.site.id = :siteId")
     Long findCurrentRegularId(Long siteId);
@@ -57,4 +59,7 @@ public interface ReserveRepository extends JpaRepository<ReserveRecord, Long> {
 
     Long deleteReserveRecordBySiteIdAndRegularIdAndId(Long siteId, Long regularId, Long reserveId);
 
+//    Long deleteReserveRecordBySiteIdAnAndSavedUserInfoId(Long siteId, Long userId);
+    @Query("delete from ReserveRecord r where r.site.id = :siteId and r.savedUserInfo.id = :userId")
+    Long deleteUser(Long siteId, Long userId);
 }

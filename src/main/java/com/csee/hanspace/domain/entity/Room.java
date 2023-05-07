@@ -1,6 +1,9 @@
 package com.csee.hanspace.domain.entity;
 
 
+import com.csee.hanspace.application.dto.RoomAvailableDto;
+import com.csee.hanspace.application.dto.RoomCUDto;
+import com.csee.hanspace.application.dto.RoomDto;
 import com.csee.hanspace.application.dto.TimeRecordDto;
 import com.csee.hanspace.domain.entity.common.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -64,6 +67,65 @@ public class Room extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Site site;
+
+    public Room(RoomCUDto roomCUDto, Site site) {
+        this.name = roomCUDto.getRoomName();
+        this.image = roomCUDto.getImage();
+        this.capacity = roomCUDto.getCapacity();
+        this.startTime = roomCUDto.getStartTime();
+        this.endTime = roomCUDto.getEndTime();
+        this.available = roomCUDto.isAvailable();
+        this.description = roomCUDto.getDescription();
+        this.roomTagsList = roomCUDto.getRoomTags();
+        this.site = site;
+    }
+
+    public RoomDto toCreateDto() {
+        return RoomDto.builder()
+                .roomId(this.id)
+                .roomName(this.name)
+                .image(this.image)
+                .capacity(this.capacity)
+                .startTime(this.startTime)
+                .endTime(this.endTime)
+                .available(this.available)
+                .description(this.description)
+                .roomTags(this.roomTagsList)
+                .site(this.site)
+                .build();
+    }
+
+    public RoomDto toUpdateDto() {
+        return RoomDto.builder()
+                .roomId(this.id)
+                .roomName(this.name)
+                .image(this.image)
+                .capacity(this.capacity)
+                .startTime(this.startTime)
+                .endTime(this.endTime)
+                .available(this.available)
+                .description(this.description)
+                .roomTags(this.roomTagsList)
+                .site(this.site)
+                .build();
+    }
+
+
+
+    public void update(RoomCUDto roomCUDto) {
+        this.name = roomCUDto.getRoomName();
+        this.image = roomCUDto.getImage();
+        this.capacity = roomCUDto.getCapacity();
+        this.startTime = roomCUDto.getStartTime();
+        this.endTime = roomCUDto.getEndTime();
+        this.available = roomCUDto.isAvailable();
+        this.description = roomCUDto.getDescription();
+        this.roomTagsList = roomCUDto.getRoomTags();
+    }
+
+    public void updateAvailable(RoomAvailableDto roomAvailableDto) {
+        this.available = roomAvailableDto.isAvailable();
+    }
 
     public List<TimeRecordDto> retListOfTimeRecord(){
         List<TimeRecordDto> ret = new ArrayList<>();

@@ -7,6 +7,7 @@ import com.csee.hanspace.application.dto.OneReserveDto;
 import com.csee.hanspace.domain.entity.ReserveRecord;
 import com.csee.hanspace.domain.entity.*;
 import com.csee.hanspace.domain.repository.ReserveRepository;
+import com.csee.hanspace.domain.repository.SiteRepository;
 import com.csee.hanspace.exception.ReserveRecordNotFoundException;
 //import com.csee.hanspace.domain.repository.TimeRecordRepository;
 import com.csee.hanspace.presentation.request.ChangeMStatusRequest;
@@ -30,6 +31,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ReserveService {
     private final ReserveRepository reserveRepository;
+    private final SiteRepository siteRepository;
 
     @Autowired
     private final UserService userService;
@@ -48,7 +50,6 @@ public class ReserveService {
     // 일회 대여
     @Transactional
     public Long save(OneReserveDto dto) {
-        System.out.println("들어옴");
         User user = userService.findByEmail(dto.getEmail());
         SavedUserInfo savedUserInfo = userInfoService.findById(user.getId());
         Site site = siteService.findById(dto.getSiteId());
@@ -61,7 +62,6 @@ public class ReserveService {
     // 정기 대여
     @Transactional
     public void saveRegular(OneReserveDto dto) {
-        System.out.println("dto = " + dto);
         User user = userService.findByEmail(dto.getEmail());
         SavedUserInfo savedUserInfo = userInfoService.findById(user.getId());
         Site site = siteService.findById(dto.getSiteId());
@@ -96,21 +96,63 @@ public class ReserveService {
     @Transactional
     public List<AllReservedDto> readAllReserveList(Long siteId) {
         List<ReserveRecord> reservedList = reserveRepository.findAllReserveBySiteId(siteId);
+        String question1 = siteRepository.findQuestion1BySiteId(siteId);
+        String question2 = siteRepository.findQuestion2BySiteId(siteId);
         System.out.println("reservedList = " + reservedList);
-        List<AllReservedDto> reserveList = reservedList.stream().map(AllReservedDto::of).collect(Collectors.toList());
+        List<AllReservedDto> reserveList = reservedList.stream().map(record -> AllReservedDto.of(record, question1, question2)).collect(Collectors.toList());
+
+        return reserveList;
+    }
+    @Transactional
+    public List<AllReservedDto> readOneReserveList(Long siteId) {
+        List<ReserveRecord> reservedList = reserveRepository.findAllReserveBySiteId(siteId);
+        System.out.println("reservedList = " + reservedList);
+        String question1 = siteRepository.findQuestion1BySiteId(siteId);
+        String question2 = siteRepository.findQuestion2BySiteId(siteId);
+        List<AllReservedDto> reserveList = reservedList.stream().filter(data -> !data.isRegular()).map(record -> AllReservedDto.of(record, question1, question2)).collect(Collectors.toList());
         return reserveList;
     }
     @Transactional
     public List<AllReservedDto> readAllRegularList(Long siteId) {
-        List<ReserveRecord> reservedList = reserveRepository.findAllReserveBySiteId(siteId);
-        List<AllReservedDto> reserveList = reservedList.stream().filter(ReserveRecord::isRegular).map(AllReservedDto::of).collect(Collectors.toList());
+        List<ReserveRecord> reservedList = reserveRepository.findAllRegularReserve(siteId);
+        String question1 = siteRepository.findQuestion1BySiteId(siteId);
+        String question2 = siteRepository.findQuestion2BySiteId(siteId);
+//        Map<Long, List<ReserveRecord>> dataMap = new HashMap<>();
+//        reservedList.stream() // 스트림 생성
+//                .map(record -> {
+//                Long regularId = record.getRegularId();
+//
+//                if (!dataMap.containsKey(regularId)) {
+//                    dataMap.put(regularId, new ArrayList<>());
+//                }
+//
+//                List<ReserveRecord> dataListForId = dataMap.get(regularId);
+//                dataListForId.add(record);
+//            }
+////                System.out.println("record = " + record);
+////                return record;
+//                )
+//            .collect(Collectors.toList());
+////        List<ReserveRecord> flattenedList = dataMap.values().stream() // 스트림 생성
+////                .flatMap(Collection::stream).map(record -> {
+////                    System.out.println("record = " + record);
+////                    return record;
+////                }).collect(Collectors.toList()); // 결과를 List로 수집
+////        List<ReserveRecord> flattenedList = records.stream()
+////                .flatMap(List::stream)
+////                .collect(Collectors.toList());
+
+        List<AllReservedDto> reserveList = reservedList.stream().filter(ReserveRecord::isRegular).map(record -> AllReservedDto.of(record, question1, question2)).collect(Collectors.toList());
+
         return reserveList;
     }
 
     @Transactional
     public List<AllReservedDto> readEachReserveList(Long siteId, Long regularId) {
         List<ReserveRecord> reservedList = reserveRepository.findBySiteIdAndRegularId(siteId, regularId);
-        List<AllReservedDto> reserveList = reservedList.stream().map(AllReservedDto::of).collect(Collectors.toList());
+        String question1 = siteRepository.findQuestion1BySiteId(siteId);
+        String question2 = siteRepository.findQuestion2BySiteId(siteId);
+        List<AllReservedDto> reserveList = reservedList.stream().map(record -> AllReservedDto.of(record, question1, question2)).collect(Collectors.toList());
         return reserveList;
     }
 
@@ -142,18 +184,30 @@ public class ReserveService {
         return reserveRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("no such reserveRecord"));
     }
 
+//    @Transactional
+//    public void changeMultiStatus(ChangeMRequestDto dto) {
+//        List<Long> list = dto.getRecordList();
+//        System.out.println("list = " + list);
+//        for(Long i : list) {
+//            List<ReserveRecord> recordList = reserveRepository.findBySiteIdAndRegularId(dto.getSiteId(), i);
+//            System.out.println("recordList = " + recordList);
+//            for(ReserveRecord record: recordList) {
+//                System.out.println("record = " + record);
+//                record.setStatus(dto.getStatusId());
+//                reserveRepository.save(record);
+//            }
+//        }
+//    }
+
     @Transactional
     public void changeMultiStatus(ChangeMRequestDto dto) {
         List<Long> list = dto.getRecordList();
         System.out.println("list = " + list);
         for(Long i : list) {
-            List<ReserveRecord> recordList = reserveRepository.findBySiteIdAndRegularId(dto.getSiteId(), i);
-            System.out.println("recordList = " + recordList);
-            for(ReserveRecord record: recordList) {
-                System.out.println("record = " + record);
-                record.setStatus(dto.getStatusId());
-                reserveRepository.save(record);
-            }
+            ReserveRecord record = reserveRepository.findBySiteIdAndId(dto.getSiteId(), i);
+            System.out.println("record = " + record);
+            record.setStatus(dto.getStatusId());
+            reserveRepository.save(record);
         }
     }
 
@@ -180,11 +234,25 @@ public class ReserveService {
     @Transactional
     public List<ReserveDto> getMyReservations(Long savedUserInfoId) {
         List<ReserveRecord> reserves = reserveRepository.findAllBySavedUserInfoId(savedUserInfoId);
-        return reserves.stream()
-                .map(ReserveDto::new)
-                .collect(Collectors.toList());
+        List<ReserveDto> reserveList = new ArrayList<>();
+        LocalDate now = LocalDate.now();
+        for(ReserveRecord reserve : reserves) {
+            String deadline = "마감됨";
+            String status = "대기";
+            if(reserve.getDate().isAfter(now)) {
+                deadline = "마감되지 않음";
+            }
+            if(reserve.getStatus() == 2) {
+                status = "승인";
+            } else if(reserve.getStatus() == 3) {
+                status = "거절";
+            }
+            ReserveDto reserveDto = new ReserveDto(reserve.getId(), reserve.getGroupName(), reserve.getPurpose(), reserve.getReservation(), reserve.getContact(), status, reserve.isRegular(), reserve.getRegularId(), reserve.getAnswer1(), reserve.getAnswer2(), reserve.getRoom().getName(), reserve.getRoom().getImage(), reserve.getDate(), reserve.getRegDate(), reserve.getReserveTime(), deadline);
+            reserveList.add(reserveDto);
+        }
+        return reserveList;
     }
-    
+
     @Transactional
     public void deleteMReserve(DeleteMultiReserveDto dto) {
         List<Long> list = dto.getRecordList();
@@ -205,78 +273,82 @@ public class ReserveService {
 @Transactional
 public List<RegularReservationHistoryDto> getMyRegularReservations(Long savedUserInfoId) {
     List<ReserveRecord> reserves = reserveRepository.findAllRegularBySavedUserInfoId(savedUserInfoId);
+    int tmpRegularId = -1;
+    int loopTimes = 0;
+    List<ReserveRecord> temp = new ArrayList<>();
+    List<List<ReserveRecord>> reservesGroupBy = new ArrayList<>();
     List<RegularReservationHistoryDto> regularReserves = new ArrayList<>();
-        int n = 0;
-        int regId = 0;
-        int size = 0;
-        LocalDate startDate = LocalDate.now();
-        String groupName = "1";
-        String purpose = "1";
-        String userName = "1";
-        String contact = "1";
-        LocalDate endDate = LocalDate.now();
-        Integer status = 1;
-        String answer1 = "1";
-        String answer2 = "1";
-        String roomName = "1";
-        String roomImg = "1";
-        LocalDateTime regDate = LocalDateTime.now();
 
-        for(ReserveRecord reserve : reserves ){
-            if(n == 0) {
-                n++;
-                regId = reserve.getRegularId().intValue();
-                startDate = reserve.getDate();
-            } else if(reserves.size()-1 == size) {
-                groupName = reserve.getGroupName();
-                purpose = reserve.getPurpose();
-                userName = reserve.getReservation();
-                contact = reserve.getContact();
-                status = reserve.getStatus();
-                endDate = reserve.getDate();
-                answer1 = reserve.getAnswer1();
-                answer2 = reserve.getAnswer2();
-                roomName = reserve.getRoom().getName();
-                roomImg = reserve.getRoom().getImage();
-                regDate = reserve.getRegDate();
-                RegularReservationHistoryDto regularReservationHistoryDto = new RegularReservationHistoryDto(groupName, purpose, userName, contact, status, Long.valueOf(regId), answer1, answer2, roomName, roomImg, startDate, endDate, regDate);
-                regularReserves.add(regularReservationHistoryDto);
-            } else if(regId == reserve.getRegularId()) {
-                n++;
-                groupName = reserve.getGroupName();
-                purpose = reserve.getPurpose();
-                userName = reserve.getReservation();
-                contact = reserve.getContact();
-                status = reserve.getStatus();
-                endDate = reserve.getDate();
-                answer1 = reserve.getAnswer1();
-                answer2 = reserve.getAnswer2();
-                roomName = reserve.getRoom().getName();
-                roomImg = reserve.getRoom().getImage();
-                regDate = reserve.getRegDate();
-            } else {
-                n = 0;
-                RegularReservationHistoryDto regularReservationHistoryDto = new RegularReservationHistoryDto(groupName, purpose, userName, contact, status, Long.valueOf(regId), answer1, answer2, roomName, roomImg, startDate, endDate, regDate);
-                regularReserves.add(regularReservationHistoryDto);
-                if(reserves.size() != size) {
-                    n++;
-                    regId = reserve.getRegularId().intValue();
-                    startDate = reserve.getDate();
-                }
-            }
-            size++;
+//    reserveid가 같은 것끼리 list를 만들고 그걸 다시 list에 담는다.
+    for(ReserveRecord reserveRecord : reserves) {
+//        System.out.println("regularId: " + reserveRecord.getRegularId() + " -name: " + reserveRecord.getReservation() + " -date: " + reserveRecord.getDate());
+        loopTimes++;
+//        마지막 element이면, reservesGroupBy에 담고 종료
+        if(loopTimes == reserves.size()) {
+            temp.add(reserveRecord);
+            reservesGroupBy.add(temp);
+            break;
         }
+//      regularId의 값이 바뀌면
+        if(tmpRegularId != reserveRecord.getRegularId().intValue()) {
+//            처음이 아닌 경우에는 reservesGroupBy에 추가
+            if(loopTimes != 1) {
+                reservesGroupBy.add(temp);
+            }
+            tmpRegularId = reserveRecord.getRegularId().intValue();
+            temp = new ArrayList<>();
+            temp.add(reserveRecord);
+        } else {
+            temp.add(reserveRecord);
+        }
+    }
+
+    for(List<ReserveRecord> reserveList : reservesGroupBy) {
+        LocalDate startDate = reserveList.get(0).getDate();
+        LocalDate endDate = reserveList.get(reserveList.size() - 1).getDate();
+        ReserveRecord tmp = reserveList.get(0);
+        String status = "";
+        if(tmp.getStatus() == 1) status = "대기";
+        else if(tmp.getStatus() == 2) status = "승인";
+        else status = "거절";
+
+        LocalDate now = LocalDate.now();
+//        String deadline = "마감됨";
+//        if(tmp.getDate().isAfter(now)) {
+//            deadline = "마감되지 않음";
+//        }
+
+        RegularReservationHistoryDto regularReservationHistoryDto = new RegularReservationHistoryDto(tmp, status,  now, startDate, endDate);
+        regularReserves.add(regularReservationHistoryDto);
+    }
+
     return regularReserves;
 }
-
 
     //    개별 예약
     @Transactional
     public List<ReserveDto> getEachReservations(Long regularId) {
         List<ReserveRecord> reserves = reserveRepository.findAllByRegularId(regularId);
-        return reserves.stream()
-            .map(ReserveDto::new)
-            .collect(Collectors.toList());
+        List<ReserveDto> reserveList = new ArrayList<>();
+        LocalDate now = LocalDate.now();
+        for(ReserveRecord reserve : reserves) {
+            String deadline = "마감됨";
+            String status = "대기";
+            if(reserve.getDate().isAfter(now)) {
+                deadline = "마감되지 않음";
+            }
+            if(reserve.getStatus() == 2) {
+                status = "승인";
+            } else if(reserve.getStatus() == 3) {
+                status = "거절";
+            }
+            ReserveDto reserveDto = new ReserveDto(reserve.getId(), reserve.getGroupName(), reserve.getPurpose(), reserve.getReservation(), reserve.getContact(), status, reserve.isRegular(), reserve.getRegularId(), reserve.getAnswer1(), reserve.getAnswer2(), reserve.getRoom().getName(), reserve.getRoom().getImage(), reserve.getDate(), reserve.getRegDate(), reserve.getReserveTime(), deadline);
+            reserveList.add(reserveDto);
+        }
+        return reserveList;
+//        return reserves.stream()
+//            .map(ReserveDto::new)
+//            .collect(Collectors.toList());
     }
 
 //일회대여 더보기
