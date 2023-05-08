@@ -48,9 +48,9 @@ public class ReserveController {
     }
 
     //    일회 대여 삭제
-    @PostMapping("/delete/{index}")
-    public ResponseEntity<ReserveIdResponse> deleteReservation(@PathVariable Long index) {
-        Long deletedReservationId = reserveService.delete(index);
+    @DeleteMapping("/delete")
+    public ResponseEntity<ReserveIdResponse> deleteReservation(@RequestParam Long reservationId) {
+        Long deletedReservationId = reserveService.delete(reservationId);
         ReserveIdResponse response = new ReserveIdResponse(deletedReservationId);
         return ResponseEntity.ok(response);
     }
@@ -74,7 +74,7 @@ public class ReserveController {
     }
 
 //    정기 대여 삭제
-    @PostMapping("/delete/regular")
+    @DeleteMapping("/delete/regular")
     public ResponseEntity<String> deleteAllByRegular(@RequestParam Long regularId) {
         reserveService.deleteAllByRegular(regularId);
         return ResponseEntity.ok("Success");
