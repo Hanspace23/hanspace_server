@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,6 +24,9 @@ public interface ReserveRepository extends JpaRepository<ReserveRecord, Long> {
 
     @Query("SELECT r FROM ReserveRecord r LEFT JOIN FETCH r.savedUserInfo s WHERE s.id = :savedUserInfoId AND r.regular = true ORDER BY r.regularId ASC, r.date ASC")
     List<ReserveRecord> findAllRegularBySavedUserInfoId(@Param("savedUserInfoId") Long savedUserInfoId);
+
+    @Query("select r from ReserveRecord r where r.site.id = :siteId and r.regular = true order by r.regularId asc, r.date asc")
+    List<ReserveRecord> findAllRegularBySiteId(Long siteId);
 
 //    @Query("select r from ReserveRecord r " +
 //            "where r.regularId = :regularId " +
@@ -60,6 +64,8 @@ public interface ReserveRepository extends JpaRepository<ReserveRecord, Long> {
     Long deleteReserveRecordBySiteIdAndRegularIdAndId(Long siteId, Long regularId, Long reserveId);
 
 //    Long deleteReserveRecordBySiteIdAnAndSavedUserInfoId(Long siteId, Long userId);
-    @Query("delete from ReserveRecord r where r.site.id = :siteId and r.savedUserInfo.id = :userId")
-    Long deleteUser(Long siteId, Long userId);
+    @Modifying
+    @Transactional
+    @Query("delete from ReserveRecord r where r.site.id = :siteId and r.savedUserInfo.id = :u_Id")
+    Integer deleteUser(Long siteId, Long u_Id);
 }

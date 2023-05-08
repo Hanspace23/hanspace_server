@@ -66,6 +66,15 @@ public class ReserveController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/getAllReservedRecord")
+    public ResponseEntity<List<RegularResponse>> getRegularReservations(@RequestParam Long siteId) {
+        List<RegularResponseDto> reserves = reserveService.getRegularReservations(siteId);
+        List<RegularResponse> response = reserves.stream()
+                .map(RegularResponseDto::reserveResponse)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(response);
+    }
+
 //    정기 대여 더보기
     @GetMapping("/regular-detail")
     public ResponseEntity<ReserveDetailDto> getRegularReservationDetail(@RequestParam Long regularId) {
@@ -133,8 +142,9 @@ public class ReserveController {
     }
 
     @GetMapping("/eachReservedList")
-    public ResponseEntity<List<AllReservedResponse>> findAllReserved(@RequestBody EachOfRegularRequest request) {
-        List<AllReservedResponse> responses = reserveService.readEachReserveList(request.getSiteId(), request.getRegularId()).stream()
+//    public ResponseEntity<List<AllReservedResponse>> findAllReserved(@RequestBody EachOfRegularRequest request) {
+    public ResponseEntity<List<AllReservedResponse>> findAllReserved(@RequestParam Long siteId, @RequestParam Long regularId) {
+        List<AllReservedResponse> responses = reserveService.readEachReserveList(siteId, regularId).stream()
                 .map(AllReservedResponse::toResponse)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(responses);
@@ -155,14 +165,15 @@ public class ReserveController {
 
     @PutMapping("/changeMultiStatus")
     public ResponseEntity<Void> changeMultiStatus (@RequestBody ChangeMStatusRequest request) {
-        System.out.println("request = " + request);
+//        System.out.println("request = " + request);
         reserveService.changeMultiStatus(ChangeMRequestDto.from(request));
         return ResponseEntity.ok(null);
     }
 
     @PutMapping("/changeMRegularStatus")
     public ResponseEntity<Void> changeMRegularStatus (@RequestBody ChangeMStatusRequest request) {
-        reserveService.changeMultiStatus(ChangeMRequestDto.from(request));
+        System.out.println("request = " + request);
+        reserveService.changeMRegularStatus(ChangeMRequestDto.from(request));
         return ResponseEntity.ok(null);
     }
 
@@ -191,7 +202,12 @@ public class ReserveController {
         return ResponseEntity.ok(null);
     }
 
-
+    @DeleteMapping("deleteMultiRegular")
+    public ResponseEntity<Void> deleteMultiRegular (@RequestBody DeleteMReserveRequest request) {
+        System.out.println("request = " + request);
+        reserveService.deleteMultiRegular(DeleteMultiReserveDto.from(request));
+        return ResponseEntity.ok(null);
+    }
 
 
 
