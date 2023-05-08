@@ -4,6 +4,7 @@ import com.csee.hanspace.presentation.request.RoomReserveRequest;
 import lombok.*;
 import org.springframework.lang.Nullable;
 
+import java.time.DayOfWeek;
 import java.util.List;
 
 @Getter
@@ -33,5 +34,26 @@ public class OneReserveDto {
         System.out.println("request = " + request);
         return new OneReserveDto(request.getEmail(), request.getSiteId(), request.getGroupName(), request.getGroupPurpose(), request.getName(), request.getNumber()
                 ,request.getAnswer1()==null ?"" :  request.getAnswer1(), request.getAnswer1()==null ?"" :  request.getAnswer2(), request.getReserveStartDate(), request.getReserveTime(), request.getRoomName());
+    }
+
+    static public DayOfWeek parseDayOfWeek(String dayString) {
+        switch (dayString) {
+            case "월":
+                return DayOfWeek.MONDAY;
+            case "화":
+                return DayOfWeek.TUESDAY;
+            case "수":
+                return DayOfWeek.WEDNESDAY;
+            case "목":
+                return DayOfWeek.THURSDAY;
+            case "금":
+                return DayOfWeek.FRIDAY;
+            case "토":
+                return DayOfWeek.SATURDAY;
+            case "일":
+                return DayOfWeek.SUNDAY;
+            default:
+                throw new IllegalArgumentException("Invalid day of week string: " + dayString);
+        }
     }
 }

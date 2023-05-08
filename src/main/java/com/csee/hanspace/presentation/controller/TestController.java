@@ -126,10 +126,12 @@ public class TestController {
 
 
 //        User.builder().name("이인혁").email("21700559@handong.ac.kr").build());
-        userService.save(User.builder().name("이인혁").email("21700559@handong.ac.kr").build());
-        userService.save(User.builder().name("방제형").email("21700328@handong.ac.kr").build());
-        userService.save(User.builder().name("홍성헌").email("lukehongg@handong.ac.kr").build());
-        userService.save(User.builder().name("배주영").email("bae@handong.ac.kr").build());
+        userService.save(User.builder().name("이인혁").email("21700559@handong.ac.kr").build());  // 1
+        userService.save(User.builder().name("방제형").email("21700328@handong.ac.kr").build());  // 2
+        userService.save(User.builder().name("홍성헌").email("lukehongg@handong.ac.kr").build());  // 3
+        userService.save(User.builder().name("송다빈").email("song@handong.ac.kr").build());  // 4
+        userService.save(User.builder().name("배주영").email("bae@handong.ac.kr").build());  // 5
+        userService.save(User.builder().name("정석민").email("jung@handong.ac.kr").build());  // 6
     }
 
     private void saveSite() {
@@ -147,20 +149,20 @@ public class TestController {
         roomService.save(Room.builder().image(null).name("NTH 224").capacity(50).description("").available(false).startTime(480).endTime(1320).reserveCnt(20).site(siteService.findById(1L)).build());
     }
     private void saveUserInfo() {
-        savedUserInfoService.save(SavedUserInfo.builder().groupName("홍방이팀").purpose("캡스톤").reservation("이인혁").contact("01034321112").authority(3).status(1).site(siteService.findById(1L)).user(userService.findByEmail("21700559@handong.ac.kr")).build());
-        savedUserInfoService.save(SavedUserInfo.builder().groupName("김광교수님팀").purpose("팀모임").reservation("방제형").contact("01038483212").authority(1).status(1).site(siteService.findById(1L)).user(userService.findByEmail("21700328@handong.ac.kr")).build());
+        savedUserInfoService.save(SavedUserInfo.builder().groupName("홍방이팀").purpose("캡스톤").reservation("이인혁").contact("01034321112").authority(3).status(2).site(siteService.findById(1L)).user(userService.findByEmail("21700559@handong.ac.kr")).build());
+        savedUserInfoService.save(SavedUserInfo.builder().groupName("김광교수님팀").purpose("팀모임").reservation("방제형").contact("01038483212").authority(1).status(2).site(siteService.findById(1L)).user(userService.findByEmail("21700328@handong.ac.kr")).build());
         savedUserInfoService.save(SavedUserInfo.builder().groupName("장소연교수님팀").purpose("팀모임").reservation("홍성헌").contact("01038433212").authority(2).status(2).site(siteService.findById(1L)).user(userService.findByEmail("lukehongg@handong.ac.kr")).build());
-        savedUserInfoService.save(SavedUserInfo.builder().groupName("김기석교수님팀").purpose("팀모임").reservation("이인혁").contact("01038453212").authority(3).status(2).site(siteService.findById(1L)).user(userService.findByEmail("21700559@handong.ac.kr")).build());
-        savedUserInfoService.save(SavedUserInfo.builder().groupName("테스트").purpose("팀모임").reservation("배주영").contact("01011453212").authority(3).status(3).site(siteService.findById(1L)).user(userService.findByEmail("bae@handong.ac.kr")).build());
-        savedUserInfoService.save(SavedUserInfo.builder().groupName("테스트").purpose("팀모임").reservation("배주영").contact("01011453212").authority(3).status(3).site(siteService.findById(1L)).user(userService.findByEmail("bae@handong.ac.kr")).build());
+        savedUserInfoService.save(SavedUserInfo.builder().groupName("김기석교수님팀").purpose("팀모임").reservation("송다빈").contact("01038453212").authority(3).status(1).site(siteService.findById(1L)).user(userService.findByEmail("song@handong.ac.kr")).build());
+        savedUserInfoService.save(SavedUserInfo.builder().groupName("조성배교수님팀").purpose("팀모임").reservation("배주영").contact("01011453212").authority(3).status(1).site(siteService.findById(1L)).user(userService.findByEmail("bae@handong.ac.kr")).build());
+        savedUserInfoService.save(SavedUserInfo.builder().groupName("남재창교수님팀").purpose("팀모임").reservation("정석민").contact("01011453212").authority(3).status(1).site(siteService.findById(1L)).user(userService.findByEmail("jung@handong.ac.kr")).build());
 
     }
 
     private void saveReserveRecord() {
         reserveService.saveReserveRecord(ReserveRecord.builder().groupName("홍방이팀").purpose("캡스톤").reservation("이인혁").contact("01034321112").status(2).regular(false).regularId(0L).answer1("김광, 장소연").answer2(null).site(siteService.findById(1L)).room(roomService.findByName("NTH 219")).savedUserInfo(savedUserInfoService.findById(1L)).weekdays(null).reserveTime("13:00 ~ 15:00").date(LocalDate.parse("2023-07-30", DateTimeFormatter.ISO_DATE)).build());
-        reserveService.saveReserveRecord(ReserveRecord.builder().groupName("CRA").purpose("동아리모임").reservation("안병웅").contact("01034351114").status(1).regular(false).regularId(0L).answer1("조성배").answer2(null).site(siteService.findById(1L)).room(roomService.findByName("NTH 220")).savedUserInfo(savedUserInfoService.findById(2L)).weekdays(null).reserveTime("12:00 ~ 13:00 , 15:00 ~ 16:00").date(LocalDate.parse("2023-05-29", DateTimeFormatter.ISO_DATE)).build());
-        reserveService.saveReserveRecord(ReserveRecord.builder().groupName("GHOST").purpose("동아리모임").reservation("홍성헌").contact("01034352414").status(2).regular(true).regularId(1L).answer1("안민규").answer2(null).site(siteService.findById(1L)).room(roomService.findByName("NTH 221")).savedUserInfo(savedUserInfoService.findById(3L)).weekdays("월,목").reserveTime("12:00 ~ 14:00").date(LocalDate.parse("2023-06-29",DateTimeFormatter.ISO_DATE)).build());
-        reserveService.saveReserveRecord(ReserveRecord.builder().groupName("슬기짜기").purpose("동아리모임").reservation("송다빈").contact("01034352444").status(3).regular(true).regularId(2L).answer1("홍신").answer2(null).site(siteService.findById(1L)).room(roomService.findByName("NTH 223")).savedUserInfo(savedUserInfoService.findById(4L)).weekdays("화,금").reserveTime("14:00 ~ 15:00").date(LocalDate.parse("2023-07-29",DateTimeFormatter.ISO_DATE)).build());
+        reserveService.saveReserveRecord(ReserveRecord.builder().groupName("CRA").purpose("동아리모임").reservation("방제형").contact("01034351114").status(1).regular(false).regularId(0L).answer1("조성배").answer2(null).site(siteService.findById(1L)).room(roomService.findByName("NTH 220")).savedUserInfo(savedUserInfoService.findById(2L)).weekdays(null).reserveTime("12:00 ~ 13:00 , 15:00 ~ 16:00").date(LocalDate.parse("2023-05-29", DateTimeFormatter.ISO_DATE)).build());
+        reserveService.saveReserveRecord(ReserveRecord.builder().groupName("GHOST").purpose("동아리모임").reservation("홍성헌").contact("01034352414").status(2).regular(true).regularId(1L).answer1("안민규").answer2(null).site(siteService.findById(1L)).room(roomService.findByName("NTH 221")).savedUserInfo(savedUserInfoService.findById(3L)).weekdays("월,목").reserveTime("12:00 ~ 14:00").date(LocalDate.parse("2023-05-13",DateTimeFormatter.ISO_DATE)).build());
+        reserveService.saveReserveRecord(ReserveRecord.builder().groupName("슬기짜기").purpose("동아리모임").reservation("송다빈").contact("01034352444").status(3).regular(true).regularId(2L).answer1("홍신").answer2(null).site(siteService.findById(1L)).room(roomService.findByName("NTH 223")).savedUserInfo(savedUserInfoService.findById(4L)).weekdays("화,금").reserveTime("14:00 ~ 15:00").date(LocalDate.parse("2023-05-26",DateTimeFormatter.ISO_DATE)).build());
     }
 
     private void saveTag() {
