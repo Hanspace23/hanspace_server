@@ -7,6 +7,7 @@ import com.csee.hanspace.application.service.UserService;
 import com.csee.hanspace.domain.entity.SavedUserInfo;
 import com.csee.hanspace.domain.entity.User;
 import com.csee.hanspace.presentation.request.RoomReserveRequest;
+import com.csee.hanspace.presentation.request.UserEmailRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -26,11 +27,18 @@ public class UserController {
 
 
 
-    @GetMapping(value="/{email}")
-    public ResponseEntity<User> findByEmail(@PathVariable String email){
-        User user = userService.findByEmail(email);
-        return ResponseEntity.ok(user);
+//    @PostMapping(value="/signup")
+//    public ResponseEntity<User> signup(@RequestBody UserEmailRequest request){
+//        User res = userService.signup(request);
+//        return ResponseEntity.ok(res);
+//    }
+
+    @PostMapping(value="/findElseSignUp")
+    public ResponseEntity<User> findElseSignUp(@RequestBody UserEmailRequest request){
+        User res = userService.findElseSignUp(request);
+        return ResponseEntity.ok(res);
     }
+
 
 
 

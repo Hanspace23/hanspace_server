@@ -11,5 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UserEmailRequest {
     private String email;
-    private Long siteId;
+    private String name;
 }

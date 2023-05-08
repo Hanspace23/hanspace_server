@@ -2,6 +2,8 @@ package com.csee.hanspace.domain.entity;
 
 import com.csee.hanspace.application.dto.UserListDto;
 import com.csee.hanspace.domain.entity.common.BaseEntity;
+import com.csee.hanspace.presentation.request.SavedUserInfoEditRequest;
+import com.csee.hanspace.presentation.request.SavedUserInfoRequest;
 import lombok.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -52,5 +54,26 @@ public class SavedUserInfo extends BaseEntity {
     @OneToMany(mappedBy = "savedUserInfo", cascade = CascadeType.PERSIST)
     private List<ReserveRecord> reserveRecordList = new ArrayList<>();
 
+
+    public void update (SavedUserInfoEditRequest request){
+        this.groupName = request.getGroupName();
+        this.reservation = request.getReservation();
+        this.contact = request.getContact();
+        this.purpose = request.getPurpose();
+    }
+
+    public static SavedUserInfo from (User user, Site site){
+        return SavedUserInfo.builder()
+                .user(user)
+                .site(site)
+                .groupName(null)
+                .reservation(null)
+                .contact(null)
+                .purpose(null)
+                .reserveRecordList(new ArrayList<>())
+                .authority(3)
+                .status(1)
+                .build();
+    }
 
 }
