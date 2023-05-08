@@ -7,6 +7,7 @@ import com.csee.hanspace.application.service.ReserveService;
 import com.csee.hanspace.application.service.RoomService;
 import com.csee.hanspace.domain.entity.Room;
 import com.csee.hanspace.presentation.request.CreateRoomRequest;
+import com.csee.hanspace.presentation.request.RoomAvailsRequest;
 import com.csee.hanspace.presentation.request.UpdateRoomAvailRequest;
 import com.csee.hanspace.presentation.request.UpdateRoomRequest;
 import com.csee.hanspace.presentation.response.*;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -79,12 +81,32 @@ public class RoomController {
     }
 
 //    공간 관리 room 사용금지 여부 수정
-    @PostMapping("/update-avail")
-    public ResponseEntity<UpdateRoomAvailResponse> updateRoomAvailable(@RequestBody UpdateRoomAvailRequest request) {
-        RoomDto roomDto = roomService.updateRoomAvailable(request.roomAvailableDto(), request.getRoomId());
-        UpdateRoomAvailResponse res = roomDto.updateRoomAvailResponse();
+//    @PostMapping("/update-avail")
+//    public ResponseEntity<UpdateRoomAvailResponse> updateRoomAvailable(@RequestBody UpdateRoomAvailRequest request) {
+//        RoomDto roomDto = roomService.updateRoomAvailable(request.roomAvailableDto(), request.getRoomId());
+//        UpdateRoomAvailResponse res = roomDto.updateRoomAvailResponse();
+//        return ResponseEntity.ok(res);
+//    }
+
+//    공간 관리 room 사용금지 여부 수정
+    @PostMapping("update-avails")
+    public ResponseEntity<List<RoomAvailsResponse>> updateRoomAvailables(@RequestBody List<RoomAvailsRequest> requestList) {
+        List<RoomDto> roomDtoList = new ArrayList<>();
+
+        int times = 0;
+        for(RoomAvailsRequest request : requestList) {
+            if(times != 0) {
+                RoomDto roomDto = roomService.updateRoomAvailable(request.getRoomId(), request.roomAvailableDto());
+                roomDtoList.add(roomDto);
+            }
+            times++;
+        }
+
+        List<RoomAvailsResponse> res = roomDtoList.stream().map(RoomDto::toRes).collect(Collectors.toList());
+
         return ResponseEntity.ok(res);
     }
+
 
 
 

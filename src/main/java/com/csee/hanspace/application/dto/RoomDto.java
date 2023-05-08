@@ -4,6 +4,7 @@ import com.csee.hanspace.domain.entity.RoomTags;
 import com.csee.hanspace.domain.entity.Site;
 import com.csee.hanspace.domain.entity.Tag;
 import com.csee.hanspace.presentation.response.CreateRoomResponse;
+import com.csee.hanspace.presentation.response.RoomAvailsResponse;
 import com.csee.hanspace.presentation.response.UpdateRoomAvailResponse;
 import com.csee.hanspace.presentation.response.UpdateRoomResponse;
 import lombok.*;
@@ -38,5 +39,9 @@ public class RoomDto {
 
     public UpdateRoomAvailResponse updateRoomAvailResponse() {
         return new UpdateRoomAvailResponse(roomId, roomName, available);
+    }
+
+    public RoomAvailsResponse toRes() {
+        return new RoomAvailsResponse(roomId, roomName, available);
     }
 }

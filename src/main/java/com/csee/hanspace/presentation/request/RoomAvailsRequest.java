@@ -1,8 +1,6 @@
 package com.csee.hanspace.presentation.request;
 
 import com.csee.hanspace.application.dto.RoomAvailableDto;
-import com.csee.hanspace.application.dto.RoomCUDto;
-import com.csee.hanspace.domain.entity.Room;
 import lombok.*;
 
 @Getter
@@ -10,9 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UpdateRoomAvailRequest {
+public class RoomAvailsRequest {
     private Long roomId;
-    private Long siteId;
     private boolean available;
 
     public RoomAvailableDto roomAvailableDto() {
