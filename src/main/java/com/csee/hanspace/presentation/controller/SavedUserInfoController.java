@@ -76,7 +76,6 @@ public class SavedUserInfoController {
 
     @DeleteMapping("/deleteUser")
     public ResponseEntity<Long> deleteUser(@RequestBody DeleteUserRequest request) {
-        System.out.println("request = " + request);
         Long id = savedUserInfoService.deleteUser(DeleteUserDto.from(request));
         return ResponseEntity.ok(id);
     }

@@ -46,6 +46,7 @@ public class RegularReservationHistoryDto {
 
     private String weekdays;
 
+
     public RegularReservationHistoryDto (ReserveRecord tmp, String status, LocalDate now, LocalDate startDate, LocalDate endDate) {
 
         this.groupName = tmp.getGroupName();

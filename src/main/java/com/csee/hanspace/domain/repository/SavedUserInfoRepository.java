@@ -32,6 +32,7 @@ public interface SavedUserInfoRepository extends JpaRepository<SavedUserInfo, Lo
 
     @Query("select count(s) from SavedUserInfo s where s.site.id = :siteId and s.user.id = :userId ")
     Integer checkInfo(Long userId, Long siteId);
-    @Query("select s.user.id from SavedUserInfo s where s.id = :savedUserInfoId and s.site.id = :siteId")
-    Long findUserId(Long savedUserInfoId, Long siteId);
+
+    @Query("select s.user.id from SavedUserInfo s where s.id = :userId and s.site.id = :siteId")
+    Long findUserId(Long userId, Long siteId);
 }
