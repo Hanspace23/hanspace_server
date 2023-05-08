@@ -26,15 +26,14 @@ public class RoomDto {
     private Integer endTime;
     private boolean available;
     private String image;
-    private Integer reserveCnt;
     private List<RoomTags> roomTags;
 
     public CreateRoomResponse createRoomResponse() {
-        return new CreateRoomResponse(roomId, site.getId(), roomName, capacity, description, startTime, endTime, available, image, reserveCnt, roomTags);
+        return new CreateRoomResponse(roomId, site.getId(), roomName, capacity, description, startTime, endTime, available, image, roomTags);
     }
 
     public UpdateRoomResponse updateRoomResponse() {
-        return new UpdateRoomResponse(roomId, site.getId(), roomName, capacity, description, startTime, endTime, available, image, reserveCnt, roomTags);
+        return new UpdateRoomResponse(roomId, site.getId(), roomName, capacity, description, startTime, endTime, available, image, roomTags);
     }
 
     public UpdateRoomAvailResponse updateRoomAvailResponse() {

@@ -77,7 +77,6 @@ public class Room extends BaseEntity {
         this.available = roomCUDto.isAvailable();
         this.description = roomCUDto.getDescription();
         this.roomTagsList = roomCUDto.getRoomTags();
-        this.reserveCnt = roomCUDto.getReserveCnt();
         this.site = site;
     }
 
@@ -92,7 +91,6 @@ public class Room extends BaseEntity {
                 .available(this.available)
                 .description(this.description)
                 .roomTags(this.roomTagsList)
-                .reserveCnt(this.reserveCnt)
                 .site(this.site)
                 .build();
     }
@@ -108,7 +106,6 @@ public class Room extends BaseEntity {
                 .available(this.available)
                 .description(this.description)
                 .roomTags(this.roomTagsList)
-                .reserveCnt(this.reserveCnt)
                 .site(this.site)
                 .build();
     }
@@ -124,7 +121,6 @@ public class Room extends BaseEntity {
         this.available = roomCUDto.isAvailable();
         this.description = roomCUDto.getDescription();
         this.roomTagsList = roomCUDto.getRoomTags();
-        this.reserveCnt = roomCUDto.getReserveCnt();
     }
 
     public void updateAvailable(RoomAvailableDto roomAvailableDto) {

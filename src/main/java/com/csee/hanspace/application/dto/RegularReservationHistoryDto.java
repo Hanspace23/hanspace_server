@@ -76,7 +76,7 @@ public class RegularReservationHistoryDto {
 
     public RegularReservationHistoryResponse reserveResponse() {
 
-        return new RegularReservationHistoryResponse(groupName, purpose, userName, contact, status, regularId, answer1, answer2, roomName, roomImg, startDate, endDate, regDate, reserveTime, deadline, weekdays);
+        return new RegularReservationHistoryResponse(regularId, groupName, purpose, userName, contact, status, answer1, answer2, roomName, roomImg, startDate, endDate, regDate, reserveTime, deadline, weekdays);
     }
 
 }
