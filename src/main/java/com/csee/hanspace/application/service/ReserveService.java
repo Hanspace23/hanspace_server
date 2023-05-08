@@ -7,10 +7,12 @@ import com.csee.hanspace.application.dto.OneReserveDto;
 import com.csee.hanspace.domain.entity.ReserveRecord;
 import com.csee.hanspace.domain.entity.*;
 import com.csee.hanspace.domain.repository.ReserveRepository;
+import com.csee.hanspace.domain.repository.SavedUserInfoRepository;
 import com.csee.hanspace.domain.repository.SiteRepository;
 import com.csee.hanspace.exception.ReserveRecordNotFoundException;
 //import com.csee.hanspace.domain.repository.TimeRecordRepository;
 import com.csee.hanspace.presentation.request.ChangeMStatusRequest;
+import com.csee.hanspace.presentation.response.RegularResponse;
 import com.csee.hanspace.presentation.response.ReserveCalResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,7 @@ import java.util.stream.Collectors;
 public class ReserveService {
     private final ReserveRepository reserveRepository;
     private final SiteRepository siteRepository;
+    private final SavedUserInfoRepository savedUserInfoRepository;
 
     @Autowired
     private final UserService userService;
@@ -212,11 +215,17 @@ public class ReserveService {
     }
 
     @Transactional
-    public void changeMRegularStatus(ChangeRequestDto dto) {
-        List<ReserveRecord> recordList = reserveRepository.findBySiteIdAndRegularId(dto.getSiteId(), dto.getRecordId());
-        for(ReserveRecord record: recordList) {
-            record.setStatus(record.getStatus());
-            reserveRepository.save(record);
+    public void changeMRegularStatus(ChangeMRequestDto dto) {
+        List<Long> list = dto.getRecordList();
+        System.out.println("list = " + list);
+        System.out.println("dto.getStatusId() = " + dto.getStatusId());
+        for(Long i: list) {
+            List<ReserveRecord> recordList = reserveRepository.findBySiteIdAndRegularId(dto.getSiteId(), i);
+            for (ReserveRecord record : recordList) {
+                System.out.println("record = " + record);
+                record.setStatus(dto.getStatusId());
+                reserveRepository.save(record);
+            }
         }
     }
 
@@ -261,11 +270,13 @@ public class ReserveService {
         }
     }
 
+
+
     @Transactional
-    public void deleteMultiRegular(DeleteMultiRegularDto dto) {
+    public void deleteMultiRegular(DeleteMultiReserveDto dto) {
         List<Long> list = dto.getRecordList();
         for(Long id : list) {
-            reserveRepository.deleteReserveRecordBySiteIdAndRegularIdAndId(dto.getSiteId(), dto.getRegularId(), id);
+            reserveRepository.deleteReserveRecordBySiteIdAndRegularId(dto.getSiteId(),id);
         }
     }
 
@@ -324,6 +335,66 @@ public List<RegularReservationHistoryDto> getMyRegularReservations(Long savedUse
 
     return regularReserves;
 }
+
+    @Transactional
+    public List<RegularResponseDto> getRegularReservations(Long siteId) {
+//        List<ReserveRecord> reserves = reserveRepository.findAllRegularBySavedUserInfoId(savedUserInfoId);
+        String question1 = siteRepository.findQuestion1BySiteId(siteId);
+        String question2 = siteRepository.findQuestion2BySiteId(siteId);
+        List<ReserveRecord> reserves = reserveRepository.findAllRegularBySiteId(siteId);
+        int tmpRegularId = -1;
+        int loopTimes = 0;
+        List<ReserveRecord> temp = new ArrayList<>();
+        List<List<ReserveRecord>> reservesGroupBy = new ArrayList<>();
+        List<RegularResponseDto> regularReserves = new ArrayList<>();
+
+//    reserveid가 같은 것끼리 list를 만들고 그걸 다시 list에 담는다.
+        for(ReserveRecord reserveRecord : reserves) {
+//        System.out.println("regularId: " + reserveRecord.getRegularId() + " -name: " + reserveRecord.getReservation() + " -date: " + reserveRecord.getDate());
+            loopTimes++;
+//        마지막 element이면, reservesGroupBy에 담고 종료
+            if(loopTimes == reserves.size()) {
+                temp.add(reserveRecord);
+                reservesGroupBy.add(temp);
+                break;
+            }
+//      regularId의 값이 바뀌면
+            if(tmpRegularId != reserveRecord.getRegularId().intValue()) {
+//            처음이 아닌 경우에는 reservesGroupBy에 추가
+                if(loopTimes != 1) {
+                    reservesGroupBy.add(temp);
+                }
+                tmpRegularId = reserveRecord.getRegularId().intValue();
+                temp = new ArrayList<>();
+                temp.add(reserveRecord);
+            } else {
+                temp.add(reserveRecord);
+            }
+        }
+
+        for(List<ReserveRecord> reserveList : reservesGroupBy) {
+            LocalDate startDate = reserveList.get(0).getDate();
+            LocalDate endDate = reserveList.get(reserveList.size() - 1).getDate();
+            ReserveRecord tmp = reserveList.get(0);
+            String status = "";
+            if(tmp.getStatus() == 1) status = "대기";
+            else if(tmp.getStatus() == 2) status = "승인";
+            else status = "거절";
+
+            LocalDate now = LocalDate.now();
+//        String deadline = "마감됨";
+//        if(tmp.getDate().isAfter(now)) {
+//            deadline = "마감되지 않음";
+//        }
+
+
+            RegularResponseDto dto = RegularResponseDto.of(tmp, status,  now, startDate, endDate, question1, question2);
+            regularReserves.add(dto);
+        }
+
+        return regularReserves;
+    }
+
 
     //    개별 예약
 //    @Transactional

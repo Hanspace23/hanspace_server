@@ -59,8 +59,10 @@ public class SavedUserInfoService {
     @Transactional
     public Long deleteUser(DeleteUserDto dto){
         Long u_id = savedUserInfoRepository.findUserId(dto.getUserId(), dto.getSiteId());
-        reserveRepository.deleteUser(dto.getSiteId(), u_id);
-        Long id = savedUserInfoRepository.deleteSavedUserInfoBySiteIdAndUserId(dto.getSiteId(), dto.getUserId());
+        System.out.println("u_id! = " + u_id);
+        System.out.println(reserveRepository.deleteUser(dto.getSiteId(), u_id));
+        Long id = savedUserInfoRepository.deleteSavedUserInfoBySiteIdAndUserId(dto.getSiteId(), u_id);
+        System.out.println("id = " + id);
         return id;
     }
 
@@ -71,7 +73,7 @@ public class SavedUserInfoService {
             Long u_id = savedUserInfoRepository.findUserId(id, dto.getSiteId());
             System.out.println("u_id = " + u_id);
             reserveRepository.deleteUser(dto.getSiteId(), u_id);
-            savedUserInfoRepository.deleteSavedUserInfoBySiteIdAndUserId(dto.getSiteId(), id);
+            savedUserInfoRepository.deleteSavedUserInfoBySiteIdAndUserId(dto.getSiteId(), u_id);
         }
 
     }
