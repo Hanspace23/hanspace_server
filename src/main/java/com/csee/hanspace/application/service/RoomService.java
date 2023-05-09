@@ -86,8 +86,16 @@ public class RoomService {
         return room.toUpdateDto();
     }
 
+//    @Transactional
+//    public RoomDto updateRoomAvailable(RoomAvailableDto roomAvailableDto, Long roomId) {
+//        Room room = roomRepository.findById(roomId).orElseThrow(() -> new IllegalArgumentException("no such room"));
+//        room.updateAvailable(roomAvailableDto);
+//        return room.toUpdateDto();
+//    }
+
+//  available update
     @Transactional
-    public RoomDto updateRoomAvailable(RoomAvailableDto roomAvailableDto, Long roomId) {
+    public RoomDto updateRoomAvailable(Long roomId, RoomAvailableDto roomAvailableDto) {
         Room room = roomRepository.findById(roomId).orElseThrow(() -> new IllegalArgumentException("no such room"));
         room.updateAvailable(roomAvailableDto);
         return room.toUpdateDto();
