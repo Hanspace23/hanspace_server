@@ -153,8 +153,8 @@ public class TestController {
         savedUserInfoService.save(SavedUserInfo.builder().groupName("김광교수님팀").purpose("팀모임").reservation("방제형").contact("01038483212").authority(1).status(2).site(siteService.findById(1L)).user(userService.findByEmail("21700328@handong.ac.kr")).build());
         savedUserInfoService.save(SavedUserInfo.builder().groupName("장소연교수님팀").purpose("팀모임").reservation("홍성헌").contact("01038433212").authority(2).status(2).site(siteService.findById(1L)).user(userService.findByEmail("lukehongg@handong.ac.kr")).build());
         savedUserInfoService.save(SavedUserInfo.builder().groupName("김기석교수님팀").purpose("팀모임").reservation("송다빈").contact("01038453212").authority(3).status(1).site(siteService.findById(1L)).user(userService.findByEmail("song@handong.ac.kr")).build());
-        savedUserInfoService.save(SavedUserInfo.builder().groupName("조성배교수님팀").purpose("팀모임").reservation("배주영").contact("01011453212").authority(3).status(1).site(siteService.findById(1L)).user(userService.findByEmail("bae@handong.ac.kr")).build());
-        savedUserInfoService.save(SavedUserInfo.builder().groupName("남재창교수님팀").purpose("팀모임").reservation("정석민").contact("01011453212").authority(3).status(1).site(siteService.findById(1L)).user(userService.findByEmail("jung@handong.ac.kr")).build());
+        savedUserInfoService.save(SavedUserInfo.builder().groupName("조성배교수님팀").purpose("팀모임").reservation("배주영").contact("01011453212").authority(1).status(1).site(siteService.findById(2L)).user(userService.findByEmail("bae@handong.ac.kr")).build());
+        savedUserInfoService.save(SavedUserInfo.builder().groupName("남재창교수님팀").purpose("팀모임").reservation("정석민").contact("01011453212").authority(1).status(1).site(siteService.findById(3L)).user(userService.findByEmail("jung@handong.ac.kr")).build());
 
     }
 
