@@ -1,7 +1,6 @@
 package com.csee.hanspace.domain.entity;
 
-import com.csee.hanspace.application.dto.SiteEditDto;
-import com.csee.hanspace.application.dto.SiteInfoDto;
+import com.csee.hanspace.application.dto.*;
 import com.csee.hanspace.domain.entity.common.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -96,6 +95,36 @@ public class Site extends BaseEntity {
         site.setTimeUnit(Integer.parseInt(dto.getTimeUnit()));
 
         return site;
+    }
+
+    public Site(SiteCUDto siteCUDto) {
+        this.name = siteCUDto.getSiteName();
+        this.company = siteCUDto.getCompany();
+        this.description = siteCUDto.getDescription();
+        this.logo = siteCUDto.getLogo();
+        this.link = siteCUDto.getLink();
+        this.maxDate = siteCUDto.getMaxDate();
+        this.maxTime = siteCUDto.getMaxTime();
+        this.timeUnit = siteCUDto.getTimeUnit();
+        this.question1 = siteCUDto.getQuestion1();
+        this.question2 = siteCUDto.getQuestion2();
+        this.restriction = siteCUDto.getRestriction();
+    }
+
+    public SiteBodyDto toCreateDto() {
+        return SiteBodyDto.builder()
+                .siteId(this.id)
+                .siteName(this.name)
+                .description(this.description)
+                .logo(this.logo)
+                .link(this.logo)
+                .company(this.company)
+                .maxDate(this.maxDate)
+                .maxTime(this.maxTime)
+                .timeUnit(this.timeUnit)
+                .question1(this.question1)
+                .question2(this.question2)
+                .build();
     }
 
 

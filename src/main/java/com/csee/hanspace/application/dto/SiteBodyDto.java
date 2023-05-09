@@ -9,7 +9,6 @@ import lombok.*;
 @Builder
 public class SiteBodyDto {
     private Long siteId;
-    private Long userId;
     private String siteName;
     private String description;
     private String logo;

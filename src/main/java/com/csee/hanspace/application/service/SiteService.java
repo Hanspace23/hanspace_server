@@ -1,9 +1,6 @@
 package com.csee.hanspace.application.service;
 
-import com.csee.hanspace.application.dto.SiteBodyDto;
-import com.csee.hanspace.application.dto.SiteDto;
-import com.csee.hanspace.application.dto.SiteEditDto;
-import com.csee.hanspace.application.dto.SiteInfoDto;
+import com.csee.hanspace.application.dto.*;
 import com.csee.hanspace.domain.entity.*;
 import com.csee.hanspace.domain.repository.ReserveRepository;
 import com.csee.hanspace.domain.repository.SavedUserInfoRepository;
@@ -112,5 +109,12 @@ public class SiteService {
         SiteBodyDto siteBodyDto = new SiteBodyDto();
 
         return siteBodyDto;
+    }
+
+    @Transactional
+    public SiteBodyDto create(SiteCUDto siteCUDto) {
+        Site newSite = new Site(siteCUDto);
+        Site site = siteRepository.save(newSite);
+        return site.toCreateDto();
     }
 }

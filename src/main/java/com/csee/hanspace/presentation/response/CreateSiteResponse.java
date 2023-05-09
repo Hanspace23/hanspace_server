@@ -9,7 +9,6 @@ import lombok.*;
 @Builder
 public class CreateSiteResponse {
     private Long siteId;
-    private Long savedUserInfoId;
     private String siteName;
     private String description;
     private String logo;
@@ -21,4 +20,6 @@ public class CreateSiteResponse {
     private String question1;
     private String question2;
     private int restriction;
+    private Long savedId;
+    private Long userId;
 }

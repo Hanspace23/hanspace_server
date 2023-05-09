@@ -1,5 +1,6 @@
 package com.csee.hanspace.presentation.request;
 
+import com.csee.hanspace.application.dto.SiteCUDto;
 import lombok.*;
 
 @Getter
@@ -8,8 +9,6 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class CreateSiteRequest {
-    private Long siteId;
-    private Long savedUserInfoId;
     private String siteName;
     private String description;
     private String logo;
@@ -21,4 +20,9 @@ public class CreateSiteRequest {
     private String question1;
     private String question2;
     private int restriction;
+    private Long userId;
+
+    public SiteCUDto siteCUDto() {
+        return new SiteCUDto(siteName, description, logo, link, company, maxDate, maxTime, timeUnit, question1, question2, restriction);
+    }
 }
