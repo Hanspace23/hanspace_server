@@ -1,9 +1,12 @@
 package com.csee.hanspace.presentation.response;
 
 import com.csee.hanspace.domain.entity.Site;
+import com.csee.hanspace.domain.entity.Tag;
 import lombok.*;
 
 import javax.persistence.Column;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,6 +28,7 @@ public class SiteByLinkResponse {
     private String question2;
     private int timeUnit;
     private String domain;
+    private List<Tag> tagList = new ArrayList<>();
 
     public static SiteByLinkResponse from (Site site, String domain){
         return SiteByLinkResponse.builder()
@@ -41,6 +45,7 @@ public class SiteByLinkResponse {
                 .question2(site.getQuestion2())
                 .timeUnit(site.getTimeUnit())
                 .domain(domain)
+                .tagList(site.getTagList())
                 .build();
     }
 }
