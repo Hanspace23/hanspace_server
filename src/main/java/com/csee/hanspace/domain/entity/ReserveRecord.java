@@ -10,9 +10,11 @@ import org.hibernate.annotations.Where;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -161,5 +163,18 @@ public class ReserveRecord extends BaseEntity {
         return ret;
     }
 
+    public static List<LocalDate> getDatesForDayOfWeek(LocalDate startDate, LocalDate endDate, List<DayOfWeek> targetDaysOfWeek) {
+        List<LocalDate> dates = new ArrayList<>();
 
+        for (DayOfWeek targetDayOfWeek : targetDaysOfWeek) {
+            LocalDate nextDate = startDate.with(TemporalAdjusters.nextOrSame(targetDayOfWeek));
+
+            while (nextDate.isBefore(endDate) || nextDate.isEqual(endDate)) {
+                dates.add(nextDate);
+                nextDate = nextDate.with(TemporalAdjusters.next(targetDayOfWeek));
+            }
+        }
+
+        return dates;
+    }
 }

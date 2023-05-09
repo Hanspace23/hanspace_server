@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -77,16 +78,24 @@ public class ReserveService {
         String endDateString = parts[2];
         String daysString = parts[3];
         String weekdays = daysString.replaceAll("[()]", "");
+        List<DayOfWeek> daysOfWeek = Arrays.stream(weekdays.split(","))
+                .map(String::trim)
+                .map(OneReserveDto::parseDayOfWeek)
+                .collect(Collectors.toList());
+
+
+        System.out.println(daysOfWeek);
+
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/M/d");
         LocalDate startDate = LocalDate.parse(startDateString, formatter);
         LocalDate endDate = LocalDate.parse(endDateString, formatter);
-
-        List<LocalDate> dates = new ArrayList<>();
-        for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
-            dates.add(date);
-        }
-        dates.add(endDate);
+        List<LocalDate> dates = ReserveRecord.getDatesForDayOfWeek(startDate, endDate, daysOfWeek);
+//        List<LocalDate> dates = new ArrayList<>();
+//        for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
+//            dates.add(date);
+//        }
+//        dates.add(endDate);
 
 
         for(LocalDate dateForRegular : dates) {
