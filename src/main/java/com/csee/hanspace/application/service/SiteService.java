@@ -1,5 +1,6 @@
 package com.csee.hanspace.application.service;
 
+import com.csee.hanspace.application.dto.SiteBodyDto;
 import com.csee.hanspace.application.dto.SiteDto;
 import com.csee.hanspace.application.dto.SiteEditDto;
 import com.csee.hanspace.application.dto.SiteInfoDto;
@@ -104,5 +105,12 @@ public class SiteService {
         String domain = temp.getUser().getEmail().split("@")[1];
         SiteByLinkResponse ret = SiteByLinkResponse.from(site, domain);
         return ret;
+    }
+
+    @Transactional
+    public SiteBodyDto create() {
+        SiteBodyDto siteBodyDto = new SiteBodyDto();
+
+        return siteBodyDto;
     }
 }
