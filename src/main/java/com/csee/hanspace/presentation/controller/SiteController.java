@@ -1,5 +1,6 @@
 package com.csee.hanspace.presentation.controller;
 
+import com.csee.hanspace.application.dto.SiteBodyDto;
 import com.csee.hanspace.application.dto.SiteDto;
 import com.csee.hanspace.application.dto.SiteEditDto;
 import com.csee.hanspace.application.dto.SiteInfoDto;
@@ -7,9 +8,13 @@ import com.csee.hanspace.application.service.ReserveService;
 import com.csee.hanspace.application.service.SavedUserInfoService;
 import com.csee.hanspace.application.service.SiteService;
 import com.csee.hanspace.application.service.TagService;
+import com.csee.hanspace.domain.entity.SavedUserInfo;
 import com.csee.hanspace.domain.entity.User;
+import com.csee.hanspace.domain.repository.SiteRepository;
+import com.csee.hanspace.presentation.request.CreateSiteRequest;
 import com.csee.hanspace.presentation.request.SiteEditRequest;
 import com.csee.hanspace.presentation.request.SiteInfoRequest;
+import com.csee.hanspace.presentation.response.CreateSiteResponse;
 import com.csee.hanspace.presentation.response.SiteByLinkResponse;
 import com.csee.hanspace.presentation.response.SiteResponse;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +37,10 @@ public class SiteController {
     @Autowired
     private SiteService siteService;
 
-    private static SavedUserInfoService savedUserInfoService;
+    @Autowired
+    private SavedUserInfoService savedUserInfoService;
+
+//    private static SavedUserInfoService savedUserInfoService;
 
     @GetMapping("/getSiteByLink/{link}")
     public ResponseEntity<SiteByLinkResponse> findByLink(@PathVariable String link){
@@ -62,31 +70,13 @@ public class SiteController {
          return ResponseEntity.ok(response);
      }
 
-//     @GetMapping("/my-sites")
-//     public ResponseEntity<List<SiteResponse>> getMySites(@RequestParam Long savedUserInfoId) {
-//         List<SiteDto> sites = siteService.getMySites(savedUserInfoId);
-//         List<SiteResponse> response = sites.stream()
-//                 .map(SiteDto::siteResponse)
-//                 .collect(Collectors.toList());
-//         return ResponseEntity.ok(response);
+
+//     @PostMapping("create-site")
+//    public ResponseEntity<CreateSiteResponse> createSite(@RequestBody CreateSiteRequest request) {
+////         SavedUserInfo savedUserInfo = re
+//
+//         CreateSiteResponse response = new CreateSiteResponse();
+//        return ResponseEntity.ok(response);
 //     }
-//
-//    @GetMapping("/manage-sites")
-//    public ResponseEntity<List<SiteResponse>> getManagingSites(@RequestParam Long savedUserInfoId) {
-//        List<SiteDto> sites = siteService.getManagingSites(savedUserInfoId);
-//        List<SiteResponse> response = sites.stream()
-//                .map(SiteDto::siteResponse)
-//                .collect(Collectors.toList());
-//        return ResponseEntity.ok(response);
-//    }
-//
-//    @GetMapping("/subscribed-sites")
-//    public ResponseEntity<List<SiteResponse>> getSubscribedSites(@RequestParam Long savedUserInfoId) {
-//        List<SiteDto> sites = siteService.getSubscribedSites(savedUserInfoId);
-//        List<SiteResponse> response = sites.stream()
-//                .map(SiteDto::siteResponse)
-//                .collect(Collectors.toList());
-//        return ResponseEntity.ok(response);
-//    }
 
 }
