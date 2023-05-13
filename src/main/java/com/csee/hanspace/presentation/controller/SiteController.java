@@ -73,7 +73,7 @@ public class SiteController {
         SiteBodyDto siteBodyDto = siteService.create(request.siteCUDto());
         CreateSavedDto createSavedDto = savedUserInfoService.createSavedUserInfo(request.getUserId(), siteBodyDto.getSiteId());
 
-         CreateSiteResponse response = new CreateSiteResponse(siteBodyDto.getSiteId(), siteBodyDto.getSiteName(), siteBodyDto.getDescription(), siteBodyDto.getLogo(), siteBodyDto.getLink(), siteBodyDto.getCompany(), siteBodyDto.getMaxDate(), siteBodyDto.getMaxTime(), siteBodyDto.getTimeUnit(), siteBodyDto.getQuestion1(), siteBodyDto.getQuestion2(), siteBodyDto.getRestriction(), createSavedDto.getSavedId(), createSavedDto.getUserId());
+         CreateSiteResponse response = new CreateSiteResponse(siteBodyDto.getSiteId(), siteBodyDto.getSiteName(), siteBodyDto.getDescription(), siteBodyDto.getLogo(), siteBodyDto.getLink(), siteBodyDto.getCompany(), siteBodyDto.getMaxDate(), siteBodyDto.getMaxTime(), siteBodyDto.getTimeUnit(), siteBodyDto.getQuestion1(), siteBodyDto.getQuestion2(), siteBodyDto.getRestriction(), createSavedDto.getSavedId(), createSavedDto.getUserId(), createSavedDto.getAuthority());
         return ResponseEntity.ok(response);
      }
 

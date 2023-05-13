@@ -47,6 +47,8 @@ public class ReserveDto {
 
     private String deadline;
 
+    private String user;
+
 //    public ReserveDto(ReserveRecord reserve){
 //        this.id = reserve.getId();
 //        this.groupName = reserve.getGroupName();
@@ -67,6 +69,6 @@ public class ReserveDto {
 
     public ReserveResponse reserveResponse() {
 
-        return new ReserveResponse(id, groupName, purpose, userName, contact, status, regular, regularId, answer1, answer2, roomName, roomImg, reservationDate, regDate, reserveTime, deadline);
+        return new ReserveResponse(id, groupName, purpose, userName, contact, status, regular, regularId, answer1, answer2, roomName, roomImg, reservationDate, regDate, reserveTime, deadline, user);
     }
 }

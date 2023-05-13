@@ -76,6 +76,7 @@ public class SavedUserInfo extends BaseEntity {
     public SavedUserInfo(User user, Site site) {
         this.user = user;
         this.site = site;
+        this.authority = 1;
     }
 
     public CreateSavedDto toCreateDto() {
@@ -83,6 +84,7 @@ public class SavedUserInfo extends BaseEntity {
                 .savedId(this.id)
                 .userId(this.user.getId())
                 .siteId(this.site.getId())
+                .authority(this.authority)
                 .build();
     }
 

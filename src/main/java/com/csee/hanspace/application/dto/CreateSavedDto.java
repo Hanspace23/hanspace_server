@@ -13,4 +13,5 @@ public class CreateSavedDto {
     private Long savedId;
     private Long userId;
     private Long siteId;
+    private int authority;
 }

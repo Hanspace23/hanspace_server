@@ -22,4 +22,5 @@ public class CreateSiteResponse {
     private int restriction;
     private Long savedId;
     private Long userId;
+    private int authority;
 }

@@ -46,4 +46,6 @@ public class RegularReservationHistoryResponse {
     private String deadline;
 
     private String weekdays;
+
+    private String user;
 }

@@ -1,7 +1,6 @@
 package com.csee.hanspace.presentation.controller;
 
 import com.csee.hanspace.application.dto.RoomDto;
-import com.csee.hanspace.application.dto.RoomReadDto;
 import com.csee.hanspace.application.dto.RoomsReadDto;
 import com.csee.hanspace.application.service.ReserveService;
 import com.csee.hanspace.application.service.RoomService;
@@ -41,12 +40,12 @@ public class RoomController {
     }
 
 //    공간 관리 room read
-    @GetMapping("/find-room")
-    public ResponseEntity<RoomReadResponse> findRoomById(@RequestParam Long roomId){
-        RoomReadDto room = roomService.findRoomById(roomId);
-        RoomReadResponse res = room.toRes();
-        return ResponseEntity.ok(res);
-    }
+//    @GetMapping("/find-room")
+//    public ResponseEntity<RoomReadResponse> findRoomById(@RequestParam Long roomId){
+//        RoomReadDto room = roomService.findRoomById(roomId);
+//        RoomReadResponse res = room.toRes();
+//        return ResponseEntity.ok(res);
+//    }
 
 //    공간 관리 room 전체 read
     @GetMapping("/find-rooms")
@@ -57,7 +56,7 @@ public class RoomController {
     }
 
 //    공간 관리 room 삭제
-    @PostMapping("/delete-room")
+    @DeleteMapping("/delete-room")
     public ResponseEntity<ReserveIdResponse> deleteRoom(@RequestParam Long roomId) {
         Long deletedRoomId = roomService.deleteRoom(roomId);
         ReserveIdResponse response = new ReserveIdResponse(deletedRoomId);
@@ -106,7 +105,6 @@ public class RoomController {
 
         return ResponseEntity.ok(res);
     }
-
 
 
 

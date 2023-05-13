@@ -45,4 +45,6 @@ public class ReserveResponse {
     private String reserveTime;
 
     private String deadline;
+
+    private String user;
 }

@@ -255,17 +255,17 @@ public class ReserveService {
         List<ReserveDto> reserveList = new ArrayList<>();
         LocalDate now = LocalDate.now();
         for(ReserveRecord reserve : reserves) {
-            String deadline = "마감됨";
+            String deadline = "기한 만료";
             String status = "대기";
             if(reserve.getDate().isAfter(now)) {
-                deadline = "마감되지 않음";
+                deadline = "만료되지 않음";
             }
             if(reserve.getStatus() == 2) {
                 status = "승인";
             } else if(reserve.getStatus() == 3) {
                 status = "거절";
             }
-            ReserveDto reserveDto = new ReserveDto(reserve.getId(), reserve.getGroupName(), reserve.getPurpose(), reserve.getReservation(), reserve.getContact(), status, reserve.isRegular(), reserve.getRegularId(), reserve.getAnswer1(), reserve.getAnswer2(), reserve.getRoom().getName(), reserve.getRoom().getImage(), reserve.getDate(), reserve.getRegDate(), reserve.getReserveTime(), deadline);
+            ReserveDto reserveDto = new ReserveDto(reserve.getId(), reserve.getGroupName(), reserve.getPurpose(), reserve.getReservation(), reserve.getContact(), status, reserve.isRegular(), reserve.getRegularId(), reserve.getAnswer1(), reserve.getAnswer2(), reserve.getRoom().getName(), reserve.getRoom().getImage(), reserve.getDate(), reserve.getRegDate(), reserve.getReserveTime(), deadline, reserve.getSavedUserInfo().getUser().getName());
             reserveList.add(reserveDto);
         }
         return reserveList;
@@ -412,17 +412,17 @@ public List<RegularReservationHistoryDto> getMyRegularReservations(Long savedUse
         List<ReserveDto> reserveList = new ArrayList<>();
         LocalDate now = LocalDate.now();
         for(ReserveRecord reserve : reserves) {
-            String deadline = "마감됨";
+            String deadline = "기한 만료";
             String status = "대기";
             if(reserve.getDate().isAfter(now)) {
-                deadline = "마감되지 않음";
+                deadline = "만료되지 않음";
             }
             if(reserve.getStatus() == 2) {
                 status = "승인";
             } else if(reserve.getStatus() == 3) {
                 status = "거절";
             }
-            ReserveDto reserveDto = new ReserveDto(reserve.getId(), reserve.getGroupName(), reserve.getPurpose(), reserve.getReservation(), reserve.getContact(), status, reserve.isRegular(), reserve.getRegularId(), reserve.getAnswer1(), reserve.getAnswer2(), reserve.getRoom().getName(), reserve.getRoom().getImage(), reserve.getDate(), reserve.getRegDate(), reserve.getReserveTime(), deadline);
+            ReserveDto reserveDto = new ReserveDto(reserve.getId(), reserve.getGroupName(), reserve.getPurpose(), reserve.getReservation(), reserve.getContact(), status, reserve.isRegular(), reserve.getRegularId(), reserve.getAnswer1(), reserve.getAnswer2(), reserve.getRoom().getName(), reserve.getRoom().getImage(), reserve.getDate(), reserve.getRegDate(), reserve.getReserveTime(), deadline, reserve.getSavedUserInfo().getUser().getName());
             reserveList.add(reserveDto);
         }
         return reserveList;

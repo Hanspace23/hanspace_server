@@ -56,6 +56,7 @@ public interface ReserveRepository extends JpaRepository<ReserveRecord, Long> {
     @Modifying
     @Query("Update ReserveRecord r set r.deleted = true where r.regularId = :regularId and r.deleted = false")
     void deleteAllByRegularId(Long regularId);
+
     
     Long deleteReserveRecordBySiteIdAndId(Long siteId, Long reserveId);
 

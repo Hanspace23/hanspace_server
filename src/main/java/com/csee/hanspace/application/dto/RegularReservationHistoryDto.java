@@ -46,6 +46,8 @@ public class RegularReservationHistoryDto {
 
     private String weekdays;
 
+    private String user;
+
 
     public RegularReservationHistoryDto (ReserveRecord tmp, String status, LocalDate now, LocalDate startDate, LocalDate endDate) {
 
@@ -64,10 +66,11 @@ public class RegularReservationHistoryDto {
         this.regDate = tmp.getRegDate();
         this.reserveTime = tmp.getReserveTime();
         this.weekdays = tmp.getWeekdays();
+        this.user = tmp.getSavedUserInfo().getUser().getName();
 
-        String deadline = "마감됨";
+        String deadline = "기한 만료";
         if(endDate.isAfter(now)) {
-            deadline = "마감되지 않음";
+            deadline = "만료되지 않음";
         }
 
         this.deadline = deadline;
@@ -76,7 +79,7 @@ public class RegularReservationHistoryDto {
 
     public RegularReservationHistoryResponse reserveResponse() {
 
-        return new RegularReservationHistoryResponse(regularId, groupName, purpose, userName, contact, status, answer1, answer2, roomName, roomImg, startDate, endDate, regDate, reserveTime, deadline, weekdays);
+        return new RegularReservationHistoryResponse(regularId, groupName, purpose, userName, contact, status, answer1, answer2, roomName, roomImg, startDate, endDate, regDate, reserveTime, deadline, weekdays, user);
     }
 
 }
