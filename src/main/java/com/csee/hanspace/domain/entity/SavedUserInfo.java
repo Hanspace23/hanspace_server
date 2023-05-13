@@ -1,15 +1,12 @@
 package com.csee.hanspace.domain.entity;
 
-import com.csee.hanspace.application.dto.UserListDto;
+import com.csee.hanspace.application.dto.CreateSavedDto;
 import com.csee.hanspace.domain.entity.common.BaseEntity;
 import com.csee.hanspace.presentation.request.SavedUserInfoEditRequest;
-import com.csee.hanspace.presentation.request.SavedUserInfoRequest;
 import lombok.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -73,6 +70,21 @@ public class SavedUserInfo extends BaseEntity {
                 .reserveRecordList(new ArrayList<>())
                 .authority(3)
                 .status(1)
+                .build();
+    }
+
+    public SavedUserInfo(User user, Site site) {
+        this.user = user;
+        this.site = site;
+        this.authority = 1;
+    }
+
+    public CreateSavedDto toCreateDto() {
+        return CreateSavedDto.builder()
+                .savedId(this.id)
+                .userId(this.user.getId())
+                .siteId(this.site.getId())
+                .authority(this.authority)
                 .build();
     }
 

@@ -147,4 +147,14 @@ public class SavedUserInfoService {
         return savedUserInfoList.stream().map(SiteDto::new).collect(Collectors.toList());
     }
 
+    //    사이트 만들 때, userId를 받아서 savedUserInfo 생성
+    @Transactional
+    public CreateSavedDto createSavedUserInfo(Long userId, Long siteId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("no such user"));
+        Site site = siteRepository.findById(siteId).orElseThrow(() -> new IllegalArgumentException("no such site"));
+        SavedUserInfo newSavedUserInfo = new SavedUserInfo(user, site);
+        SavedUserInfo savedUserInfo = savedUserInfoRepository.save(newSavedUserInfo);
+        return savedUserInfo.toCreateDto();
+    }
+
 }

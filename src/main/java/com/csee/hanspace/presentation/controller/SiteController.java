@@ -1,9 +1,6 @@
 package com.csee.hanspace.presentation.controller;
 
-import com.csee.hanspace.application.dto.SiteBodyDto;
-import com.csee.hanspace.application.dto.SiteDto;
-import com.csee.hanspace.application.dto.SiteEditDto;
-import com.csee.hanspace.application.dto.SiteInfoDto;
+import com.csee.hanspace.application.dto.*;
 import com.csee.hanspace.application.service.ReserveService;
 import com.csee.hanspace.application.service.SavedUserInfoService;
 import com.csee.hanspace.application.service.SiteService;
@@ -71,12 +68,13 @@ public class SiteController {
      }
 
 
-//     @PostMapping("create-site")
-//    public ResponseEntity<CreateSiteResponse> createSite(@RequestBody CreateSiteRequest request) {
-////         SavedUserInfo savedUserInfo = re
-//
-//         CreateSiteResponse response = new CreateSiteResponse();
-//        return ResponseEntity.ok(response);
-//     }
+     @PostMapping("create-site")
+    public ResponseEntity<CreateSiteResponse> createSite(@RequestBody CreateSiteRequest request) {
+        SiteBodyDto siteBodyDto = siteService.create(request.siteCUDto());
+        CreateSavedDto createSavedDto = savedUserInfoService.createSavedUserInfo(request.getUserId(), siteBodyDto.getSiteId());
+
+         CreateSiteResponse response = new CreateSiteResponse(siteBodyDto.getSiteId(), siteBodyDto.getSiteName(), siteBodyDto.getDescription(), siteBodyDto.getLogo(), siteBodyDto.getLink(), siteBodyDto.getCompany(), siteBodyDto.getMaxDate(), siteBodyDto.getMaxTime(), siteBodyDto.getTimeUnit(), siteBodyDto.getQuestion1(), siteBodyDto.getQuestion2(), siteBodyDto.getRestriction(), createSavedDto.getSavedId(), createSavedDto.getUserId(), createSavedDto.getAuthority());
+        return ResponseEntity.ok(response);
+     }
 
 }
