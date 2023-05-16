@@ -1,8 +1,11 @@
 package com.csee.hanspace.application.dto;
 
 import com.csee.hanspace.domain.entity.Room;
+import com.csee.hanspace.domain.entity.RoomTags;
 import com.csee.hanspace.presentation.response.RoomsReadResponse;
 import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,6 +22,7 @@ public class RoomsReadDto {
     private boolean available;
     private String image;
     private Integer reserveCnt;
+//    private List<RoomTags> tagsList;
 
     public RoomsReadDto(Room room) {
         this.roomId = room.getId();
@@ -30,6 +34,7 @@ public class RoomsReadDto {
         this.available = room.isAvailable();
         this.image = room.getImage();
         this.reserveCnt = room.getReserveCnt();
+//        this.tagsList = room.getRoomTagsList();
     }
 
     public RoomsReadResponse toRes() {

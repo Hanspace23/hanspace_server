@@ -3,18 +3,17 @@ package com.csee.hanspace.application.service;
 import com.csee.hanspace.application.dto.*;
 import com.csee.hanspace.domain.entity.Room;
 //import com.csee.hanspace.domain.entity.TimeRecord;
+import com.csee.hanspace.domain.entity.RoomTags;
 import com.csee.hanspace.domain.entity.Site;
 import com.csee.hanspace.domain.entity.Tag;
-import com.csee.hanspace.domain.repository.ReserveRepository;
-import com.csee.hanspace.domain.repository.RoomRepository;
-import com.csee.hanspace.domain.repository.SiteRepository;
-import com.csee.hanspace.domain.repository.TagRepository;
+import com.csee.hanspace.domain.repository.*;
 import com.csee.hanspace.presentation.response.RoomFilterResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +29,8 @@ public class RoomService {
     @Autowired
     private final SiteRepository siteRepository;
 
+    private final RoomTagRepository roomTagRepository;
+
     @Transactional
     public Room findByName(String roomName){
         return roomRepository.findByName(roomName);
@@ -39,13 +40,13 @@ public class RoomService {
         return roomRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("no such room"));
     }
 
-    @Transactional
-    public RoomReadDto findRoomById(Long id){
-        Room room = roomRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("no such room"));
-        List<Tag> tags = tagRepository.findAllByRoomId(id);
-        RoomReadDto roomReadDto = new RoomReadDto(room, tags);
-        return roomReadDto;
-    }
+//    @Transactional
+//    public RoomReadDto findRoomById(Long id){
+//        Room room = roomRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("no such room"));
+//        List<Tag> tags = tagRepository.findAllByRoomId(id);
+//        RoomReadDto roomReadDto = new RoomReadDto(room, tags);
+//        return roomReadDto;
+//    }
 
     @Transactional
     public void save(Room room){
@@ -100,6 +101,7 @@ public class RoomService {
         room.updateAvailable(roomAvailableDto);
         return room.toUpdateDto();
     }
+
 
 
 

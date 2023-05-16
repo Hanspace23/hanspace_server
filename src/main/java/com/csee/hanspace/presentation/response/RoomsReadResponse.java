@@ -1,6 +1,9 @@
 package com.csee.hanspace.presentation.response;
 
+import com.csee.hanspace.domain.entity.RoomTags;
 import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,4 +20,5 @@ public class RoomsReadResponse {
     private boolean available;
     private String image;
     private Integer reserveCnt;
+//    private List<RoomTags> tagsList;
 }

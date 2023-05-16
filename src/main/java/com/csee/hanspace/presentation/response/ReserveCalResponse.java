@@ -19,6 +19,7 @@ import java.util.List;
 public class ReserveCalResponse {
     private Long id;
     private Long roomId;
+    private String roomName;
     private String groupName;
 
     @Nullable
@@ -36,6 +37,7 @@ public class ReserveCalResponse {
         return ReserveCalResponse.builder()
                 .id(record.getId())
                 .roomId(record.getRoom().getId())
+                .roomName(record.getRoom().getName())
                 .groupName(record.getGroupName())
                 .start(record.getDate())
                 .purpose(record.getPurpose())

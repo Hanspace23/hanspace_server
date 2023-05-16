@@ -1,17 +1,19 @@
 package com.csee.hanspace.presentation.controller;
 
-import com.csee.hanspace.application.dto.SiteDto;
-import com.csee.hanspace.application.dto.SiteEditDto;
-import com.csee.hanspace.application.dto.SiteInfoDto;
+import com.csee.hanspace.application.dto.*;
 import com.csee.hanspace.application.service.ReserveService;
 import com.csee.hanspace.application.service.SavedUserInfoService;
 import com.csee.hanspace.application.service.SiteService;
 import com.csee.hanspace.application.service.TagService;
+import com.csee.hanspace.domain.entity.SavedUserInfo;
 import com.csee.hanspace.domain.entity.Tag;
 import com.csee.hanspace.domain.entity.User;
+import com.csee.hanspace.domain.repository.SiteRepository;
+import com.csee.hanspace.presentation.request.CreateSiteRequest;
 import com.csee.hanspace.presentation.request.SiteEditRequest;
 import com.csee.hanspace.presentation.request.SiteInfoRequest;
 import com.csee.hanspace.presentation.response.EditResponse;
+import com.csee.hanspace.presentation.response.CreateSiteResponse;
 import com.csee.hanspace.presentation.response.SiteByLinkResponse;
 import com.csee.hanspace.presentation.response.SiteResponse;
 import org.springframework.http.ResponseEntity;
@@ -34,16 +36,14 @@ public class SiteController {
     @Autowired
     private SiteService siteService;
 
-    private static SavedUserInfoService savedUserInfoService;
+    @Autowired
+    private SavedUserInfoService savedUserInfoService;
+
+//    private static SavedUserInfoService savedUserInfoService;
 
     @GetMapping("/getSiteByLink/{link}")
     public ResponseEntity<SiteByLinkResponse> findByLink(@PathVariable String link){
         SiteByLinkResponse res = siteService.findByLink(link);
-//        System.out.println("res = " + res);
-//        System.out.println("res.getTagList() = " + res.getTagList());
-//        for( Tag tag : res.getTagList()) {
-//            System.out.println("tag = " + tag.getName());
-//        }
         return ResponseEntity.ok(res);
     }
 
@@ -71,31 +71,14 @@ public class SiteController {
          return ResponseEntity.ok(response);
      }
 
-//     @GetMapping("/my-sites")
-//     public ResponseEntity<List<SiteResponse>> getMySites(@RequestParam Long savedUserInfoId) {
-//         List<SiteDto> sites = siteService.getMySites(savedUserInfoId);
-//         List<SiteResponse> response = sites.stream()
-//                 .map(SiteDto::siteResponse)
-//                 .collect(Collectors.toList());
-//         return ResponseEntity.ok(response);
-//     }
-//
-//    @GetMapping("/manage-sites")
-//    public ResponseEntity<List<SiteResponse>> getManagingSites(@RequestParam Long savedUserInfoId) {
-//        List<SiteDto> sites = siteService.getManagingSites(savedUserInfoId);
-//        List<SiteResponse> response = sites.stream()
-//                .map(SiteDto::siteResponse)
-//                .collect(Collectors.toList());
-//        return ResponseEntity.ok(response);
-//    }
-//
-//    @GetMapping("/subscribed-sites")
-//    public ResponseEntity<List<SiteResponse>> getSubscribedSites(@RequestParam Long savedUserInfoId) {
-//        List<SiteDto> sites = siteService.getSubscribedSites(savedUserInfoId);
-//        List<SiteResponse> response = sites.stream()
-//                .map(SiteDto::siteResponse)
-//                .collect(Collectors.toList());
-//        return ResponseEntity.ok(response);
-//    }
+
+     @PostMapping("create-site")
+    public ResponseEntity<CreateSiteResponse> createSite(@RequestBody CreateSiteRequest request) {
+        SiteBodyDto siteBodyDto = siteService.create(request.siteCUDto());
+        CreateSavedDto createSavedDto = savedUserInfoService.createSavedUserInfo(request.getUserId(), siteBodyDto.getSiteId());
+
+         CreateSiteResponse response = new CreateSiteResponse(siteBodyDto.getSiteId(), siteBodyDto.getSiteName(), siteBodyDto.getDescription(), siteBodyDto.getLogo(), siteBodyDto.getLink(), siteBodyDto.getCompany(), siteBodyDto.getMaxDate(), siteBodyDto.getMaxTime(), siteBodyDto.getTimeUnit(), siteBodyDto.getQuestion1(), siteBodyDto.getQuestion2(), siteBodyDto.getRestriction(), createSavedDto.getSavedId(), createSavedDto.getUserId(), createSavedDto.getAuthority());
+        return ResponseEntity.ok(response);
+     }
 
 }
