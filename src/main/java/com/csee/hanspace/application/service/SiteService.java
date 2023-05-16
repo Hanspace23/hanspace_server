@@ -2,10 +2,7 @@ package com.csee.hanspace.application.service;
 
 import com.csee.hanspace.application.dto.*;
 import com.csee.hanspace.domain.entity.*;
-import com.csee.hanspace.domain.repository.ReserveRepository;
-import com.csee.hanspace.domain.repository.SavedUserInfoRepository;
-import com.csee.hanspace.domain.repository.SiteRepository;
-import com.csee.hanspace.domain.repository.TagRepository;
+import com.csee.hanspace.domain.repository.*;
 import com.csee.hanspace.presentation.response.SiteByLinkResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +17,8 @@ public class SiteService {
     private final SiteRepository siteRepository;
     private final SavedUserInfoRepository savedUserInfoRepository;
     private final TagRepository tagRepository;
+
+    private final RoomTagRepository roomTagRepository;
 
     @Transactional
     public List<SiteDto> getAllSites() {
@@ -79,15 +78,20 @@ public class SiteService {
     }
 
     @Transactional
-    public Long editSiteInfo(SiteEditDto dto) {
+    public Site editSiteInfo(SiteEditDto dto) {
         Site site = siteRepository.findById(dto.getSiteId()).orElseThrow(()->new IllegalArgumentException("no such site"));
+        System.out.println("dto = " + dto);
         Site editSite = siteRepository.save(site.from(site, dto));
         List<String> tags = dto.getHashTags();
+        roomTagRepository.hardDeleteAll();
+        tagRepository.hardDeleteAll();
         for(String tag : tags) {
-            Tag newTag = Tag.from(tag, editSite);
-            tagRepository.save(newTag);
+            if(tag != null) {
+                Tag newTag = Tag.from(tag, editSite);
+                tagRepository.save(newTag);
+            }
         }
-        return editSite.getId();
+        return editSite;
     }
 
     @Transactional

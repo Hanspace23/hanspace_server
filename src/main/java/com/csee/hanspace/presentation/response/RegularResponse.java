@@ -45,5 +45,7 @@ public class RegularResponse {
 
     private String weekdays;
     private String detail;
+
+    private String loginName;
 }
 

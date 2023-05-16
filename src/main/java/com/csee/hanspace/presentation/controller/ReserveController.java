@@ -103,7 +103,6 @@ public class ReserveController {
 
     @PostMapping("/reserveRoom")
     public ResponseEntity<Long> save(@RequestBody RoomReserveRequest request) {
-        System.out.println("request = " + request);
         Long savedId = reserveService.save(OneReserveDto.from(request));
         return ResponseEntity.ok(savedId);
 //        return ResponseEntity.ok(request);

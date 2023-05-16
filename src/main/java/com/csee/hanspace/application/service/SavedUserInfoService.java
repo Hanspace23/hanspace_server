@@ -57,6 +57,14 @@ public class SavedUserInfoService {
     }
 
     @Transactional
+    public int changeUserAuth(ChangeAuthDto dto){
+        SavedUserInfo userInfo = savedUserInfoRepository.findSavedUserInfoBySiteIdAndId(dto.getSiteId(), dto.getUserId());
+        userInfo.setAuthority(dto.getAuth());
+        SavedUserInfo editUserInfo = savedUserInfoRepository.save(userInfo);
+        return editUserInfo.getAuthority();
+    }
+
+    @Transactional
     public void changeMUserStatus(ChangeMStatusDto dto){
         for(Long i : dto.getUserList()) {
             SavedUserInfo userInfo = savedUserInfoRepository.findSavedUserInfoBySiteIdAndId(dto.getSiteId(), i);

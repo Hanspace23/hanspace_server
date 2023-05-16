@@ -92,7 +92,7 @@ public class ReserveRecord extends BaseEntity {
         LocalDate date = LocalDate.parse(dto.getReserveDate(), formatter);
         String fullReserveTime = String.join(" , " , dto.getReserveTime());
 
-        if (site.getRestriction() == 1) {
+
             return ReserveRecord.builder()
                     .groupName(dto.getGroupName())
                     .purpose(dto.getGroupPurpose())
@@ -109,8 +109,8 @@ public class ReserveRecord extends BaseEntity {
                     .savedUserInfo(savedUserInfo)
                     .reserveTime(fullReserveTime)
                     .build();
-        }
-        return null;
+
+
     }
 
 
