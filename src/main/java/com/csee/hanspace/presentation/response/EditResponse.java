@@ -1,5 +1,6 @@
 package com.csee.hanspace.presentation.response;
 
+import com.csee.hanspace.application.dto.UserListDto;
 import com.csee.hanspace.domain.entity.Site;
 import com.csee.hanspace.domain.entity.Tag;
 import lombok.*;
@@ -13,8 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
-public class SiteByLinkResponse {
+public class EditResponse {
     private Long id;
     private String name;
     private String description;
@@ -28,11 +28,10 @@ public class SiteByLinkResponse {
     private String question1;
     private String question2;
     private int timeUnit;
-    private String domain;
     private List<Tag> tagList = new ArrayList<>();
 
-    public static SiteByLinkResponse from (Site site, String domain){
-        return SiteByLinkResponse.builder()
+    public static EditResponse from (Site site){
+        return EditResponse.builder()
                 .id(site.getId())
                 .name(site.getName())
                 .description(site.getDescription())
@@ -45,7 +44,6 @@ public class SiteByLinkResponse {
                 .question1(site.getQuestion1())
                 .question2(site.getQuestion2())
                 .timeUnit(site.getTimeUnit())
-                .domain(domain)
                 .tagList(site.getTagList())
                 .build();
     }

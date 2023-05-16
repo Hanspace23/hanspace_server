@@ -11,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class SiteEditDto {
 
     private Long siteId;
@@ -28,8 +29,8 @@ public class SiteEditDto {
     private List<String> hashTags;
 
     public static SiteEditDto from(SiteEditRequest request) {
-        return new SiteEditDto(request.getSiteId(), request.getSiteName(), request.getCompanyName(),request.getDescription(), request.getRestriction(), request.getLogo()
-                , request.getAvailableDays(), request.getTimeUnit(), request.getTotalTime(), request.getLink(), request.getExtraQuestion1()
-                , request.getExtraQuestion2(), request.getHashTags());
+        return new SiteEditDto(request.getId(), request.getName(), request.getCompany(),request.getDescription(), request.getRestriction(), request.getLogo()
+                , request.getMaxDate(), request.getTimeUnit(), request.getMaxTime(), request.getLink(), request.getQuestion1()
+                , request.getQuestion2(), request.getTagList());
     }
 }

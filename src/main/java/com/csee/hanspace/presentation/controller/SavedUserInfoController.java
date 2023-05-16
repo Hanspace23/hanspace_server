@@ -68,6 +68,12 @@ public class SavedUserInfoController {
         return ResponseEntity.ok(null);
     }
 
+    @PutMapping("/changeUserAuth")
+    public ResponseEntity<Integer> changeUserAuth(@RequestBody ChangeUserAuthRequest request) {
+        int id = savedUserInfoService.changeUserAuth(ChangeAuthDto.from(request));
+        return ResponseEntity.ok(id);
+    }
+
     @PatchMapping("/editSavedUserInfo/{id}")
     public ResponseEntity<SiteUserResponse> editSavedUserInfo(@PathVariable Long id, @RequestBody SavedUserInfoEditRequest request) throws Throwable {
         SiteUserResponse res = savedUserInfoService.editSavedUserInfo(id, request);

@@ -7,9 +7,11 @@ import com.csee.hanspace.application.service.ReserveService;
 import com.csee.hanspace.application.service.SavedUserInfoService;
 import com.csee.hanspace.application.service.SiteService;
 import com.csee.hanspace.application.service.TagService;
+import com.csee.hanspace.domain.entity.Tag;
 import com.csee.hanspace.domain.entity.User;
 import com.csee.hanspace.presentation.request.SiteEditRequest;
 import com.csee.hanspace.presentation.request.SiteInfoRequest;
+import com.csee.hanspace.presentation.response.EditResponse;
 import com.csee.hanspace.presentation.response.SiteByLinkResponse;
 import com.csee.hanspace.presentation.response.SiteResponse;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +39,11 @@ public class SiteController {
     @GetMapping("/getSiteByLink/{link}")
     public ResponseEntity<SiteByLinkResponse> findByLink(@PathVariable String link){
         SiteByLinkResponse res = siteService.findByLink(link);
+//        System.out.println("res = " + res);
+//        System.out.println("res.getTagList() = " + res.getTagList());
+//        for( Tag tag : res.getTagList()) {
+//            System.out.println("tag = " + tag.getName());
+//        }
         return ResponseEntity.ok(res);
     }
 
@@ -47,9 +54,11 @@ public class SiteController {
     }
 
     @PutMapping("/editSiteInfo")
-    public ResponseEntity<Long> editSiteInfo (@RequestBody SiteEditRequest request) {
-        Long siteId = siteService.editSiteInfo(SiteEditDto.from(request));
-        return ResponseEntity.ok(siteId);
+    public ResponseEntity<EditResponse> editSiteInfo (@RequestBody SiteEditRequest request) {
+        System.out.println("request = " + request);
+        Site editSite = siteService.editSiteInfo(SiteEditDto.from(request));
+        EditResponse response = EditResponse.from(editSite);
+        return ResponseEntity.ok(response);
     }
 
 

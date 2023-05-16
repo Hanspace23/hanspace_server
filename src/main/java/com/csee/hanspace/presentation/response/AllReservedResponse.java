@@ -23,9 +23,10 @@ public class AllReservedResponse {
     private String weekdays;
     private boolean regular;
     private String detail;
+    private String userName;
     static public AllReservedResponse toResponse (AllReservedDto dto) {
         return new AllReservedResponse(dto.getId(), dto.getPlace(), dto.getUseDate() , dto.getApplyDate()
-                , dto.getTime(), dto.getApplicant(), dto.getPurpose(), dto.getStatus() , dto.getWeekdays(), dto.isRegular(), dto.getDetail());
+                , dto.getTime(), dto.getApplicant(), dto.getPurpose(), dto.getStatus() , dto.getWeekdays(), dto.isRegular(), dto.getDetail() , dto.getUserName());
 
     }
 }

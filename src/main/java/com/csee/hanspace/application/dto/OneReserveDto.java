@@ -32,7 +32,7 @@ public class OneReserveDto {
 
     static public OneReserveDto from (RoomReserveRequest request) {
         System.out.println("request = " + request);
-        return new OneReserveDto(request.getEmail(), request.getSiteId(), request.getGroupName(), request.getGroupPurpose(), request.getName(), request.getNumber()
+        return new OneReserveDto(request.getEmail(),  request.getSiteId(), request.getGroupName(), request.getGroupPurpose(), request.getName(), request.getNumber()
                 ,request.getAnswer1()==null ?"" :  request.getAnswer1(), request.getAnswer1()==null ?"" :  request.getAnswer2(), request.getReserveStartDate(), request.getReserveTime(), request.getRoomName());
     }
 
