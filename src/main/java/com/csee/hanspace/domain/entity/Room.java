@@ -134,11 +134,17 @@ public class Room extends BaseEntity {
             String[] temp = this.reserveRecordList.get(i).getReserveTime().split(" , ");
             for(int j=0; j<temp.length;j++){
                 String[] partTime = temp[j].split(" ~ ");
-                String start = partTime[0];
-                String end = partTime[1];
-                int startT = Integer.parseInt(start.split(":")[0]) * 60;
-                int endT = Integer.parseInt(end.split(":")[0]) * 60;
-                ret.add(new TimeRecordDto(d, startT, endT));
+                String start = partTime[0].trim();
+                String end = partTime[1].trim();
+                String[] startT = start.split(":");
+                String[] endT = end.split(":");
+                int startTime = 0;
+                if(!startT[0].equals("00")) startTime = startTime + Integer.parseInt(startT[0].trim()) * 60;
+                if(!startT[1].equals("00")) startTime = startTime + Integer.parseInt(startT[1].trim());
+                int endTime = 0;
+                if(!endT[0].equals("00")) endTime = endTime + Integer.parseInt(endT[0].trim()) * 60;
+                if(!endT[1].equals("00")) endTime = endTime + Integer.parseInt(endT[1].trim());
+                ret.add(new TimeRecordDto(d, startTime, endTime));
             }
         }
 //        System.out.println(ret);
