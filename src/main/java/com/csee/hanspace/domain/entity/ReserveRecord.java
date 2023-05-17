@@ -183,4 +183,19 @@ public class ReserveRecord extends BaseEntity {
 
         return dates;
     }
+
+    public static int calculateDuration(String startTime, String endTime) {
+        String[] startParts = startTime.split(":");
+        int startHour = Integer.parseInt(startParts[0]);
+        int startMinute = Integer.parseInt(startParts[1]);
+
+        String[] endParts = endTime.split(":");
+        int endHour = Integer.parseInt(endParts[0]);
+        int endMinute = Integer.parseInt(endParts[1]);
+
+        int start = startHour * 60 + startMinute;
+        int end = endHour * 60 + endMinute;
+
+        return end-start;
+    }
 }

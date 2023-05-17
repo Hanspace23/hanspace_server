@@ -208,6 +208,23 @@ public class ReserveController {
         return ResponseEntity.ok(null);
     }
 
+    @GetMapping("getRemainTime")
+    public ResponseEntity<Boolean> getRemainTime(@RequestParam Long siteId, @RequestParam Long userId, @RequestParam String date) {
+        boolean check;
+        System.out.println("siteId = " + siteId);
+        System.out.println("userId = " + userId);
+        System.out.println("date = " + date);
+        check = reserveService.getRemainTime(siteId, userId, date);
+        System.out.println("check = " + check);
+        return ResponseEntity.ok(check);
+    }
+
+    @GetMapping("getRemainRegularTime")
+    public ResponseEntity<Boolean> getRemainRegularTime(@RequestParam Long siteId, @RequestParam Long userId, @RequestParam String startDate, @RequestParam String endDate) {
+        boolean check;
+        check = reserveService.getRemainRegularTime(siteId, userId, startDate, endDate);
+        return ResponseEntity.ok(check);
+    }
 
 
 //    @DeleteMapping("deleteMReserve")

@@ -25,6 +25,7 @@ public class RoomFilterResponse {
     private String img;
     private String detail;
     private List<TimeRecordDto> reservedList;
+    private int capacity;
 
     public static RoomFilterResponse from(Room room){
         return RoomFilterResponse.builder()
@@ -36,6 +37,7 @@ public class RoomFilterResponse {
                 .img(room.getImage())
                 .detail(room.getDescription())
                 .reservedList(room.retListOfTimeRecord())
+                .capacity(room.getCapacity())
                 .build();
     }
 
