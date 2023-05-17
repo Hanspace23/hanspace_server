@@ -1,15 +1,17 @@
 package com.csee.hanspace.application.service;
 
-import com.csee.hanspace.domain.entity.Room;
-import com.csee.hanspace.domain.entity.RoomTags;
-import com.csee.hanspace.domain.entity.Site;
-import com.csee.hanspace.domain.entity.Tag;
+import com.csee.hanspace.application.dto.SiteDto;
+import com.csee.hanspace.application.dto.TagDto;
+import com.csee.hanspace.domain.entity.*;
 import com.csee.hanspace.domain.repository.ReserveRepository;
 import com.csee.hanspace.domain.repository.RoomTagRepository;
 import com.csee.hanspace.domain.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +33,13 @@ public class TagService {
     @Transactional
     public Tag findById(Long id) {
         return tagRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("no such roomTags"));
+    }
+
+    //    이용중인 사이트 리스트
+    @Transactional
+    public List<TagDto> getSiteTags(Long siteId) {
+        List<Tag> tagList = tagRepository.findAllBySiteId(siteId);
+        return tagList.stream().map(TagDto::new).collect(Collectors.toList());
     }
 
 }
