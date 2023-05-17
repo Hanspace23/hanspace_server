@@ -31,6 +31,7 @@ public class AllReservedDto {
     private boolean regular;
     private String detail;
 
+    private String userName;
 
     static public AllReservedDto of (ReserveRecord record, String question1,  String question2) {
         String fullUseDate = record.getDate().getYear() + "-" + record.getDate().getMonthValue() + "-" + record.getDate().getDayOfMonth();
@@ -62,6 +63,7 @@ public class AllReservedDto {
                 .status(record.getStatus() == 1 ? "대기" : record.getStatus() == 2 ? "승인" : "거절")
                 .regular(record.isRegular())
                 .detail(detail)
+                .userName(record.getSavedUserInfo().getReservation())
                 .build();
 
     }

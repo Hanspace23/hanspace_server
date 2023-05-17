@@ -49,6 +49,7 @@ public class RegularResponseDto {
     private String weekdays;
 
     private String detail;
+    private String loginName;
 
     public static RegularResponseDto of (ReserveRecord record, String status, LocalDate now, LocalDate startDate, LocalDate endDate, String question1, String question2) {
         String detail = "";
@@ -82,6 +83,7 @@ public class RegularResponseDto {
                 .reserveTime(record.getReserveTime())
                 .weekdays(record.getWeekdays())
                 .detail(detail)
+                .loginName(record.getSavedUserInfo().getReservation())
                 .build();
 
 
@@ -89,7 +91,7 @@ public class RegularResponseDto {
 
     public RegularResponse reserveResponse() {
 
-        return new RegularResponse(groupName, purpose, userName, contact, status, regularId, answer1, answer2, roomName, roomImg, startDate, endDate, regDate, reserveTime, deadline, weekdays, detail);
+        return new RegularResponse(groupName, purpose, userName, contact, status, regularId, answer1, answer2, roomName, roomImg, startDate, endDate, regDate, reserveTime, deadline, weekdays, detail, loginName);
     }
 
 }

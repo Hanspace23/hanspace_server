@@ -92,7 +92,7 @@ public class ReserveRecord extends BaseEntity {
         LocalDate date = LocalDate.parse(dto.getReserveDate(), formatter);
         String fullReserveTime = String.join(" , " , dto.getReserveTime());
 
-        if (site.getRestriction() == 1) {
+
             return ReserveRecord.builder()
                     .groupName(dto.getGroupName())
                     .purpose(dto.getGroupPurpose())
@@ -109,8 +109,8 @@ public class ReserveRecord extends BaseEntity {
                     .savedUserInfo(savedUserInfo)
                     .reserveTime(fullReserveTime)
                     .build();
-        }
-        return null;
+
+
     }
 
 
@@ -152,11 +152,17 @@ public class ReserveRecord extends BaseEntity {
         String[] temp = this.reserveTime.split(" , ");
         for(int j=0; j<temp.length; j++){
             String[] partTime = temp[j].split(" ~ ");
-            String start = partTime[0];
-            String end = partTime[1];
-            int startT = Integer.parseInt(start.split(":")[0]) * 60;
-            int endT = Integer.parseInt(end.split(":")[0]) * 60;
-            ret.add(new TimeDto(startT, endT));
+            String start = partTime[0].trim();
+            String end = partTime[1].trim();
+            String[] startT = start.split(":");
+            String[] endT = end.split(":");
+            int startTime = 0;
+            if(!startT[0].equals("00")) startTime = startTime + Integer.parseInt(startT[0].trim()) * 60;
+            if(!startT[1].equals("00")) startTime = startTime + Integer.parseInt(startT[1].trim());
+            int endTime = 0;
+            if(!endT[0].equals("00")) endTime = endTime + Integer.parseInt(endT[0].trim()) * 60;
+            if(!endT[1].equals("00")) endTime = endTime + Integer.parseInt(endT[1].trim());
+            ret.add(new TimeDto(startTime, endTime));
         }
 
 //        System.out.println(ret);

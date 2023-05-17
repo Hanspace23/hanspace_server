@@ -54,11 +54,17 @@ public class ReserveService {
     // 일회 대여
     @Transactional
     public Long save(OneReserveDto dto) {
+        System.out.println("dto = " + dto);
         User user = userService.findByEmail(dto.getEmail());
+        System.out.println("user = " + user);
         SavedUserInfo savedUserInfo = userInfoService.findById(user.getId());
+        System.out.println("savedUserInfo = " + savedUserInfo);
         Site site = siteService.findById(dto.getSiteId());
+        System.out.println("site = " + site);
         Room room = roomService.findByName(dto.getRoomName());
+        System.out.println("room = " + room);
 
+        System.out.println(ReserveRecord.onetimeReserve(savedUserInfo, site, room,  dto));
         ReserveRecord savedRecord = reserveRepository.save(ReserveRecord.onetimeReserve(savedUserInfo, site, room,  dto));
         return savedRecord.getId();
     }
