@@ -20,6 +20,9 @@ public interface SavedUserInfoRepository extends JpaRepository<SavedUserInfo, Lo
 
     SavedUserInfo findSavedUserInfoBySiteIdAndUserId(Long siteId, Long userId);
 
+    @Query("select s from SavedUserInfo s where s.site.id = :siteId and s.user.id= :userId")
+    SavedUserInfo findUser(Long siteId, Long userId);
+
     SavedUserInfo findSavedUserInfoBySiteIdAndId(Long siteId, Long userId);
 
     Long deleteSavedUserInfoBySiteIdAndUserId(Long siteId, Long userId);
