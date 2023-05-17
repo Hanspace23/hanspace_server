@@ -12,6 +12,7 @@ import com.csee.hanspace.domain.repository.SiteRepository;
 import com.csee.hanspace.exception.ReserveRecordNotFoundException;
 //import com.csee.hanspace.domain.repository.TimeRecordRepository;
 import com.csee.hanspace.presentation.request.ChangeMStatusRequest;
+import com.csee.hanspace.presentation.request.RemainTimeRequest;
 import com.csee.hanspace.presentation.response.RegularResponse;
 import com.csee.hanspace.presentation.response.ReserveCalResponse;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -64,8 +63,8 @@ public class ReserveService {
         Room room = roomService.findByName(dto.getRoomName());
         System.out.println("room = " + room);
 
-        System.out.println(ReserveRecord.onetimeReserve(savedUserInfo, site, room,  dto));
-        ReserveRecord savedRecord = reserveRepository.save(ReserveRecord.onetimeReserve(savedUserInfo, site, room,  dto));
+        System.out.println(ReserveRecord.onetimeReserve(savedUserInfo, site, room, dto));
+        ReserveRecord savedRecord = reserveRepository.save(ReserveRecord.onetimeReserve(savedUserInfo, site, room, dto));
         return savedRecord.getId();
     }
 
@@ -104,9 +103,9 @@ public class ReserveService {
 //        dates.add(endDate);
 
 
-        for(LocalDate dateForRegular : dates) {
+        for (LocalDate dateForRegular : dates) {
             System.out.println("dateForRegular = " + dateForRegular);
-            reserveRepository.save(ReserveRecord.regularReserve(savedUserInfo, site, room, dto, curId+1 , dateForRegular, weekdays));
+            reserveRepository.save(ReserveRecord.regularReserve(savedUserInfo, site, room, dto, curId + 1, dateForRegular, weekdays));
         }
 
     }
@@ -121,6 +120,7 @@ public class ReserveService {
 
         return reserveList;
     }
+
     @Transactional
     public List<AllReservedDto> readOneReserveList(Long siteId) {
         List<ReserveRecord> reservedList = reserveRepository.findAllReserveBySiteId(siteId);
@@ -130,6 +130,7 @@ public class ReserveService {
         List<AllReservedDto> reserveList = reservedList.stream().filter(data -> !data.isRegular()).map(record -> AllReservedDto.of(record, question1, question2)).collect(Collectors.toList());
         return reserveList;
     }
+
     @Transactional
     public List<AllReservedDto> readAllRegularList(Long siteId) {
         List<ReserveRecord> reservedList = reserveRepository.findAllRegularReserve(siteId);
@@ -175,14 +176,14 @@ public class ReserveService {
     }
 
     @Transactional
-    public Integer changeStatus(ChangeRequestDto dto){
+    public Integer changeStatus(ChangeRequestDto dto) {
         ReserveRecord record = reserveRepository.findBySiteIdAndId(dto.getSiteId(), dto.getRecordId());
         record.setStatus(dto.getStatusId());
         ReserveRecord newRecord = reserveRepository.save(record);
         return newRecord.getStatus();
     }
 
-    public void changeRegularStatus(ChangeRequestDto dto){
+    public void changeRegularStatus(ChangeRequestDto dto) {
         List<ReserveRecord> records = reserveRepository.findBySiteIdAndRegularId(dto.getSiteId(), dto.getRecordId());
         records.stream().forEach(record -> record.setStatus((dto.getStatusId())));
         List<ReserveRecord> list = reserveRepository.saveAll(records);
@@ -193,12 +194,12 @@ public class ReserveService {
 //    }
 
     @Transactional
-    public void saveReserveRecord(ReserveRecord reserveRecord){
+    public void saveReserveRecord(ReserveRecord reserveRecord) {
         reserveRepository.save(reserveRecord);
     }
 
     @Transactional
-    public ReserveRecord findById(Long id){
+    public ReserveRecord findById(Long id) {
         return reserveRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("no such reserveRecord"));
     }
 
@@ -221,7 +222,7 @@ public class ReserveService {
     public void changeMultiStatus(ChangeMRequestDto dto) {
         List<Long> list = dto.getRecordList();
         System.out.println("list = " + list);
-        for(Long i : list) {
+        for (Long i : list) {
             ReserveRecord record = reserveRepository.findBySiteIdAndId(dto.getSiteId(), i);
             System.out.println("record = " + record);
             record.setStatus(dto.getStatusId());
@@ -234,7 +235,7 @@ public class ReserveService {
         List<Long> list = dto.getRecordList();
         System.out.println("list = " + list);
         System.out.println("dto.getStatusId() = " + dto.getStatusId());
-        for(Long i: list) {
+        for (Long i : list) {
             List<ReserveRecord> recordList = reserveRepository.findBySiteIdAndRegularId(dto.getSiteId(), i);
             for (ReserveRecord record : recordList) {
                 System.out.println("record = " + record);
@@ -254,21 +255,21 @@ public class ReserveService {
         reserveRepository.deleteReserveRecordBySiteIdAndRegularId(dto.getSiteId(), dto.getRecordId());
     }
 
-//일회대여
+    //일회대여
     @Transactional
     public List<ReserveDto> getMyReservations(Long savedUserInfoId) {
         List<ReserveRecord> reserves = reserveRepository.findAllBySavedUserInfoId(savedUserInfoId);
         List<ReserveDto> reserveList = new ArrayList<>();
         LocalDate now = LocalDate.now();
-        for(ReserveRecord reserve : reserves) {
+        for (ReserveRecord reserve : reserves) {
             String deadline = "기한 만료";
             String status = "대기";
-            if(reserve.getDate().isAfter(now)) {
+            if (reserve.getDate().isAfter(now)) {
                 deadline = "만료되지 않음";
             }
-            if(reserve.getStatus() == 2) {
+            if (reserve.getStatus() == 2) {
                 status = "승인";
-            } else if(reserve.getStatus() == 3) {
+            } else if (reserve.getStatus() == 3) {
                 status = "거절";
             }
             ReserveDto reserveDto = new ReserveDto(reserve.getId(), reserve.getGroupName(), reserve.getPurpose(), reserve.getReservation(), reserve.getContact(), status, reserve.isRegular(), reserve.getRegularId(), reserve.getAnswer1(), reserve.getAnswer2(), reserve.getRoom().getName(), reserve.getRoom().getImage(), reserve.getDate(), reserve.getRegDate(), reserve.getReserveTime(), deadline, reserve.getSavedUserInfo().getUser().getName());
@@ -280,76 +281,75 @@ public class ReserveService {
     @Transactional
     public void deleteMReserve(DeleteMultiReserveDto dto) {
         List<Long> list = dto.getRecordList();
-        for(Long id : list) {
+        for (Long id : list) {
             reserveRepository.deleteReserveRecordBySiteIdAndId(dto.getSiteId(), id);
         }
     }
 
 
-
     @Transactional
     public void deleteMultiRegular(DeleteMultiReserveDto dto) {
         List<Long> list = dto.getRecordList();
-        for(Long id : list) {
-            reserveRepository.deleteReserveRecordBySiteIdAndRegularId(dto.getSiteId(),id);
+        for (Long id : list) {
+            reserveRepository.deleteReserveRecordBySiteIdAndRegularId(dto.getSiteId(), id);
         }
     }
 
-//    정기대여
-@Transactional
-public List<RegularReservationHistoryDto> getMyRegularReservations(Long savedUserInfoId) {
-    List<ReserveRecord> reserves = reserveRepository.findAllRegularBySavedUserInfoId(savedUserInfoId);
-    int tmpRegularId = -1;
-    int loopTimes = 0;
-    List<ReserveRecord> temp = new ArrayList<>();
-    List<List<ReserveRecord>> reservesGroupBy = new ArrayList<>();
-    List<RegularReservationHistoryDto> regularReserves = new ArrayList<>();
+    //    정기대여
+    @Transactional
+    public List<RegularReservationHistoryDto> getMyRegularReservations(Long savedUserInfoId) {
+        List<ReserveRecord> reserves = reserveRepository.findAllRegularBySavedUserInfoId(savedUserInfoId);
+        int tmpRegularId = -1;
+        int loopTimes = 0;
+        List<ReserveRecord> temp = new ArrayList<>();
+        List<List<ReserveRecord>> reservesGroupBy = new ArrayList<>();
+        List<RegularReservationHistoryDto> regularReserves = new ArrayList<>();
 
 //    reserveid가 같은 것끼리 list를 만들고 그걸 다시 list에 담는다.
-    for(ReserveRecord reserveRecord : reserves) {
+        for (ReserveRecord reserveRecord : reserves) {
 //        System.out.println("regularId: " + reserveRecord.getRegularId() + " -name: " + reserveRecord.getReservation() + " -date: " + reserveRecord.getDate());
-        loopTimes++;
+            loopTimes++;
 //        마지막 element이면, reservesGroupBy에 담고 종료
-        if(loopTimes == reserves.size()) {
-            temp.add(reserveRecord);
-            reservesGroupBy.add(temp);
-            break;
-        }
-//      regularId의 값이 바뀌면
-        if(tmpRegularId != reserveRecord.getRegularId().intValue()) {
-//            처음이 아닌 경우에는 reservesGroupBy에 추가
-            if(loopTimes != 1) {
+            if (loopTimes == reserves.size()) {
+                temp.add(reserveRecord);
                 reservesGroupBy.add(temp);
+                break;
             }
-            tmpRegularId = reserveRecord.getRegularId().intValue();
-            temp = new ArrayList<>();
-            temp.add(reserveRecord);
-        } else {
-            temp.add(reserveRecord);
+//      regularId의 값이 바뀌면
+            if (tmpRegularId != reserveRecord.getRegularId().intValue()) {
+//            처음이 아닌 경우에는 reservesGroupBy에 추가
+                if (loopTimes != 1) {
+                    reservesGroupBy.add(temp);
+                }
+                tmpRegularId = reserveRecord.getRegularId().intValue();
+                temp = new ArrayList<>();
+                temp.add(reserveRecord);
+            } else {
+                temp.add(reserveRecord);
+            }
         }
-    }
 
-    for(List<ReserveRecord> reserveList : reservesGroupBy) {
-        LocalDate startDate = reserveList.get(0).getDate();
-        LocalDate endDate = reserveList.get(reserveList.size() - 1).getDate();
-        ReserveRecord tmp = reserveList.get(0);
-        String status = "";
-        if(tmp.getStatus() == 1) status = "대기";
-        else if(tmp.getStatus() == 2) status = "승인";
-        else status = "거절";
+        for (List<ReserveRecord> reserveList : reservesGroupBy) {
+            LocalDate startDate = reserveList.get(0).getDate();
+            LocalDate endDate = reserveList.get(reserveList.size() - 1).getDate();
+            ReserveRecord tmp = reserveList.get(0);
+            String status = "";
+            if (tmp.getStatus() == 1) status = "대기";
+            else if (tmp.getStatus() == 2) status = "승인";
+            else status = "거절";
 
-        LocalDate now = LocalDate.now();
+            LocalDate now = LocalDate.now();
 //        String deadline = "마감됨";
 //        if(tmp.getDate().isAfter(now)) {
 //            deadline = "마감되지 않음";
 //        }
 
-        RegularReservationHistoryDto regularReservationHistoryDto = new RegularReservationHistoryDto(tmp, status,  now, startDate, endDate);
-        regularReserves.add(regularReservationHistoryDto);
-    }
+            RegularReservationHistoryDto regularReservationHistoryDto = new RegularReservationHistoryDto(tmp, status, now, startDate, endDate);
+            regularReserves.add(regularReservationHistoryDto);
+        }
 
-    return regularReserves;
-}
+        return regularReserves;
+    }
 
     @Transactional
     public List<RegularResponseDto> getRegularReservations(Long siteId) {
@@ -364,19 +364,19 @@ public List<RegularReservationHistoryDto> getMyRegularReservations(Long savedUse
         List<RegularResponseDto> regularReserves = new ArrayList<>();
 
 //    reserveid가 같은 것끼리 list를 만들고 그걸 다시 list에 담는다.
-        for(ReserveRecord reserveRecord : reserves) {
+        for (ReserveRecord reserveRecord : reserves) {
 //        System.out.println("regularId: " + reserveRecord.getRegularId() + " -name: " + reserveRecord.getReservation() + " -date: " + reserveRecord.getDate());
             loopTimes++;
 //        마지막 element이면, reservesGroupBy에 담고 종료
-            if(loopTimes == reserves.size()) {
+            if (loopTimes == reserves.size()) {
                 temp.add(reserveRecord);
                 reservesGroupBy.add(temp);
                 break;
             }
 //      regularId의 값이 바뀌면
-            if(tmpRegularId != reserveRecord.getRegularId().intValue()) {
+            if (tmpRegularId != reserveRecord.getRegularId().intValue()) {
 //            처음이 아닌 경우에는 reservesGroupBy에 추가
-                if(loopTimes != 1) {
+                if (loopTimes != 1) {
                     reservesGroupBy.add(temp);
                 }
                 tmpRegularId = reserveRecord.getRegularId().intValue();
@@ -387,13 +387,13 @@ public List<RegularReservationHistoryDto> getMyRegularReservations(Long savedUse
             }
         }
 
-        for(List<ReserveRecord> reserveList : reservesGroupBy) {
+        for (List<ReserveRecord> reserveList : reservesGroupBy) {
             LocalDate startDate = reserveList.get(0).getDate();
             LocalDate endDate = reserveList.get(reserveList.size() - 1).getDate();
             ReserveRecord tmp = reserveList.get(0);
             String status = "";
-            if(tmp.getStatus() == 1) status = "대기";
-            else if(tmp.getStatus() == 2) status = "승인";
+            if (tmp.getStatus() == 1) status = "대기";
+            else if (tmp.getStatus() == 2) status = "승인";
             else status = "거절";
 
             LocalDate now = LocalDate.now();
@@ -403,7 +403,7 @@ public List<RegularReservationHistoryDto> getMyRegularReservations(Long savedUse
 //        }
 
 
-            RegularResponseDto dto = RegularResponseDto.of(tmp, status,  now, startDate, endDate, question1, question2);
+            RegularResponseDto dto = RegularResponseDto.of(tmp, status, now, startDate, endDate, question1, question2);
             regularReserves.add(dto);
         }
 
@@ -417,15 +417,15 @@ public List<RegularReservationHistoryDto> getMyRegularReservations(Long savedUse
         List<ReserveRecord> reserves = reserveRepository.findAllByRegularId(regularId);
         List<ReserveDto> reserveList = new ArrayList<>();
         LocalDate now = LocalDate.now();
-        for(ReserveRecord reserve : reserves) {
+        for (ReserveRecord reserve : reserves) {
             String deadline = "기한 만료";
             String status = "대기";
-            if(reserve.getDate().isAfter(now)) {
+            if (reserve.getDate().isAfter(now)) {
                 deadline = "만료되지 않음";
             }
-            if(reserve.getStatus() == 2) {
+            if (reserve.getStatus() == 2) {
                 status = "승인";
-            } else if(reserve.getStatus() == 3) {
+            } else if (reserve.getStatus() == 3) {
                 status = "거절";
             }
             ReserveDto reserveDto = new ReserveDto(reserve.getId(), reserve.getGroupName(), reserve.getPurpose(), reserve.getReservation(), reserve.getContact(), status, reserve.isRegular(), reserve.getRegularId(), reserve.getAnswer1(), reserve.getAnswer2(), reserve.getRoom().getName(), reserve.getRoom().getImage(), reserve.getDate(), reserve.getRegDate(), reserve.getReserveTime(), deadline, reserve.getSavedUserInfo().getUser().getName());
@@ -437,7 +437,7 @@ public List<RegularReservationHistoryDto> getMyRegularReservations(Long savedUse
 //            .collect(Collectors.toList());
     }
 
-//일회대여 더보기
+    //일회대여 더보기
     @Transactional
     public ReserveDetailDto findOneReservationDetail(Long reservationId) {
 
@@ -446,26 +446,25 @@ public List<RegularReservationHistoryDto> getMyRegularReservations(Long savedUse
         return reserve.toDetailDto();
     }
 
-//정기대여 더보기
+    //정기대여 더보기
     @Transactional
     public ReserveDetailDto findRegularReservationDetail(Long regularId) {
         ReserveRecord reserve = reserveRepository.findTop1ByRegularId(regularId);
         return reserve.toDetailDto();
     }
 
-// 예약 삭제
+    // 예약 삭제
     @Transactional
     public Long delete(Long reservationId) {
         reserveRepository.deleteById(reservationId);
         return reservationId;
     }
 
-//    정기대여 예약 삭제
+    //    정기대여 예약 삭제
     @Transactional
     public void deleteAllByRegular(Long regularId) {
         reserveRepository.deleteAllByRegularId(regularId);
     }
-
 
 
     @Transactional(readOnly = true)
@@ -474,4 +473,108 @@ public List<RegularReservationHistoryDto> getMyRegularReservations(Long savedUse
         return ret;
     }
 
+    @Transactional
+    public boolean getRemainTime(Long siteId, Long userId, String date) {
+        Site site = siteRepository.findById(siteId).orElseThrow(() -> new IllegalArgumentException("no such site"));
+        int maxTime = site.getMaxTime();
+        System.out.println("maxTime = " + maxTime);
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//        System.out.println("date = " + date);
+        ZonedDateTime zonedDateTime = ZonedDateTime.parse(date);
+        ZonedDateTime convertedDateTime = zonedDateTime.withZoneSameInstant(ZoneId.of("Asia/Seoul"));
+        LocalDate changedDate = convertedDateTime.toLocalDate();
+        System.out.println("changedDate = " + changedDate);
+
+        List<ReserveRecord> reserveList = reserveRepository.findRecords(siteId, userId, changedDate);
+        System.out.println("reserveList = " + reserveList);
+        
+        List<String> timeList = new ArrayList<>();
+        int currentTime = 0;
+        for (ReserveRecord record : reserveList) {
+            System.out.println("record.getReserveTime() = " + record.getReserveTime());
+            timeList.add(record.getReserveTime());
+            
+        }
+
+        for (String times : timeList) {
+            System.out.println("들옴");
+            String[] slots = times.trim().split(",");
+
+            for (String slot : slots) {
+                System.out.println("여기도 들옴");
+                String[] time = slot.trim().split("~");
+                String startTime = time[0].trim();
+                String endTime = time[1].trim();
+                int duration = ReserveRecord.calculateDuration(startTime, endTime);
+
+                currentTime += duration;
+
+            }
+        }
+        System.out.println("currentTime = " + currentTime);
+        if(maxTime > currentTime) {
+            return true;
+        }
+        else
+            return false;
+    }
+
+    @Transactional
+    public boolean getRemainRegularTime(Long siteId, Long userId, String startDate, String endDate) {
+        Site site = siteRepository.findById(siteId).orElseThrow(() -> new IllegalArgumentException("no such site"));
+        int maxTime = site.getMaxTime();
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        System.out.println("startDate = " + startDate);
+        System.out.println("endDate = " + endDate);
+//        LocalDate changedDate = LocalDate.parse(date, formatter);
+//        LocalDate startD = LocalDate.parse(startDate);
+
+        ZonedDateTime zonedDateStartTime = ZonedDateTime.parse(startDate);
+        ZonedDateTime convertedDateStartTime = zonedDateStartTime.withZoneSameInstant(ZoneId.of("Asia/Seoul"));
+        LocalDate startD = convertedDateStartTime.toLocalDate();
+//        LocalDate endD = LocalDate.parse(endDate);
+
+        ZonedDateTime zonedDateEndTime = ZonedDateTime.parse(endDate);
+        ZonedDateTime convertedDateEndTime = zonedDateEndTime.withZoneSameInstant(ZoneId.of("Asia/Seoul"));
+        LocalDate endD = convertedDateEndTime.toLocalDate();
+        List<LocalDate> dateList = new ArrayList<>();
+        LocalDate currentDate = startD;
+        while (!currentDate.isAfter(endD)) {
+            dateList.add(currentDate);
+            currentDate = currentDate.plusDays(1);
+        }
+
+        dateList.add(startD);
+        dateList.add(endD);
+
+        for(LocalDate changedDate : dateList) {
+            List<ReserveRecord> reserveList = reserveRepository.findBySiteIdAndSavedUserInfoIdAndDate(siteId, userId, changedDate);
+            List<String> timeList = new ArrayList<>();
+            int currentTime = 0;
+
+            for (ReserveRecord record : reserveList) {
+
+                timeList.add(record.getReserveTime());
+            }
+
+            for (String times : timeList) {
+                String[] slots = times.trim().split(",");
+
+                for (String slot : slots) {
+                    String[] time = slot.trim().split("~");
+                    String startTime = time[0].trim();
+                    String endTime = time[1].trim();
+                    int duration = ReserveRecord.calculateDuration(startTime, endTime);
+
+                    currentTime += duration;
+                    if(maxTime > currentTime) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }
+
+

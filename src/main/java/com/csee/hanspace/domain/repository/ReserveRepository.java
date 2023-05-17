@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public interface ReserveRepository extends JpaRepository<ReserveRecord, Long> {
@@ -69,4 +71,12 @@ public interface ReserveRepository extends JpaRepository<ReserveRecord, Long> {
     @Transactional
     @Query("delete from ReserveRecord r where r.site.id = :siteId and r.savedUserInfo.id = :u_Id")
     Integer deleteUser(Long siteId, Long u_Id);
+
+
+//    List<ReserveRecord> findBySiteIdAndSavedUserInfoId(Long siteId, Long userId);
+
+    List<ReserveRecord> findBySiteIdAndSavedUserInfoIdAndDate(Long siteId, Long userId, LocalDate date);
+
+    @Query("select r from ReserveRecord r where r.site.id = :siteId and r.savedUserInfo.id = :userId and r.date = :date")
+    List<ReserveRecord> findRecords(Long siteId, Long userId, LocalDate date);
 }
