@@ -72,13 +72,66 @@ public class RoomService {
         return roomId;
     }
 
+//    @Transactional
+//    public RoomDto create(RoomCUDto roomCUDto, Long siteId) {
+//        Site site = siteRepository.findById(siteId).orElseThrow(() -> new IllegalArgumentException("no such room"));
+//        Room newRoom = new Room(roomCUDto, site);
+//        Room savedRoom = roomRepository.save(newRoom);
+//        return savedRoom.toCreateDto();
+//    }
+
     @Transactional
-    public RoomDto create(RoomCUDto roomCUDto, Long siteId) {
+    public RoomDto createRoomAndTag(RoomAndTagCUDto roomAndTagCUDto, CreateTagDto createTagDto, Long siteId) {
         Site site = siteRepository.findById(siteId).orElseThrow(() -> new IllegalArgumentException("no such room"));
-        Room newRoom = new Room(roomCUDto, site);
+        Room newRoom = new Room(roomAndTagCUDto, site);
         Room savedRoom = roomRepository.save(newRoom);
+
+        if(createTagDto.getTag1() != 0) {
+            Tag tag = tagRepository.findById(createTagDto.getTag1()).orElseThrow(() -> new IllegalArgumentException("no such tag"));
+            RoomTags newRoomTags = new RoomTags(tag, savedRoom);
+            RoomTags roomTags = roomTagRepository.save(newRoomTags);
+        }
+
+        if(createTagDto.getTag2() != 0) {
+            Tag tag = tagRepository.findById(createTagDto.getTag2()).orElseThrow(() -> new IllegalArgumentException("no such tag"));
+            RoomTags newRoomTags = new RoomTags(tag, savedRoom);
+            RoomTags roomTags = roomTagRepository.save(newRoomTags);
+        }
+
+        if(createTagDto.getTag3() != 0) {
+            Tag tag = tagRepository.findById(createTagDto.getTag3()).orElseThrow(() -> new IllegalArgumentException("no such tag"));
+            RoomTags newRoomTags = new RoomTags(tag, savedRoom);
+            RoomTags roomTags = roomTagRepository.save(newRoomTags);
+        }
+
         return savedRoom.toCreateDto();
     }
+
+//    @Transactional
+//    public RoomDto updateRoom(RoomCUDto roomCUDto, CreateTagDto createTagDto , Long roomId) {
+//        Room room = roomRepository.findById(roomId).orElseThrow(() -> new IllegalArgumentException("no such room"));
+//        room.update(roomCUDto);
+//
+//        if(createTagDto.getTag1() != 0) {
+//            Tag tag = tagRepository.findById(createTagDto.getTag1()).orElseThrow(() -> new IllegalArgumentException("no such tag"));
+//            tag.update(createTagDto.getTag1());
+//            RoomTags roomTags = roomTagRepository.save(newRoomTags);
+//        }
+//
+//        if(createTagDto.getTag2() != 0) {
+//            Tag tag = tagRepository.findById(createTagDto.getTag2()).orElseThrow(() -> new IllegalArgumentException("no such tag"));
+//            RoomTags newRoomTags = new RoomTags(tag, savedRoom);
+//            RoomTags roomTags = roomTagRepository.save(newRoomTags);
+//        }
+//
+//        if(createTagDto.getTag3() != 0) {
+//            Tag tag = tagRepository.findById(createTagDto.getTag3()).orElseThrow(() -> new IllegalArgumentException("no such tag"));
+//            RoomTags newRoomTags = new RoomTags(tag, savedRoom);
+//            RoomTags roomTags = roomTagRepository.save(newRoomTags);
+//        }
+//
+//        return room.toUpdateDto();
+//    }
 
     @Transactional
     public RoomDto updateRoom(RoomCUDto roomCUDto, Long roomId) {

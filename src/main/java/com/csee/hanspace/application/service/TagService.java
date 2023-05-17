@@ -1,5 +1,6 @@
 package com.csee.hanspace.application.service;
 
+import com.csee.hanspace.application.dto.RoomTagDto;
 import com.csee.hanspace.application.dto.SiteDto;
 import com.csee.hanspace.application.dto.TagDto;
 import com.csee.hanspace.domain.entity.*;
@@ -35,11 +36,18 @@ public class TagService {
         return tagRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("no such roomTags"));
     }
 
-    //    이용중인 사이트 리스트
+    //    사이트 태그 리스트
     @Transactional
     public List<TagDto> getSiteTags(Long siteId) {
         List<Tag> tagList = tagRepository.findAllBySiteId(siteId);
         return tagList.stream().map(TagDto::new).collect(Collectors.toList());
+    }
+
+    //    룸 태그 리스트
+    @Transactional
+    public List<RoomTagDto> getRoomTags(Long roomId) {
+        List<RoomTags> roomTags = roomTagRepository.findAllByRoomId(roomId);
+        return roomTags.stream().map(RoomTagDto::new).collect(Collectors.toList());
     }
 
 }

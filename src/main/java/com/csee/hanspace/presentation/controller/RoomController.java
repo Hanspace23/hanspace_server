@@ -1,14 +1,12 @@
 package com.csee.hanspace.presentation.controller;
 
+import com.csee.hanspace.application.dto.RoomAndTagDto;
 import com.csee.hanspace.application.dto.RoomDto;
 import com.csee.hanspace.application.dto.RoomsReadDto;
 import com.csee.hanspace.application.service.ReserveService;
 import com.csee.hanspace.application.service.RoomService;
 import com.csee.hanspace.domain.entity.Room;
-import com.csee.hanspace.presentation.request.CreateRoomRequest;
-import com.csee.hanspace.presentation.request.RoomAvailsRequest;
-import com.csee.hanspace.presentation.request.UpdateRoomAvailRequest;
-import com.csee.hanspace.presentation.request.UpdateRoomRequest;
+import com.csee.hanspace.presentation.request.*;
 import com.csee.hanspace.presentation.response.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,14 +62,30 @@ public class RoomController {
     }
 
 //    공간 관리 room 추가
-    @PostMapping("/create-room")
-    public ResponseEntity<CreateRoomResponse> createRoom(@RequestBody CreateRoomRequest request) {
-        RoomDto roomDto = roomService.create(request.roomCUDto(), request.getSiteId());
+//    @PostMapping("/create-room")
+//    public ResponseEntity<CreateRoomResponse> createRoom(@RequestBody CreateRoomRequest request) {
+//        RoomDto roomDto = roomService.create(request.roomCUDto(), request.getSiteId());
+//        CreateRoomResponse res = roomDto.createRoomResponse();
+//        return ResponseEntity.ok(res);
+//    }
+
+    //    공간 관리 room 추가, roomtag 생성
+    @PostMapping("/create")
+    public ResponseEntity<CreateRoomResponse> createRoomAndTag(@RequestBody CreateRoomAndTagRequest request) {
+        RoomDto roomDto = roomService.createRoomAndTag(request.roomAndTagCUDto(), request.createTagDto(), request.getSiteId());
         CreateRoomResponse res = roomDto.createRoomResponse();
         return ResponseEntity.ok(res);
     }
 
 //    공간 관리 room 수정
+//    @PostMapping("/update-room")
+//    public ResponseEntity<UpdateRoomResponse> updateRoom(@RequestBody UpdateRoomRequest request) {
+//        RoomDto roomDto = roomService.updateRoom(request.roomCUDto(), request.createTagDto(), request.getRoomId());
+//        UpdateRoomResponse res = roomDto.updateRoomResponse();
+//        return ResponseEntity.ok(res);
+//    }
+
+    //    공간 관리 room 수정
     @PostMapping("/update-room")
     public ResponseEntity<UpdateRoomResponse> updateRoom(@RequestBody UpdateRoomRequest request) {
         RoomDto roomDto = roomService.updateRoom(request.roomCUDto(), request.getRoomId());

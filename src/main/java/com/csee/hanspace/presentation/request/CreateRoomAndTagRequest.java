@@ -1,6 +1,7 @@
 package com.csee.hanspace.presentation.request;
 
 import com.csee.hanspace.application.dto.CreateTagDto;
+import com.csee.hanspace.application.dto.RoomAndTagCUDto;
 import com.csee.hanspace.application.dto.RoomCUDto;
 import com.csee.hanspace.domain.entity.RoomTags;
 import lombok.*;
@@ -12,8 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UpdateRoomRequest {
-    private Long roomId;
+public class CreateRoomAndTagRequest {
+    private Long siteId;
     private String roomName;
     private Integer capacity;
     private String description;
@@ -25,11 +26,13 @@ public class UpdateRoomRequest {
     private Long tag2;
     private Long tag3;
 
-    public RoomCUDto roomCUDto() {
-        return new RoomCUDto(roomName, capacity, description, startTime, endTime, available, image);
+    public RoomAndTagCUDto roomAndTagCUDto() {
+        return new RoomAndTagCUDto(roomName, capacity, description, startTime, endTime, available, image);
     }
 
     public CreateTagDto createTagDto() {
         return new CreateTagDto(tag1, tag2, tag3);
     }
+
+
 }
