@@ -1,10 +1,7 @@
 package com.csee.hanspace.domain.entity;
 
 
-import com.csee.hanspace.application.dto.RoomAvailableDto;
-import com.csee.hanspace.application.dto.RoomCUDto;
-import com.csee.hanspace.application.dto.RoomDto;
-import com.csee.hanspace.application.dto.TimeRecordDto;
+import com.csee.hanspace.application.dto.*;
 import com.csee.hanspace.domain.entity.common.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
@@ -80,6 +77,17 @@ public class Room extends BaseEntity {
         this.site = site;
     }
 
+    public Room(RoomAndTagCUDto roomAndTagCUDto, Site site) {
+        this.name = roomAndTagCUDto.getRoomName();
+        this.image = roomAndTagCUDto.getImage();
+        this.capacity = roomAndTagCUDto.getCapacity();
+        this.startTime = roomAndTagCUDto.getStartTime();
+        this.endTime = roomAndTagCUDto.getEndTime();
+        this.available = roomAndTagCUDto.isAvailable();
+        this.description = roomAndTagCUDto.getDescription();
+        this.site = site;
+    }
+
     public RoomDto toCreateDto() {
         return RoomDto.builder()
                 .roomId(this.id)
@@ -90,7 +98,6 @@ public class Room extends BaseEntity {
                 .endTime(this.endTime)
                 .available(this.available)
                 .description(this.description)
-                .roomTags(this.roomTagsList)
                 .site(this.site)
                 .build();
     }
@@ -105,7 +112,6 @@ public class Room extends BaseEntity {
                 .endTime(this.endTime)
                 .available(this.available)
                 .description(this.description)
-                .roomTags(this.roomTagsList)
                 .site(this.site)
                 .build();
     }

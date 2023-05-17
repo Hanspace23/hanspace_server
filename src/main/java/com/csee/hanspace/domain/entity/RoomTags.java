@@ -29,4 +29,9 @@ public class RoomTags extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Room room;
+
+    public RoomTags(Tag tag, Room room) {
+        this.tag = tag;
+        this.room = room;
+    }
 }
