@@ -73,7 +73,6 @@ public class Room extends BaseEntity {
         this.endTime = roomCUDto.getEndTime();
         this.available = roomCUDto.isAvailable();
         this.description = roomCUDto.getDescription();
-        this.roomTagsList = roomCUDto.getRoomTags();
         this.site = site;
     }
 
@@ -126,7 +125,6 @@ public class Room extends BaseEntity {
         this.endTime = roomCUDto.getEndTime();
         this.available = roomCUDto.isAvailable();
         this.description = roomCUDto.getDescription();
-        this.roomTagsList = roomCUDto.getRoomTags();
     }
 
     public void updateAvailable(RoomAvailableDto roomAvailableDto) {
