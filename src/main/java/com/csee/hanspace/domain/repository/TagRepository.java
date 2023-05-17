@@ -11,6 +11,13 @@ import java.util.List;
 
 public interface TagRepository extends JpaRepository<Tag, Long> {
 
+
+//    @Query("select t from Tag t left join fetch t.roomTagsList r where r.room.id = :roomId")
+//    List<Tag> findAllByRoomId(@Param("roomId") Long roomId);
+
+    @Query("select t from Tag t  where t.site.id = :siteId")
+    List<Tag> findAllBySiteId(@Param("siteId") Long siteId);
+
     @Query("select t from Tag t left join fetch t.roomTagsList r where r.room.id = :roomId")
     List<Tag> findAllByRoomId(@Param("roomId") Long roomId);
 
@@ -19,4 +26,5 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
     @Modifying
     @Query("DELETE FROM Tag e")
     void hardDeleteAll();
+
 }

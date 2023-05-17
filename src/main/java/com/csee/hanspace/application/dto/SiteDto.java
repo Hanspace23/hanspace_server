@@ -15,12 +15,14 @@ public class SiteDto {
     private String name;
     private String description;
     private String logo;
+    private String link;
 
     public SiteDto(Site site) {
         this.siteId = site.getId();
         this.name = site.getName();
         this.description = site.getDescription();
         this.logo = site.getLogo();
+        this.link = site.getLink();
     }
 
     public SiteDto(SavedUserInfo savedUserInfo) {
@@ -28,9 +30,10 @@ public class SiteDto {
         this.name = savedUserInfo.getSite().getName();
         this.description = savedUserInfo.getSite().getDescription();
         this.logo = savedUserInfo.getSite().getLogo();
+        this.link = savedUserInfo.getSite().getLink();
     }
 
     public SiteResponse siteResponse() {
-        return new SiteResponse(siteId, name, description, logo);
+        return new SiteResponse(siteId, name, description, logo, link);
     }
 }

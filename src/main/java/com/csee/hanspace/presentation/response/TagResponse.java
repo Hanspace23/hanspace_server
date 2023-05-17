@@ -9,10 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SiteResponse {
-    private Long siteId;
-    private String name;
-    private String description;
-    private String logo;
-    private String link;
+public class TagResponse {
+    private Long tagId;
+    private String tagName;
 }

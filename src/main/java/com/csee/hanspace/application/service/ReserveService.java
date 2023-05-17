@@ -12,7 +12,6 @@ import com.csee.hanspace.domain.repository.SiteRepository;
 import com.csee.hanspace.exception.ReserveRecordNotFoundException;
 //import com.csee.hanspace.domain.repository.TimeRecordRepository;
 import com.csee.hanspace.presentation.request.ChangeMStatusRequest;
-import com.csee.hanspace.presentation.request.RemainTimeRequest;
 import com.csee.hanspace.presentation.response.RegularResponse;
 import com.csee.hanspace.presentation.response.ReserveCalResponse;
 import lombok.RequiredArgsConstructor;
@@ -53,15 +52,10 @@ public class ReserveService {
     // 일회 대여
     @Transactional
     public Long save(OneReserveDto dto) {
-        System.out.println("dto = " + dto);
         User user = userService.findByEmail(dto.getEmail());
-        System.out.println("user = " + user);
         SavedUserInfo savedUserInfo = userInfoService.findById(user.getId());
-        System.out.println("savedUserInfo = " + savedUserInfo);
         Site site = siteService.findById(dto.getSiteId());
-        System.out.println("site = " + site);
         Room room = roomService.findByName(dto.getRoomName());
-        System.out.println("room = " + room);
 
         System.out.println(ReserveRecord.onetimeReserve(savedUserInfo, site, room, dto));
         ReserveRecord savedRecord = reserveRepository.save(ReserveRecord.onetimeReserve(savedUserInfo, site, room, dto));
@@ -487,13 +481,13 @@ public class ReserveService {
 
         List<ReserveRecord> reserveList = reserveRepository.findRecords(siteId, userId, changedDate);
         System.out.println("reserveList = " + reserveList);
-        
+
         List<String> timeList = new ArrayList<>();
         int currentTime = 0;
         for (ReserveRecord record : reserveList) {
             System.out.println("record.getReserveTime() = " + record.getReserveTime());
             timeList.add(record.getReserveTime());
-            
+
         }
 
         for (String times : timeList) {
