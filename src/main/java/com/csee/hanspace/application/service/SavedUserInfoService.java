@@ -58,7 +58,9 @@ public class SavedUserInfoService {
 
     @Transactional
     public int changeUserAuth(ChangeAuthDto dto){
-        SavedUserInfo userInfo = savedUserInfoRepository.findSavedUserInfoBySiteIdAndId(dto.getSiteId(), dto.getUserId());
+        System.out.println("dto = " + dto);
+        SavedUserInfo userInfo = savedUserInfoRepository.findSavedUserInfoBySiteIdAndUserId(dto.getSiteId(), dto.getUserId());
+        System.out.println("userInfo = " + userInfo);
         userInfo.setAuthority(dto.getAuth());
         SavedUserInfo editUserInfo = savedUserInfoRepository.save(userInfo);
         return editUserInfo.getAuthority();

@@ -470,32 +470,35 @@ public class ReserveService {
     @Transactional
     public boolean getRemainTime(Long siteId, Long userId, String date) {
         Site site = siteRepository.findById(siteId).orElseThrow(() -> new IllegalArgumentException("no such site"));
+        SavedUserInfo user = savedUserInfoRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("no such user"));
+        if(user.getAuthority() == 1 || user.getAuthority() == 2) {
+            return true;
+        }
         int maxTime = site.getMaxTime();
         System.out.println("maxTime = " + maxTime);
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//        System.out.println("date = " + date);
+
         ZonedDateTime zonedDateTime = ZonedDateTime.parse(date);
         ZonedDateTime convertedDateTime = zonedDateTime.withZoneSameInstant(ZoneId.of("Asia/Seoul"));
         LocalDate changedDate = convertedDateTime.toLocalDate();
-        System.out.println("changedDate = " + changedDate);
+
 
         List<ReserveRecord> reserveList = reserveRepository.findRecords(siteId, userId, changedDate);
-        System.out.println("reserveList = " + reserveList);
+
 
         List<String> timeList = new ArrayList<>();
         int currentTime = 0;
         for (ReserveRecord record : reserveList) {
-            System.out.println("record.getReserveTime() = " + record.getReserveTime());
+
             timeList.add(record.getReserveTime());
 
         }
 
         for (String times : timeList) {
-            System.out.println("들옴");
+
             String[] slots = times.trim().split(",");
 
             for (String slot : slots) {
-                System.out.println("여기도 들옴");
+
                 String[] time = slot.trim().split("~");
                 String startTime = time[0].trim();
                 String endTime = time[1].trim();
@@ -505,7 +508,7 @@ public class ReserveService {
 
             }
         }
-        System.out.println("currentTime = " + currentTime);
+
         if(maxTime > currentTime) {
             return true;
         }
@@ -516,17 +519,18 @@ public class ReserveService {
     @Transactional
     public boolean getRemainRegularTime(Long siteId, Long userId, String startDate, String endDate) {
         Site site = siteRepository.findById(siteId).orElseThrow(() -> new IllegalArgumentException("no such site"));
+        SavedUserInfo user = savedUserInfoRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("no such user"));
         int maxTime = site.getMaxTime();
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        if(user.getAuthority() == 1 || user.getAuthority() == 2) {
+            return true;
+        }
         System.out.println("startDate = " + startDate);
         System.out.println("endDate = " + endDate);
-//        LocalDate changedDate = LocalDate.parse(date, formatter);
-//        LocalDate startD = LocalDate.parse(startDate);
 
         ZonedDateTime zonedDateStartTime = ZonedDateTime.parse(startDate);
         ZonedDateTime convertedDateStartTime = zonedDateStartTime.withZoneSameInstant(ZoneId.of("Asia/Seoul"));
         LocalDate startD = convertedDateStartTime.toLocalDate();
-//        LocalDate endD = LocalDate.parse(endDate);
+
 
         ZonedDateTime zonedDateEndTime = ZonedDateTime.parse(endDate);
         ZonedDateTime convertedDateEndTime = zonedDateEndTime.withZoneSameInstant(ZoneId.of("Asia/Seoul"));
