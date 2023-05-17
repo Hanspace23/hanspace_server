@@ -24,6 +24,6 @@ public class CreateRoomRequest {
     private List<RoomTags> roomTags;
 
     public RoomCUDto roomCUDto() {
-        return new RoomCUDto(roomName, capacity, description, startTime, endTime, available, image, roomTags);
+        return new RoomCUDto(roomName, capacity, description, startTime, endTime, available, image);
     }
 }
