@@ -54,31 +54,24 @@ https://www.youtube.com/watch?v=3CG4rbCgE8s
 
 
 ## 🎁 Service Introduction
+
 ![image](https://github.com/Hanspace23/hanspace_server/assets/79990740/d03de5bd-f24f-4175-9cc9-7aa80fc51c60)
-
-
-
-
-## 🔎 기술 설명
-
-![안병웅박성진_캡스톤발표자료 (1)_040](https://user-images.githubusercontent.com/80206884/210241017-34b06259-8cff-4f30-8e13-4dbf4b091b61.jpg)
-![안병웅박성진_캡스톤발표자료 (1)_041](https://user-images.githubusercontent.com/80206884/210241024-d83efad1-ac9d-44fd-8dc4-b1ce20f68fdc.jpg)
-![안병웅박성진_캡스톤발표자료 (1)_042](https://user-images.githubusercontent.com/80206884/210241026-ed4ea227-f3d9-43cd-aa7e-1a38969344ef.jpg)
-![안병웅박성진_캡스톤발표자료 (1)_043](https://user-images.githubusercontent.com/80206884/210241029-5d8d28bb-0911-4b7d-9ba7-4f4a87ba64da.jpg)
-![안병웅박성진_캡스톤발표자료 (1)_044](https://user-images.githubusercontent.com/80206884/210241031-498ad24a-cd33-4433-94ca-3cc58bed64e3.jpg)
-![안병웅박성진_캡스톤발표자료 (1)_045](https://user-images.githubusercontent.com/80206884/210241033-41992c52-dd29-45fa-bfa0-b3b6e3f2ad81.jpg)
-![안병웅박성진_캡스톤발표자료 (1)_046](https://user-images.githubusercontent.com/80206884/210241035-3524ea11-6b49-41f0-b0aa-ccc626971097.jpg)
-![안병웅박성진_캡스톤발표자료 (1)_047](https://user-images.githubusercontent.com/80206884/210241037-f4805384-e4e6-46d9-aa93-032d272a0a55.jpg)
-![안병웅박성진_캡스톤발표자료 (1)_048](https://user-images.githubusercontent.com/80206884/210241043-85f860b0-696d-42c4-a8c7-faf821d34f9f.jpg)
-![안병웅박성진_캡스톤발표자료 (1)_049](https://user-images.githubusercontent.com/80206884/210241045-00b865eb-4454-41a6-82a2-1db98ecf9487.jpg)
-![안병웅박성진_캡스톤발표자료 (1)_050](https://user-images.githubusercontent.com/80206884/210241047-1398a388-8888-498f-a540-5ad2dabd9b8f.jpg)
-![안병웅박성진_캡스톤발표자료 (1)_051](https://user-images.githubusercontent.com/80206884/210241048-b95ae314-b83f-42a2-9e6f-46eb3b93dce7.jpg)
+![image](https://github.com/Hanspace23/hanspace_server/assets/79990740/93e15d71-8527-44a6-ae6f-98b2665f51b1)
+![image](https://github.com/Hanspace23/hanspace_server/assets/79990740/6e2cd1e8-7503-4ae7-9e05-f2061263d5cc)
+![image](https://github.com/Hanspace23/hanspace_server/assets/79990740/c15f2a31-5eaf-4528-88e3-967d18a552e6)
+![image](https://github.com/Hanspace23/hanspace_server/assets/79990740/a1b77949-8eee-4ac2-b414-d1e3856ee5b1)
+![image](https://github.com/Hanspace23/hanspace_server/assets/79990740/c19b552a-ca4f-4bff-8bb6-f82281df17b8)
+![image](https://github.com/Hanspace23/hanspace_server/assets/79990740/62912dd9-2e8a-489e-9166-a2bd3044def9)
+![image](https://github.com/Hanspace23/hanspace_server/assets/79990740/b42b17df-9ff3-4e70-a3ba-404de303e549)
+![image](https://github.com/Hanspace23/hanspace_server/assets/79990740/d5ecd01b-74a3-4cf7-aa62-7becb6e42210)
+![image](https://github.com/Hanspace23/hanspace_server/assets/79990740/d49d43ae-fd3f-49fe-bcfd-8bf0be460e0d)
+![image](https://github.com/Hanspace23/hanspace_server/assets/79990740/c02b3393-746f-4f53-ab81-01e7fa278d37)
+![image](https://github.com/Hanspace23/hanspace_server/assets/79990740/617436ae-4785-48e9-9559-7d1df2fd9334)
+![image](https://github.com/Hanspace23/hanspace_server/assets/79990740/d0f76055-d031-418b-aac4-d09020d9cd7e)
+![image](https://github.com/Hanspace23/hanspace_server/assets/79990740/6cf5f0ba-20e6-40c3-b889-c1f070766dfd)
 
 
 ## 🙋‍♂️ 협업
 
-![안병웅박성진_캡스톤발표자료 (1)_052](https://user-images.githubusercontent.com/80206884/210241246-007ad0fd-03ab-43e4-8a70-718eb0486aa0.jpg)
-![안병웅박성진_캡스톤발표자료 (1)_053](https://user-images.githubusercontent.com/80206884/210241255-e059ce6f-946f-4a5c-a8f1-396d714693f0.jpg)
-![안병웅박성진_캡스톤발표자료 (1)_054](https://user-images.githubusercontent.com/80206884/210241257-14509c51-6d95-49b9-ba23-b14646084d0d.jpg)
-![안병웅박성진_캡스톤발표자료 (1)_055](https://user-images.githubusercontent.com/80206884/210241258-101387fa-9aba-44f0-9f71-a37eff46cd42.jpg)
+![image](https://github.com/Hanspace23/hanspace_server/assets/79990740/ae6ebcdf-51b2-45ca-aa60-11bcb44475bf)
 
