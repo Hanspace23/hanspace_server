@@ -41,9 +41,6 @@
 -   [HanSpace Back End](https://github.com/Hanspace23/hanspace_server)
 
 
-## 💻 데모영상
-https://www.youtube.com/watch?v=3CG4rbCgE8s
-
 ## ✌️ ERD
 <img width="1912" alt="image" src="https://github.com/Hanspace23/hanspace_server/assets/79990740/84851d15-e94f-44dd-a9ab-8438cd19198d">
 
