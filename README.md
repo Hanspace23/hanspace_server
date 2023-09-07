@@ -32,8 +32,8 @@
 
 ## 🔧 기술스택
 
-<img src= "![image](https://github.com/Hanspace23/hanspace_server/assets/79990740/b13f4bfb-ea31-4213-b656-5883fdd0fb18)
-" />
+![image](https://github.com/Hanspace23/hanspace_server/assets/79990740/93541b35-0daa-49e2-a882-a6e293b9a76a)
+
 
 ## ⌨️ Code
 
@@ -50,7 +50,8 @@ https://www.youtube.com/watch?v=3CG4rbCgE8s
 
 ## 🖌️ Service Design
 
-<img width="1912" alt="image" src="https://user-images.githubusercontent.com/63008958/210237295-f60b03aa-5416-47c9-8abd-91a4f4ffd8f2.png">
+<img width="782" alt="image" src="https://github.com/Hanspace23/hanspace_server/assets/79990740/c38a7de7-7a95-46d6-8f5d-6784f3318158">
+
 
 ## 🎁 Service Introduction
 
